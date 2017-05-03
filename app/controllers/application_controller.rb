@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
   def hello
-    puts 'Yeah !'
+    puts 'Yeah !!'
   end
 end
