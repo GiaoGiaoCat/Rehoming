@@ -38,3 +38,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
+# 微信
+gem 'wechat', '~> 0.8.7'
+
+# service object
+gem 'active_type', '~> 0.7.0'
