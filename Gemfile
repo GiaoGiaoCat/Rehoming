@@ -28,6 +28,8 @@ gem 'puma', '~> 3.7'
 
 # Simple Rails app configuration
 gem 'figaro'
+# Make any Ruby object quack like ActiveRecord
+gem 'active_type', '~> 0.7.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -40,9 +42,3 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-# 微信
-gem 'wechat', '~> 0.8.7'
-
-# service object
-gem 'active_type', '~> 0.7.0'
