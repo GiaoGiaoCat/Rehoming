@@ -19,7 +19,7 @@ class PostsController < ApplicationController
 
   def post_params
     params.fetch(:post, {}).permit(
-      :content, attachments_attributes: [:category, :url]
+      :content, attachments_attributes: %i[category url]
     )
   end
 end
