@@ -1,2 +1,3 @@
+wechat_open_host: 'example'
 wechat_app_id: 'example'
 wechat_app_secret: 'example'
