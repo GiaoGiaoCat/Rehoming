@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   scope module: 'users' do
     resources :sessions, only: :create
   end
+  resources :posts, only: [:create]
 end
