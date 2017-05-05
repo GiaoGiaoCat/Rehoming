@@ -55,5 +55,4 @@ class User::SignIn < ActiveType::Object
   def validate_userinfo_exists
     errors.add(:userinfo, userinfo.errmsg) if userinfo && userinfo.errcode
   end
-
 end

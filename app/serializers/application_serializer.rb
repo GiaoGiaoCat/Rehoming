@@ -7,7 +7,9 @@ class ApplicationSerializer < ActiveModel::Serializer
     hash
   end
 
-  def id
-    object.to_param
-  end
+  # def id
+  #   # object.to_param
+  #   object.id
+  # end
+  delegate :id, to: :object
 end
