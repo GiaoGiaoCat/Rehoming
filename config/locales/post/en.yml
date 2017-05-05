@@ -1,9 +1,0 @@
-en:
-  activerecord:
-    errors:
-      models:
-        post:
-          attributes:
-            base:
-              too_many_images: 'Maximum image count exceeded'
-              too_many_videos: 'Maximum video count exceeded'
