@@ -1,7 +1,7 @@
 class Attachment < ApplicationRecord
   belongs_to :post
 
-  validates_presence_of :category, :url
+  validates :category, :url, presence: true
 
   enum category: {
     image: 10,
