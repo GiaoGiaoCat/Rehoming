@@ -4,10 +4,10 @@ class Users::SessionsController < ApplicationController
   def create
     @session = User::SignIn.new(session_params)
     if @session.save
-      # @session.update_tracked_fields!(request)
+      @session.update_tracked_fields!(request)
       render json: @session, status: :created, serializer: SessionSerializer
     else
-      render_error_msg(@session, :mobile, :password)
+      render_error_msg(@session, :access_token, :userinfo, :user)
     end
   end
 

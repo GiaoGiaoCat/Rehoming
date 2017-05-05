@@ -3,11 +3,13 @@ class User::SignIn < ActiveType::Object
     EasyWechat::Client.new(ENV['wechat_app_id'], ENV['wechat_app_secret'])
   end
 
+  belongs_to :user
+
   attribute :code, :string
   attribute :auth_token, :string
+  attribute :user_id, :integer
   attribute :access_token
   attribute :userinfo
-  attribute :user
 
   validates :code, presence: true
   validate :validate_access_token_exists
@@ -16,12 +18,10 @@ class User::SignIn < ActiveType::Object
 
   before_validation :ensure_access_token_has_a_value
   before_validation :ensure_userinfo_has_a_value
-  before_validation :ensure_user_has_a_value
+  before_validation :ensure_user_id_has_a_value
   # after_create :generate_auth_token
 
-  def update_tracked_fields!(request)
-    # delegator to user
-  end
+  delegate :update_tracked_fields!, to: :user
 
   private
 
@@ -34,9 +34,10 @@ class User::SignIn < ActiveType::Object
     self.userinfo = @@wechat_client.get_userinfo(access_token.access_token, access_token.openid)
   end
 
-  def ensure_user_has_a_value
+  def ensure_user_id_has_a_value
     return unless userinfo
-    self.user = User::Generator.find_or_create_user_by(raw_info: userinfo)
+    user = User::Generator.find_or_create_user_by(raw_info: userinfo)
+    self.user_id = user.id
   end
 
   def validate_access_token_exists
@@ -49,11 +50,7 @@ class User::SignIn < ActiveType::Object
 
   def validate_user_exists
     # I18n::InvalidLocale: :"zh-CN" is not a valid locale
-    # errors.add(:user, :user_not_found, status: :not_found) unless user
-    errors.add(:user, 'user not found') unless user
-  end
-
-  def set_auth_token_expired_time
-    30.days.from_now.to_i
+    # errors.add(:user_id, :user_not_found, status: :not_found) unless user_id
+    errors.add(:user_id, 'user not found') unless user_id
   end
 end
