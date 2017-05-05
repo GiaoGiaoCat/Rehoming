@@ -17,19 +17,13 @@ module EncryptedId
     def find(*args)
       scope = args.slice!(0)
       options = args.slice!(0) || {}
-      if !(scope.is_a? Symbol) && encrypted_id? && !options[:no_encrypted_id] && scope.to_s !~ /\A\d+\z/
+      if !options[:no_encrypted_id] && scope.to_s !~ /\A\d+\z/
         begin
-          scope =
-            if scope.is_a? Array
-              scope.map! { |encrypted_id| decrypt(encrypted_id_key, encrypted_id) }
-            else
-              decrypt(encrypted_id_key, scope.to_s)
-            end
+          scope = process_scope(scope)
         rescue OpenSSL::Cipher::CipherError
           raise ActiveRecord::RecordNotFound.new("Could not decrypt ID #{scope}")
         end
       end
-      options.delete(:no_encrypted_id)
       super(scope)
     end
 
@@ -37,12 +31,16 @@ module EncryptedId
       find(*args)
     end
 
-    def encrypted_id?
-      true
-    end
-
     def encrypted_id_default_key
       name
+    end
+
+    def process_scope(scope)
+      if scope.is_a? Array
+        scope.map! { |encrypted_id| decrypt(encrypted_id_key, encrypted_id) }
+      else
+        decrypt(encrypted_id_key, scope.to_s)
+      end
     end
 
     def decrypt(key, id)
@@ -62,16 +60,5 @@ module EncryptedId
 
   def to_param
     self.class.encrypt(self.class.encrypted_id_key, id)
-  end
-
-  def to_key
-    key = id || nil
-    key = [self.class.encrypt(self.class.encrypted_id_key, id)] if key
-    key
-  end
-
-  def reload(options = nil)
-    options = (options || {}).merge(no_encrypted_id: true)
-    super(options)
   end
 end
