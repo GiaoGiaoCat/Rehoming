@@ -7,7 +7,7 @@ class Users::SessionsController < ApplicationController
       @session.update_tracked_fields!(request)
       render json: @session, status: :created, serializer: SessionSerializer
     else
-      render_error_msg(@session, :access_token, :userinfo, :user)
+      render_error_msg(@session, :access_token, :userinfo, :user_id)
     end
   end
 

@@ -13,8 +13,6 @@ gem 'rails', '~> 5.1.0'
 gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
@@ -26,6 +24,8 @@ gem 'puma', '~> 3.7'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+# ActiveModel::Serializer implementation and Rails hooks
+gem 'active_model_serializers'
 # Simple Rails app configuration
 gem 'figaro'
 # Make any Ruby object quack like ActiveRecord
