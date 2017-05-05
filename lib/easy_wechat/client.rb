@@ -8,13 +8,13 @@ module EasyWechat
     end
 
     def get_access_token(code)
-      uri = URI(Figaro.env.wechat_open_host + 'sns/oauth2/access_token')
+      uri = URI(ENV['wechat_open_host'] + 'sns/oauth2/access_token')
       params = { appid: @appid, secret: @secret, code: code, grant_type: 'authorization_code' }
       http_get(uri, params)
     end
 
     def get_userinfo(access_token, openid)
-      uri = URI(Figaro.env.wechat_open_host + 'sns/userinfo')
+      uri = URI(ENV['wechat_open_host'] + 'sns/userinfo')
       params = { access_token: access_token, openid: openid }
       http_get(uri, params)
     end
