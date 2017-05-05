@@ -16,7 +16,7 @@ class User::SignIn < ActiveType::Object
 
   before_validation :ensure_access_token_has_a_value
   before_validation :ensure_userinfo_has_a_value
-  before_validation :connect_user
+  before_validation :ensure_user_has_a_value
   # after_create :generate_auth_token
 
   def update_tracked_fields!(request)
@@ -34,8 +34,9 @@ class User::SignIn < ActiveType::Object
     self.userinfo = @@wechat_client.get_userinfo(access_token.access_token, access_token.openid)
   end
 
-  def set_auth_token_expired_time
-    30.days.from_now.to_i
+  def ensure_user_has_a_value
+    return unless userinfo
+    self.user = User::Generator.find_or_create_user_by(raw_info: userinfo)
   end
 
   def validate_access_token_exists
@@ -46,8 +47,13 @@ class User::SignIn < ActiveType::Object
     errors.add(:userinfo, userinfo.errmsg) if userinfo && userinfo.errcode
   end
 
-  def connect_user
-    # self.user = do somthing
-    # User.create!(unionid: unionid, nickname: headimgurl, headimgurl: headimgurl, raw_info: userinfo)
+  def validate_user_exists
+    # I18n::InvalidLocale: :"zh-CN" is not a valid locale
+    # errors.add(:user, :user_not_found, status: :not_found) unless user
+    errors.add(:user, 'user not found') unless user
+  end
+
+  def set_auth_token_expired_time
+    30.days.from_now.to_i
   end
 end
