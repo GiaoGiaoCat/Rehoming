@@ -1,0 +1,10 @@
+{
+  "type": "posts",
+  "attributes": {
+    "content": "do some test",
+    "attachments_attributes": [
+      { "category": 10, "url": "http://www.baidu.com/1.jpg" },
+      { "category": 10, "url": "http://www.baidu.com/2.jpg" }
+    ]
+  }
+}
