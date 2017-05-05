@@ -12,9 +12,9 @@ class User::SignIn < ActiveType::Object
   attribute :userinfo
 
   validates :code, presence: true
+  validates :user, presence: true
   validate :validate_access_token_exists
   validate :validate_userinfo_exists
-  validate :validate_user_exists
 
   before_validation :ensure_access_token_has_a_value
   before_validation :ensure_userinfo_has_a_value
@@ -46,11 +46,5 @@ class User::SignIn < ActiveType::Object
 
   def validate_userinfo_exists
     errors.add(:userinfo, userinfo.errmsg) if userinfo && userinfo.errcode
-  end
-
-  def validate_user_exists
-    # I18n::InvalidLocale: :"zh-CN" is not a valid locale
-    # errors.add(:user_id, :user_not_found, status: :not_found) unless user_id
-    errors.add(:user_id, 'user not found') unless user_id
   end
 end
