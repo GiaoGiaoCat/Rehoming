@@ -26,6 +26,8 @@ gem 'puma', '~> 3.7'
 
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers'
+# A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard
+gem 'jwt'
 # Simple Rails app configuration
 gem 'figaro'
 # Make any Ruby object quack like ActiveRecord
