@@ -1,0 +1,9 @@
+zh_CN:
+  activerecord:
+    errors:
+      models:
+        post:
+          attributes:
+            base:
+              too_many_images: '图片数量不能超过九张'
+              too_many_videos:  '视频数量不能超过一份'
