@@ -32,13 +32,6 @@ ActiveRecord::Schema.define(version: 20170504133433) do
     t.string "nickname", limit: 191
     t.text "headimgurl"
     t.text "raw_info"
-    t.integer "sign_in_count", default: 0, null: false
-    t.integer "failed_sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.datetime "last_sign_in_at"
-    t.string "last_sign_in_ip"
-    t.datetime "last_failed_sign_in_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unionid"], name: "users_unionid_index"

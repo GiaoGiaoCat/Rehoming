@@ -22,7 +22,7 @@ class User::SignIn < ActiveType::Object
   before_validation :ensure_user_id_has_a_value
   before_validation :ensure_auth_token_has_a_value
 
-  delegate :update_tracked_fields!, :id, to: :user, allow_nil: true
+  delegate :id, to: :user, allow_nil: true
 
   private
 
