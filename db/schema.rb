@@ -10,13 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503142535) do
+ActiveRecord::Schema.define(version: 20170504133433) do
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.string "unionid", limit: 191, comment: "全局唯一ID"
-    t.string "nickname", limit: 191, comment: "昵称"
-    t.text "headimgurl", comment: "头像URL"
-    t.text "raw_info", comment: "微信用户原始信息"
+  create_table "attachments", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "category"
+    t.text "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_attachments_on_post_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.text "content", limit: 65536
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "unionid", limit: 191
+    t.string "nickname", limit: 191
+    t.text "headimgurl"
+    t.text "raw_info"
     t.integer "sign_in_count", default: 0, null: false
     t.integer "failed_sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
