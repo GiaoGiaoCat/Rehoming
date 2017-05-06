@@ -47,7 +47,7 @@ module EncryptedId
       c = OpenSSL::Cipher.new(CIPHER_NAME).decrypt
       c.iv = CIPHER_IV
       c.key = key
-      c.update([id].pack('H*')) + c.final
+      (c.update([id].pack('H*')) + c.final).to_i
     end
 
     def encrypt(key, id)
