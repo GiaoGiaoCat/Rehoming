@@ -1,4 +1,8 @@
 class ApplicationSerializer < ActiveModel::Serializer
+  delegate :to_param, to: :object
+
+  alias id to_param
+
   def attributes(*)
     hash = super
     hash.each do |key, value|
@@ -6,10 +10,4 @@ class ApplicationSerializer < ActiveModel::Serializer
     end
     hash
   end
-
-  # def id
-  #   # object.to_param
-  #   object.id
-  # end
-  delegate :id, to: :object
 end
