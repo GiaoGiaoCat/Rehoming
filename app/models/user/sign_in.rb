@@ -43,8 +43,7 @@ class User::SignIn < ActiveType::Object
 
   def ensure_auth_token_has_a_value
     return unless user
-    # payload = { user_id: user.to_param, exp: 30.days.from_now.to_i }
-    payload = { user_id: user.id, exp: 30.days.from_now.to_i }
+    payload = { user_id: user.to_param, exp: 30.days.from_now.to_i }
     self.auth_token = JsonWebToken.encode(payload)
   end
 
