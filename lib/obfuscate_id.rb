@@ -124,11 +124,11 @@ module ObfuscateId
   end
 
   module InstanceMethods
-    def to_obfuscated_param
+    def obfuscated_id
       ObfuscateId.hide(self.id, self.class.obfuscate_id_spin)
     end
 
-    def deobfuscate_id(obfuscated_id)
+    def deobfuscate(obfuscated_id)
       self.class.deobfuscate_id(obfuscated_id)
     end
   end
