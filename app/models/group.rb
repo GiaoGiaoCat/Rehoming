@@ -1,6 +1,9 @@
 class Group < ApplicationRecord
   obfuscate_id
 
+  has_many :group_enrollments, class_name: 'Groups::Enrollment', foreign_key: 'group_id'
+  has_many :users, through: :group_enrollments
+
   enum category: {
     wenyi:    10,
     keji:     20,

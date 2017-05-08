@@ -13,24 +13,25 @@
 ActiveRecord::Schema.define(version: 20170507145004) do
 
   create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.integer "post_id"
+    t.bigint "post_id"
     t.integer "category"
     t.text "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "attachments_index"
+    t.index ["post_id"], name: "index_attachments_on_post_id"
   end
 
-  create_table "group_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+  create_table "group_enrollments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.integer "group_id"
     t.integer "user_id"
+    t.string "nickname"
+    t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id", "user_id"], name: "group_users_index"
+    t.index ["group_id", "user_id"], name: "group_enrollments_index"
   end
 
   create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.string "number"
     t.string "title", null: false
     t.text "description"
     t.text "cover"
@@ -41,19 +42,23 @@ ActiveRecord::Schema.define(version: 20170507145004) do
   end
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.integer "group_id"
+    t.integer "user_id"
     t.text "content", limit: 16777215
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id", "user_id"], name: "posts_index"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.string "union_id", limit: 191, comment: "全局唯一ID"
+    t.string "unionid", limit: 191, comment: "全局唯一ID"
     t.string "nickname", limit: 191, comment: "昵称"
     t.text "headimgurl", comment: "头像URL"
     t.text "raw_info", comment: "微信用户原始信息"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["union_id"], name: "users_union_id_index"
+    t.index ["unionid"], name: "users_unionid_index"
   end
 
+  add_foreign_key "attachments", "posts"
 end
