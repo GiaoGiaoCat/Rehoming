@@ -8,7 +8,7 @@ module ScatterSwap
       @original_integer = original_integer
       @spin = spin
       zero_pad = original_integer.to_s.rjust(DIGITS_COUNT, '0')
-      @working_array = zero_pad.split("").collect {|d| d.to_i}
+      @working_array = zero_pad.split('').map(&:to_i)
     end
 
     # obfuscates an integer up to 10 digits in length
@@ -31,7 +31,7 @@ module ScatterSwap
 
     # We want a unique map for each place in the original number
     def swapper_map(index)
-      array = (0..DIGITS_COUNT-1).to_a
+      array = (0..DIGITS_COUNT - 1).to_a
       DIGITS_COUNT.times.collect.with_index do |i|
         array.rotate!(index + i ^ spin).pop
       end
@@ -57,7 +57,7 @@ module ScatterSwap
     # as a key to record how they were scattered
     def scatter
       sum_of_digits = @working_array.inject(:+).to_i
-      @working_array = DIGITS_COUNT.times.collect do
+      @working_array = Array.new(DIGITS_COUNT) do
         @working_array.rotate!(spin ^ sum_of_digits).pop
       end
     end
@@ -70,7 +70,7 @@ module ScatterSwap
       @working_array.tap do |unscatter|
         DIGITS_COUNT.times do
           unscatter.push scattered_array.pop
-          unscatter.rotate! (sum_of_digits ^ spin) * -1
+          unscatter.rotate!((sum_of_digits ^ spin) * -1)
         end
       end
     end
@@ -90,7 +90,6 @@ module ScatterSwap
   end
 end
 
-
 module ObfuscateId
   def obfuscate_id(options = {})
     extend ClassMethods
@@ -109,15 +108,15 @@ module ObfuscateId
 
   module ClassMethods
     def deobfuscate_id(obfuscated_id)
-      ObfuscateId.show(obfuscated_id, self.obfuscate_id_spin)
+      ObfuscateId.show(obfuscated_id, obfuscate_id_spin)
     end
 
     # Generate a default spin from the Model name
     # This makes it easy to drop obfuscate_id onto any model
     # and produce different obfuscated ids for different models
     def obfuscate_id_default_spin
-      alphabet = Array("a".."z")
-      number = name.split("").collect do |char|
+      alphabet = Array('a'..'z')
+      number = name.split('').map do |char|
         alphabet.index(char)
       end
 
@@ -127,7 +126,7 @@ module ObfuscateId
 
   module InstanceMethods
     def obfuscated_id
-      ObfuscateId.hide(self.id, self.class.obfuscate_id_spin)
+      ObfuscateId.hide(id, self.class.obfuscate_id_spin)
     end
 
     def deobfuscate(obfuscated_id)
