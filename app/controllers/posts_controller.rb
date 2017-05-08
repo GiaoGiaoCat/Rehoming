@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  # before_action :login_required
+  # before_action :authenticate_request!
 
   def create
     build_post

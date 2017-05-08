@@ -2,7 +2,8 @@ require 'test_helper'
 
 class JsonWebTokenTest < ActiveSupport::TestCase
   def setup
-    @payload = { user_id: 10 }
+    @victor = users(:victor)
+    @payload = { user_id: @victor.id }
   end
 
   test '验证可以签发 token 并解码' do

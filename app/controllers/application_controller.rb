@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  include AuthenticateRequest
+
   private
 
   def get_resource_status(obj, *attrs)
