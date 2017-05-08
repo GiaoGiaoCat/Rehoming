@@ -12,10 +12,10 @@ class PostsController < ApplicationController
 
   def build_post
     @post = Post.new
-    @post.attributes = post_params
+    @post.attributes = post_params.merge(user_id: current_user.id)
   end
 
   def post_params
-    params.require(:data).permit(attributes: [:content, attachments_attributes: %i(category url)])
+    params.require(:data).permit(attributes: [:group_id, :content, attachments_attributes: %i(category url)])
   end
 end
