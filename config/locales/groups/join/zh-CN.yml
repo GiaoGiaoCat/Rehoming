@@ -1,0 +1,8 @@
+zh-CN:
+  activerecord:
+    errors:
+      models:
+        groups/join:
+          attributes:
+            base:
+              cannot_join_twice: '已经加入，无需重复加入'

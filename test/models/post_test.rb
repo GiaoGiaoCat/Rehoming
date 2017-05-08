@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class PostTest < ActiveSupport::TestCase
-  # validates :content, presence: true, length: { in: 1..10_000 }
-  # validate :images_limitation, :video_limitation
   test '验证内容' do
     p = Post.new content: ''
     assert_not p.valid?
