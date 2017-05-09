@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   def create
     build_post
     if @post.save
-      render json: @post, status: :created, include: [:attachments]
+      render json: @post, status: :created, serializer: PostSerializer
     else
       render json: @post.errors.messages, status: :bad_request
     end
