@@ -1,6 +1,4 @@
 class PostsController < ApplicationController
-  # before_action :login_required
-
   def create
     build_post
     if @post.save
