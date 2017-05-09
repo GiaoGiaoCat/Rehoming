@@ -1,5 +1,5 @@
 class Groups::JoinsController < ApplicationController
-  # before_action :authenticate_request!
+  before_action :authenticate_request!
 
   def create
     build_group_join
@@ -14,12 +14,10 @@ class Groups::JoinsController < ApplicationController
 
   def build_group_join
     @group_join = Groups::Join.new
-    # @group_join.attributes = group_join_params.merge(user_id: current_user.id)
-    @group_join.attributes = group_join_params
+    @group_join.attributes = group_join_params.merge(user_id: current_user.id)
   end
 
   def group_join_params
-    # params.permit(:group_id)
-    params.permit(:group_id, :user_id)
+    params.permit(:group_id)
   end
 end
