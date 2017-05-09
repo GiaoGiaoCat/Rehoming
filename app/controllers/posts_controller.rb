@@ -1,6 +1,4 @@
 class PostsController < ApplicationController
-  # before_action :authenticate_request!
-
   def create
     build_post
     if @post.save
