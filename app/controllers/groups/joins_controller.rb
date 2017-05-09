@@ -1,6 +1,4 @@
 class Groups::JoinsController < ApplicationController
-  before_action :authenticate_request!
-
   def create
     build_group_join
     if @group_join.save

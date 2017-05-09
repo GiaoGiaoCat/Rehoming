@@ -4,8 +4,8 @@ class Groups::JoinTest < ActiveSupport::TestCase
   test '验证必填项' do
     p = Groups::Join.new
     assert_not p.valid?
-    assert p.errors.key? :user_id
-    assert p.errors.key? :group_id
+    assert p.errors.key? :user
+    assert p.errors.key? :group
   end
 
   test '验证不能重复加入' do
