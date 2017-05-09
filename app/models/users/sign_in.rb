@@ -1,4 +1,4 @@
-class User::SignIn < ActiveType::Object
+class Users::SignIn < ActiveType::Object
   mattr_writer :wechat_client do
     EasyWechat::Client.new(ENV['wechat_app_id'], ENV['wechat_app_secret'])
   end
@@ -37,7 +37,7 @@ class User::SignIn < ActiveType::Object
 
   def ensure_user_id_has_a_value
     return unless userinfo
-    user = User::Generator.find_or_create_user_by(raw_info: userinfo)
+    user = Users::Generator.find_or_create_user_by(raw_info: userinfo)
     self.user_id = user.id
   end
 

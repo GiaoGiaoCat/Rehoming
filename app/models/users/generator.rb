@@ -1,4 +1,4 @@
-class User::Generator < ActiveType::Record[User]
+class Users::Generator < ActiveType::Record[User]
   validates :raw_info, presence: true
 
   def self.find_or_create_user_by(attributes)
