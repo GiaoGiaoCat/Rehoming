@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resource :join, only: [:create]
       resource :quit, only: [:create]
       resources :members, only: [:index]
+      resource :rename, only: [:create]
     end
   end
 end

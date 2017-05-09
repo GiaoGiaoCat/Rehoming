@@ -1,0 +1,8 @@
+zh-CN:
+  activerecord:
+    errors:
+      models:
+        groups/rename:
+          attributes:
+            base:
+              must_join_first: '需先加入圈子，才能更改昵称'
