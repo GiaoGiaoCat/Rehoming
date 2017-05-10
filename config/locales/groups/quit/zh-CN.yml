@@ -1,0 +1,8 @@
+ zh-CN:
+   activerecord:
+     errors:
+       models:
+         groups/quit:
+           attributes:
+             base:
+               must_join_first: '不能从未加入的圈子中退出'

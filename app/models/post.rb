@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  belongs_to :group
+  belongs_to :user
   has_many :attachments
 
   validates :content, presence: true, length: { in: 1..10_000 }

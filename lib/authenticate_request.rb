@@ -19,7 +19,7 @@ module AuthenticateRequest
 
   # Returns 401 response. To handle malformed / invalid requests.
   def invalid_authentication
-    render json: { error: 'Not Authenticate' }, status: :unauthorized
+    render json: { error: 'Not Authenticated' }, status: :unauthorized
   end
 
   private
