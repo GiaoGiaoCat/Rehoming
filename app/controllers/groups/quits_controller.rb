@@ -1,23 +1,14 @@
 class Groups::QuitsController < ApplicationController
-  before_action :authenticate_request!
-
-  def create
-    build_group_quit
-    if @group_quit.save
-      render json: @group_quit
-    else
-      render json: @group_quit.errors.full_messages, status: :bad_request
-    end
-  end
+  include RestfulResources
+  restful_resources resource_name: :group_quit
 
   private
 
-  def build_group_quit
-    @group_quit = Groups::Quit.new
-    @group_quit.attributes = group_quit_params.merge(user_id: current_user.id)
+  def resource_scope
+    Groups::Quit
   end
 
-  def group_quit_params
-    params.permit(:group_id)
+  def resource_params
+    params.permit(:group_id).merge(user_id: current_user.id)
   end
 end

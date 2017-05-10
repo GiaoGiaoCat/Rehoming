@@ -1,6 +1,4 @@
 class Groups::RenamesController < ApplicationController
-  before_action :authenticate_request!
-
   def create
     build_rename
     if @rename.save
