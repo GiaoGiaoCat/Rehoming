@@ -50,7 +50,10 @@ GEM
     byebug (9.0.6)
     case_transform (0.2)
       activesupport
+    codeclimate-test-reporter (1.0.8)
+      simplecov (<= 0.13)
     concurrent-ruby (1.0.5)
+    docile (1.1.5)
     erubi (1.6.0)
     ffi (1.9.18)
     figaro (1.1.1)
@@ -58,6 +61,7 @@ GEM
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     i18n (0.8.1)
+    json (2.1.0)
     jsonapi-renderer (0.1.2)
     jwt (1.5.6)
     listen (3.1.5)
@@ -110,6 +114,11 @@ GEM
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
     ruby_dep (1.5.0)
+    simplecov (0.13.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     spring (2.0.1)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -138,12 +147,14 @@ DEPENDENCIES
   active_model_serializers
   active_type (~> 0.7.0)
   byebug
+  codeclimate-test-reporter (~> 1.0.0)
   figaro
   jwt
   listen (>= 3.0.5, < 3.2)
   mysql2
   puma (~> 3.7)
   rails (~> 5.1.0)
+  simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
