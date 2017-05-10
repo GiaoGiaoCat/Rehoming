@@ -12,3 +12,10 @@
 * How to run the test suite
 * Services (job queues, cache servers, search engines, etc.)
 * Deployment instructions
+
+## 测试
+
+```
+bin/rails db:migrate RAILS_ENV=test
+rake test
+```
