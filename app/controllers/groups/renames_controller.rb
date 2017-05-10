@@ -2,7 +2,7 @@ class Groups::RenamesController < ApplicationController
   def create
     build_rename
     if @rename.save
-      render json: @rename
+      head :created
     else
       render json: @rename.errors.full_messages, status: :bad_request
     end

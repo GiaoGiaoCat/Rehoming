@@ -1,4 +1,4 @@
-class GroupsEnrollments < ActiveRecord::Migration[5.1]
+class CreateGroupsEnrollments < ActiveRecord::Migration[5.1]
   def change
     create_table :group_enrollments do |t|
       t.references  :group
