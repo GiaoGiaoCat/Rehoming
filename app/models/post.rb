@@ -2,6 +2,7 @@ class Post < ApplicationRecord
   belongs_to :group
   belongs_to :user
   has_many :attachments
+  has_many :comments, as: :commentable
 
   validates :content, presence: true, length: { in: 1..10_000 }
   validate :images_limitation, :video_limitation

@@ -3,7 +3,13 @@ Rails.application.routes.draw do
     scope module: 'users' do
       resources :sessions, only: :create
     end
-    resources :posts, only: [:create]
+    resources :posts, only: [:show, :create] do
+      resource :comment, only: [:create]
+    end
+
+    resources :comments, only: [] do
+      resource :comment, only: [:create]
+    end
 
     resources :groups, only: [] do
       scope module: :groups do
