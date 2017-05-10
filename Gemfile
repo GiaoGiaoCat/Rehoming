@@ -35,7 +35,7 @@ gem 'active_type', '~> 0.7.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'byebug'
   gem 'sqlite3'
 end
 
