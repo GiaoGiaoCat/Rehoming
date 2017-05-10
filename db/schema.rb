@@ -12,18 +12,18 @@
 
 ActiveRecord::Schema.define(version: 20170507145004) do
 
-  create_table "attachments", force: :cascade do |t|
+  create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.integer "post_id"
     t.integer "category"
     t.text "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_attachments_on_post_id"
+    t.index ["post_id"], name: "attachments_index"
   end
 
-  create_table "group_enrollments", force: :cascade do |t|
-    t.integer "group_id"
-    t.integer "user_id"
+  create_table "group_enrollments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.bigint "group_id"
+    t.bigint "user_id"
     t.string "nickname"
     t.integer "role"
     t.datetime "created_at", null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20170507145004) do
     t.index ["user_id"], name: "index_group_enrollments_on_user_id"
   end
 
-  create_table "groups", force: :cascade do |t|
+  create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "title", null: false
     t.text "description"
     t.text "cover"
@@ -43,23 +43,20 @@ ActiveRecord::Schema.define(version: 20170507145004) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.integer "group_id"
-    t.integer "user_id"
-    t.text "content", limit: 65536
+  create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.text "content", limit: 16777215
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id", "user_id"], name: "posts_index"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "unionid", limit: 191
-    t.string "nickname", limit: 191
-    t.text "headimgurl"
-    t.text "raw_info"
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string "union_id", limit: 191, comment: "全局唯一ID"
+    t.string "nickname", limit: 191, comment: "昵称"
+    t.text "headimgurl", comment: "头像URL"
+    t.text "raw_info", comment: "微信用户原始信息"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["unionid"], name: "users_unionid_index"
+    t.index ["union_id"], name: "users_union_id_index"
   end
 
 end

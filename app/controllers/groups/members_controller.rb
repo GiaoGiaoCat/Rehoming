@@ -2,7 +2,7 @@ class Groups::MembersController < ApplicationController
   def index
     load_group
     load_members
-    render json: @members
+    render json: @members, each_serializer: MemberSerializer
   end
 
   private
