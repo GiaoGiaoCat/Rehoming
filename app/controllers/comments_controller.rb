@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  skip_before_action :authenticate_request!
+  before_action :authenticate_request!
   def create
     build_comment
     if @comment.save
@@ -13,8 +13,7 @@ class CommentsController < ApplicationController
 
   def build_comment
     @comment = Comments::Form.new
-    # @comment.attributes = comment_params.merge(user: current_user)
-    @comment.attributes = comment_params.merge(user: User.first)
+    @comment.attributes = comment_params.merge(user: current_user)
   end
 
   def comment_params

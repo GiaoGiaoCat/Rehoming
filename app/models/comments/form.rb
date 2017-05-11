@@ -13,7 +13,7 @@ class Comments::Form < ActiveType::Record[Comment]
   end
 
   def commentable_existence
-    errors.add :base, :commentable_blank if post.blank? && comment.blank?
+    errors.add :commentable, :blank if post.blank? && comment.blank?
   end
 
   def post
