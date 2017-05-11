@@ -1,6 +1,4 @@
 class PostsController < ApplicationController
-  skip_before_action :authenticate_request!
-
   def show
     load_post
     render json: @post, include: %i(commments), serializer: PostSerializer

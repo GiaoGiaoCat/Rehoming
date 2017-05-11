@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class CommentsControllerTest < ActionController::TestCase
-  setup do
-    @controller.instance_variable_set :@current_user, users(:victor)
-  end
-
   test '可以对 post 进行回复' do
     post :create, params: {
       post_id: posts(:one).id,
