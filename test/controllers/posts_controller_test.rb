@@ -15,6 +15,27 @@ class PostsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test '带标签的数据需正确持久化' do
+    post :create, params: {
+      data: {
+        type: 'posts',
+        attributes: { group_id: @group.id, content: '#我是标签# 合法数据' }
+      }
+    }
+    assert_response :success
+  end
+
+  test '带 emoji 的数据需正确持久化' do
+    post :create, params: {
+      data: {
+        type: 'posts',
+        attributes: { group_id: @group.id, content: '👍合法数据' }
+      }
+    }
+    assert_response :success
+  end
+
+
   test '带附件的合法数据需正确持久化' do
     post :create, params: {
       data: {
