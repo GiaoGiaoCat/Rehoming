@@ -1,0 +1,4 @@
+one:
+  group:    groups(:one)
+  user:     users(:victor)
+  content:  'one content goes here'

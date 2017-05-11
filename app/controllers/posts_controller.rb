@@ -1,4 +1,9 @@
 class PostsController < ApplicationController
+  def show
+    load_post
+    render json: @post, include: %i(commments), serializer: PostSerializer
+  end
+
   def create
     build_post
     if @post.save
@@ -9,6 +14,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def load_post
+    @post = Post.find(params[:id])
+  end
 
   def build_post
     @post = Post.new

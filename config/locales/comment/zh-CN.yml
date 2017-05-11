@@ -1,0 +1,12 @@
+zh-CN:
+  activerecord:
+    errors:
+      models:
+        comment:
+          attributes:
+            user:
+              required: '作者不能为空'
+            content:
+              blank: '内容不能为空'
+            commentable:
+              blank: '被评论对象不能为空'

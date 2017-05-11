@@ -1,0 +1,4 @@
+one:
+  user: users(:one)
+  commentable: posts(:one)
+  content: 'comment one content goes here'
