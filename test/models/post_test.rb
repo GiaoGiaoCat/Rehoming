@@ -30,7 +30,11 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test '验证视频附件' do
-    p = Post.new content: 'content goes here', user_id: users(:victor).id, group_id: groups(:one).id
+    p = Post.new(
+      content:  'content goes here',
+      user_id:  users(:victor).id,
+      group_id: groups(:one).id
+    )
 
     1.times do |i|
       p.attachments << Attachment.new(category: 'video', url: "#{i}*100")
@@ -41,5 +45,27 @@ class PostTest < ActiveSupport::TestCase
     p.attachments << Attachment.new(category: 'video', url: 'url goes here')
     assert_not p.valid?
     assert p.errors.key?(:base)
+  end
+
+  test '带标签的数据需正确持久化' do
+    assert_nothing_raised do
+      p = Post.new(
+        content:  '#我是标签# content goes here',
+        user_id:  users(:victor).id,
+        group_id: groups(:one).id
+      )
+      p.save!
+    end
+  end
+
+  test '带 emoji 的数据需正确持久化' do
+    assert_nothing_raised do
+      p = Post.new(
+        content:  '👍 content goes here',
+        user_id:  users(:victor).id,
+        group_id: groups(:one).id
+      )
+      p.save!
+    end
   end
 end
