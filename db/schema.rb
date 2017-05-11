@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510141408) do
+ActiveRecord::Schema.define(version: 20170511065954) do
 
   create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "post_id"
@@ -19,18 +19,6 @@ ActiveRecord::Schema.define(version: 20170510141408) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_attachments_on_post_id"
-  end
-
-  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.text "content"
-    t.text "image_url"
-    t.integer "commentable_id"
-    t.string "commentable_type"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["commentable_id", "commentable_type"], name: "comments_commentable_index"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "group_enrollments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -55,25 +43,23 @@ ActiveRecord::Schema.define(version: 20170510141408) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "post_replies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "user_id"
-    t.bigint "post_id"
-    t.text "content"
-    t.text "image_url"
+    t.string "likeable_type"
+    t.bigint "likeable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_post_replies_on_post_id"
-    t.index ["user_id"], name: "index_post_replies_on_user_id"
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.bigint "group_id"
-    t.bigint "user_id"
+    t.integer "group_id"
+    t.integer "user_id"
     t.text "content", limit: 16777215
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_posts_on_group_id"
-    t.index ["user_id"], name: "index_posts_on_user_id"
+    t.index ["group_id", "user_id"], name: "posts_index"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
