@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_request!
+
   def create
     build_comment
     if @comment.save
