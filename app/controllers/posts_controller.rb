@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   def show
     load_post
-    render json: @post, include: %i[commments], serializer: PostSerializer
+    render json: @post, include: %i(commments), serializer: PostSerializer
   end
 
   def create
