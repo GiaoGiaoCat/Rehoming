@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  include ActsAsLikeable::Likeable
+
   belongs_to :group
   belongs_to :user
   has_many :attachments
