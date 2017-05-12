@@ -1,4 +1,4 @@
-class Posts::DislikesController < ApplicationController
+class Comments::DislikesController < ApplicationController
   include LikeableResources
 
   private
