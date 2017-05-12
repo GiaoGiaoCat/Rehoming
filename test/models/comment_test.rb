@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class CommentTest < ActiveSupport::TestCase
+  def setup
+    @victor = users(:victor)
+    @post = posts(:one)
+    @comment = comments(:one)
+  end
+
   test '验证必填项' do
     f = Comment.new
     assert_not f.valid?
@@ -10,13 +16,11 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test '可以对 post 进行回复' do
-    post_one = posts(:one)
-    user_one = users(:victor)
-    assert_difference 'post_one.comments.count', 1 do
+    assert_difference '@post.comments.count' do
       f = Comment.new(
-        commentable: post_one,
-        user:    user_one,
-        content: 'comment goes here'
+        commentable: @post,
+        user:        @victor,
+        content:     'comment goes here'
       )
       assert f.valid?
       assert f.save
@@ -24,12 +28,11 @@ class CommentTest < ActiveSupport::TestCase
   end
 
   test '可以对 comment 进行回复' do
-    comment_one = comments(:one)
-    assert_difference 'comment_one.comments.count', 1 do
+    assert_difference '@comment.comments.count' do
       f = Comment.new(
-        commentable: comment_one,
-        user_id:    users(:victor).id,
-        content:    'content'
+        commentable: @comment,
+        user:        @victor,
+        content:     'content'
       )
       assert f.valid?
       assert f.save
