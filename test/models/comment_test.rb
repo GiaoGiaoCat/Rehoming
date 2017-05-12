@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class Comments::FormTest < ActiveSupport::TestCase
+class CommentTest < ActiveSupport::TestCase
   test '验证必填项' do
-    f = Comments::Form.new
+    f = Comment.new
     assert_not f.valid?
     assert f.errors.key? :user
     assert f.errors.key? :content
@@ -13,8 +13,8 @@ class Comments::FormTest < ActiveSupport::TestCase
     post_one = posts(:one)
     user_one = users(:victor)
     assert_difference 'post_one.comments.count', 1 do
-      f = Comments::Form.new(
-        post_id: post_one.id,
+      f = Comment.new(
+        commentable: post_one,
         user:    user_one,
         content: 'comment goes here'
       )
@@ -26,8 +26,8 @@ class Comments::FormTest < ActiveSupport::TestCase
   test '可以对 comment 进行回复' do
     comment_one = comments(:one)
     assert_difference 'comment_one.comments.count', 1 do
-      f = Comments::Form.new(
-        comment_id: comment_one.id,
+      f = Comment.new(
+        commentable: comment_one,
         user_id:    users(:victor).id,
         content:    'content'
       )
