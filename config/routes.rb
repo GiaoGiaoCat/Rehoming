@@ -1,14 +1,26 @@
 Rails.application.routes.draw do
   concern :routes do
-    scope module: 'users' do
-      resources :sessions, only: :create
-    end
-    resources :posts, only: [:show, :create] do
+    concern :commentable do
       resource :comment, only: [:create]
     end
 
+    concern :likeable do |options|
+      resource :likes, only: [:create], **options
+      resource :dislikes, only: [:create], **options
+    end
+
+    scope module: 'users' do
+      resources :sessions, only: :create
+    end
+
+    resources :posts, only: [:show, :create] do
+      concerns :commentable
+      concerns :likeable, module: :posts
+    end
+
     resources :comments, only: [] do
-      resource :comment, only: [:create]
+      concerns :commentable
+      concerns :likeable, module: :comments
     end
 
     resources :groups, only: [] do

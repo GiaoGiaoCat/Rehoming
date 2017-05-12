@@ -1,3 +1,4 @@
+# https://github.com/bbatsov/rubocop/blob/master/config/default.yml
 AllCops:
   Include:
     - 'Rakefile'
@@ -41,6 +42,10 @@ Style/AlignHash:
 
 Style/AsciiComments:
   Enabled: false
+
+Style/PercentLiteralDelimiters:
+  default: ()
+  '%i': ()
 
 # Mixing the styles looks just silly.
 Style/HashSyntax:
