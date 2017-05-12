@@ -7,7 +7,7 @@ module ActsAsLikeable
     end
 
     def liked?(obj)
-      find_likes(obj).empty?
+      find_likes(obj).any?
     end
 
     def like(obj)
