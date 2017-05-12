@@ -9,7 +9,7 @@ module LikeableResources
   end
 
   def create
-    load_likeable
+    load_parent
     build_operation_obj
     execute_operation
     head :created
@@ -17,18 +17,13 @@ module LikeableResources
 
   private
 
-  def load_likeable
-    resource, id = request.path.split('/')[1, 2]
-    @likeable = resource.singularize.classify.constantize.find(id)
-  end
-
   def build_operation_obj
     @operation_obj =
       case self.class.action
       when :like
-        current_user.likes.build(likeable: @likeable)
+        current_user.likes.build(likeable: @parent)
       when :dislike
-        current_user.likes.where(likeable: @likeable)
+        current_user.likes.where(likeable: @parent)
       end
   end
 

@@ -2,7 +2,7 @@ module CommentableResources
   extend ActiveSupport::Concern
 
   def create
-    load_commentable
+    load_parent
     build_comment
     if @comment.save
       head :created
@@ -13,13 +13,8 @@ module CommentableResources
 
   private
 
-  def load_commentable
-    resource, id = request.path.split('/')[1, 2]
-    @commentable = resource.singularize.classify.constantize.find(id)
-  end
-
   def build_comment
-    @comment = Comment.new(commentable: @commentable, user: current_user)
+    @comment = Comment.new(commentable: @parent, user: current_user)
     @comment.attributes = comment_params
   end
 
