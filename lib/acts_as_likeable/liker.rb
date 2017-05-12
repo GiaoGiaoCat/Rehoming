@@ -12,17 +12,17 @@ module ActsAsLikeable
 
     def like(obj)
       return unless obj.respond_to? :likeable?
-      likes.create(likeable_id: obj.id, likeable_type: obj.class.name)
+      find_likes(obj).create
     end
 
-    def unlike(obj)
+    def dislike(obj)
       return unless obj.respond_to? :likeable?
       find_likes(obj).destroy_all
     end
 
     def find_likes(likeable)
       # likes.where(extra_conditions)
-      likes.where(likeable_id: likeable.id, likeable_type: likeable.class.name)
+      likes.where(likeable: likeable)
     end
   end
 end
