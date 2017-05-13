@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   concern :routes do
-    concern :commentable do
-      resource :comment, only: [:create]
+    concern :commentable do |options|
+      resource :comments, only: [:create], **options
     end
 
     concern :likeable do |options|
@@ -14,13 +14,13 @@ Rails.application.routes.draw do
     end
 
     resources :posts, only: [:show, :create] do
-      concerns :commentable
       concerns :likeable, module: :posts
+      concerns :commentable, module: :posts
     end
 
     resources :comments, only: [] do
-      concerns :commentable
       concerns :likeable, module: :comments
+      concerns :commentable, module: :comments
     end
 
     resources :groups, only: [] do
@@ -33,11 +33,13 @@ Rails.application.routes.draw do
     end
   end
 
-  constraints subdomain: 'api' do
-    concerns :routes
+  if Rails.env.production?
+    constraints subdomain: 'api' do
+      concerns :routes
+    end
   end
 
-  if Rails.env.development?
+  if Rails.env.development? || Rails.env.test?
     concerns :routes # for development
   end
 end

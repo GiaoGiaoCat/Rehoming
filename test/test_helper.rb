@@ -1,13 +1,19 @@
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'minitest/autorun'
-require 'minitest/reporters'
+
+# Requires supporting ruby files with custom matchers and macros, etc,
+# in support/ and its subdirectories.
 require 'support/custom_header_setup'
+
+# Code coverage
 require 'simplecov'
 SimpleCov.start do
   add_filter '/vendor/' # Ignores any file containing "/vendor/" in its path.
-  # add_filter "/lib/myfile.rb" # Ignores a specific file.
 end
+
+# Improved Minitest output (color and progress bar)
+require 'minitest/reporters'
 Minitest::Reporters.use!
 
 class ActiveSupport::TestCase

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include AuthenticateRequest
+  include SupportMethod
 
   private
 
