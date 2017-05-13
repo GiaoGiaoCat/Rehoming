@@ -12,18 +12,31 @@
 
 ActiveRecord::Schema.define(version: 20170511065954) do
 
-  create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.bigint "post_id"
+  create_table "attachments", force: :cascade do |t|
+    t.string "attachable_type"
+    t.integer "attachable_id"
     t.integer "category"
     t.text "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_attachments_on_post_id"
+    t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id"
   end
 
-  create_table "group_enrollments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.bigint "group_id"
-    t.bigint "user_id"
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.text "image_url"
+    t.string "commentable_type"
+    t.integer "commentable_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "group_enrollments", force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "user_id"
     t.string "nickname"
     t.integer "role"
     t.datetime "created_at", null: false
@@ -33,7 +46,7 @@ ActiveRecord::Schema.define(version: 20170511065954) do
     t.index ["user_id"], name: "index_group_enrollments_on_user_id"
   end
 
-  create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+  create_table "groups", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
     t.text "cover"
@@ -43,34 +56,34 @@ ActiveRecord::Schema.define(version: 20170511065954) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.bigint "user_id"
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id"
     t.string "likeable_type"
-    t.bigint "likeable_id"
+    t.integer "likeable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+  create_table "posts", force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
-    t.text "content", limit: 16777215
+    t.text "content", limit: 65536
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id", "user_id"], name: "posts_index"
+    t.index ["group_id"], name: "index_posts_on_group_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.string "unionid", limit: 191, comment: "全局唯一ID"
-    t.string "nickname", limit: 191, comment: "昵称"
-    t.text "headimgurl", comment: "头像URL"
-    t.text "raw_info", comment: "微信用户原始信息"
+  create_table "users", force: :cascade do |t|
+    t.string "unionid", limit: 191
+    t.string "nickname", limit: 191
+    t.text "headimgurl"
+    t.text "raw_info"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unionid"], name: "users_unionid_index"
   end
 
-  add_foreign_key "attachments", "posts"
 end

@@ -3,7 +3,7 @@ class Post < ApplicationRecord
 
   belongs_to :group
   belongs_to :user
-  has_many :attachments
+  has_many :attachments, as: :attachable
   has_many :comments, as: :commentable
 
   validates :content, presence: true, length: { in: 1..10_000 }
