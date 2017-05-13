@@ -2,6 +2,8 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'minitest/autorun'
 
+# Requires supporting ruby files with custom matchers and macros, etc,
+# in support/ and its subdirectories.
 require 'support/custom_header_setup'
 
 # Code coverage
