@@ -1,9 +1,9 @@
-module ActsAsFavable
-  module Favable
+module ActsAsFavorable
+  module Favorable
     extend ActiveSupport::Concern
 
     included do
-      has_many :favorites, as: :favable, dependent: :destroy
+      has_many :favorites, as: :favorable, dependent: :destroy
     end
 
     def favorable?

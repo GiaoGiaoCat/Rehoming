@@ -1,4 +1,4 @@
-module ActsAsFavable
+module ActsAsFavorable
   module Favoriter
     extend ActiveSupport::Concern
 
@@ -22,8 +22,8 @@ module ActsAsFavable
       find_favorites(obj).delete_all
     end
 
-    def find_favorites(favable)
-      favorites.where(favable: favable)
+    def find_favorites(favorable)
+      favorites.where(favorable: favorable)
     end
   end
 end
