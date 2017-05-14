@@ -17,7 +17,7 @@ module ActsAsLikeable
 
     def dislike(obj)
       return unless obj.respond_to? :likeable?
-      find_likes(obj).destroy_all
+      find_likes(obj).delete_all
     end
 
     def find_likes(likeable)

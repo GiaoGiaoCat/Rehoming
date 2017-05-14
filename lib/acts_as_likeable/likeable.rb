@@ -9,5 +9,10 @@ module ActsAsLikeable
     def likeable?
       true
     end
+
+    # Get the times this item was favored
+    def times_liked
+      likes.count
+    end
   end
 end
