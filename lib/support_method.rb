@@ -15,16 +15,6 @@ module SupportMethod
     head :created
   end
 
-  def build_operation_obj
-    @operation_obj =
-      case self.class.action
-      when verb_name
-        current_user.send(self.class.resource_name).build(likeable: @parent)
-      when unverb_name
-        current_user.send(self.class.resource_name).where(likeable: @parent)
-      end
-  end
-
   def execute_operation
     case self.class.action.to_sym
     when verb_name

@@ -26,7 +26,7 @@ class ActsAsFavableTest < ActiveSupport::TestCase
       @victor.favor @post_two
     end
     assert_difference '@victor.favorites.count', -1 do
-      @victor.remove_favor @post_one
+      @victor.unfavor @post_one
     end
   end
 

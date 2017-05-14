@@ -3,9 +3,8 @@ module LikeableResources
 
   module ClassMethods
     def likeable_resources(options = {})
-      cattr_accessor :action, :resource_name
+      cattr_accessor :action
       self.action = options[:action].to_sym || :like
-      self.resource_name = 'likes'
     end
   end
 
@@ -21,5 +20,15 @@ module LikeableResources
 
   def unverb_name
     :dislike
+  end
+
+  def build_operation_obj
+    @operation_obj =
+      case self.class.action
+      when verb_name
+        current_user.likes.build(likeable: @parent)
+      when unverb_name
+        current_user.likes.where(likeable: @parent)
+      end
   end
 end

@@ -3,9 +3,8 @@ module FavorableResources
 
   module ClassMethods
     def favorable_resources(options = {})
-      cattr_accessor :action, :resource_name
-      self.action = options[:action].to_sym || :fave
-      self.resource_name = 'favorites'
+      cattr_accessor :action
+      self.action = options[:action].to_sym || :favor
     end
   end
 
@@ -16,10 +15,20 @@ module FavorableResources
   private
 
   def verb_name
-    :fave
+    :favor
   end
 
   def unverb_name
-    :unfave
+    :unfavor
+  end
+
+  def build_operation_obj
+    @operation_obj =
+      case self.class.action
+      when verb_name
+        current_user.favorites.build(favorable: @parent)
+      when unverb_name
+        current_user.favorites.where(favorable: @parent)
+      end
   end
 end

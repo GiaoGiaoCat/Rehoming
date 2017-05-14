@@ -10,14 +10,12 @@ module ActsAsFavorable
       find_favorites(obj).any?
     end
 
-    # Create a new favorite using this favoriter
     def favor(obj)
       return unless obj.respond_to? :favorable?
       find_favorites(obj).create
     end
 
-    # Removes a favorite using this favoriter
-    def remove_favor(obj)
+    def unfavor(obj)
       return unless obj.respond_to? :favorable?
       find_favorites(obj).delete_all
     end
