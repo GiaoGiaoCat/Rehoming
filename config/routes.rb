@@ -9,6 +9,11 @@ Rails.application.routes.draw do
       resource :dislikes, only: [:create], **options
     end
 
+    concern :favorable do |options|
+      resource :favorites, only: [:create], **options
+      resource :unfavorites, only: [:create], **options
+    end
+
     scope module: 'users' do
       resources :sessions, only: :create
     end
@@ -16,6 +21,7 @@ Rails.application.routes.draw do
     resources :posts, only: [:show, :create] do
       concerns :likeable, module: :posts
       concerns :commentable, module: :posts
+      concerns :favorable, module: :posts
     end
 
     resources :comments, only: [] do

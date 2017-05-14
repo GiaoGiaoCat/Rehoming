@@ -1,11 +1,11 @@
-module LikeableResources
+module FavorableResources
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def likeable_resources(options = {})
+    def favorable_resources(options = {})
       cattr_accessor :action, :resource_name
-      self.action = options[:action].to_sym || :like
-      self.resource_name = 'likes'
+      self.action = options[:action].to_sym || :fave
+      self.resource_name = 'favorites'
     end
   end
 
@@ -16,10 +16,10 @@ module LikeableResources
   private
 
   def verb_name
-    :like
+    :fave
   end
 
   def unverb_name
-    :dislike
+    :unfave
   end
 end
