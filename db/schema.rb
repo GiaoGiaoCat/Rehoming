@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511065954) do
+ActiveRecord::Schema.define(version: 20170514010031) do
 
   create_table "attachments", force: :cascade do |t|
     t.string "attachable_type"
@@ -23,15 +23,24 @@ ActiveRecord::Schema.define(version: 20170511065954) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text "content"
-    t.text "image_url"
     t.string "commentable_type"
     t.integer "commentable_id"
     t.integer "user_id"
+    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "favorable_type"
+    t.integer "favorable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["favorable_type", "favorable_id"], name: "index_favorites_on_favorable_type_and_favorable_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "group_enrollments", force: :cascade do |t|
