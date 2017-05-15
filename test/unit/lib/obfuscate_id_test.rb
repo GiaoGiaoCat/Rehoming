@@ -8,7 +8,17 @@ class ObfuscateIdTest < ActiveSupport::TestCase
   end
 
   test '应该可以正常来回转换 ' do
-    assert_equal '31524066', User.first.obfuscated_id
-    assert_equal 1, User.deobfuscate_id('31524066').to_i
+    assert_equal '02196387', User.first.obfuscated_id
+    assert_equal 1, User.deobfuscate_id('02196387').to_i
+  end
+
+  test '测试 100 个连续数字' do
+    100.times do |i|
+      u = User.first
+      u.id = i + 1
+      assert_nothing_raised do
+        User.first.obfuscated_id
+      end
+    end
   end
 end
