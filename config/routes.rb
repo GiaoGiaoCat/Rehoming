@@ -18,6 +18,10 @@ Rails.application.routes.draw do
       resources :sessions, only: :create
     end
 
+    resources :users, only: [] do
+      resources :posts, only: :index, module: :users
+    end
+
     resources :posts, only: [:show, :create] do
       concerns :likeable, module: :posts
       concerns :commentable, module: :posts
