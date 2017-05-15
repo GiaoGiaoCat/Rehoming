@@ -10,7 +10,7 @@ module AuthenticateRequest
   protected
 
   def authenticate_request!
-    load_development_user and return if Rails.env.development?
+    return load_development_user if Rails.env.development?
     return render json: { errors: ['Not Authenticated'] }, status: :unauthorized unless user_id_in_token?
     load_current_user
     invalid_authentication unless @current_user
