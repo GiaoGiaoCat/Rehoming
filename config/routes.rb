@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     resources :groups, only: [] do
       scope module: :groups do
         %i(join quit rename).each { |r| resource r, only: [:create] }
-        resources :members, only: [:index]
+        %i(members posts).each { |r| resources r, only: [:index] }
       end
     end
   end

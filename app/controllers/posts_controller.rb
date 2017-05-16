@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def show
     load_post
-    render json: @post, include: [comments: [:attachments, :comments]], serializer: PostSerializer
+    render json: @post, include: [comments: [:attachments, :comments]]
   end
 
   def create

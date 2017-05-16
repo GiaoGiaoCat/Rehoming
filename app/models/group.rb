@@ -3,6 +3,7 @@ class Group < ApplicationRecord
 
   has_many :group_enrollments, class_name: 'Groups::Enrollment', foreign_key: 'group_id'
   has_many :users, through: :group_enrollments
+  has_many :posts
 
   enum category: {
     wenyi:    10,
