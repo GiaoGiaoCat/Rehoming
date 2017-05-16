@@ -1,17 +1,20 @@
 require 'test_helper'
 
-class Groups::RenamesControllerTest < ActionController::TestCase
-  def setup
+class Groups::RenamesControllerTest < ActionDispatch::IntegrationTest
+  setup do
     @victor = users(:victor)
-    @group_one = groups(:one)
-    @enrollment = Groups::Join.create(group_id: @group_one.id, user_id: @victor.id)
+    @group = groups(:one)
+    @enrollment = Groups::Join.create(group_id: @group.id, user_id: @victor.id)
   end
 
-  test '合法数据需正确持久化' do
-    Groups::Join.create(group_id: @group_one.id, user_id: @victor.id)
-    post :create, params: { group_id: @group_one.id, name: '我是新昵称' }
+  test 'should create rename' do
+    params_data = {
+      data: { attributes: { name: 'new nickname' } }
+    }
+    assert_changes -> { @victor.group_enrollments.find_by(group_id: @group.id).nickname } do
+      post group_rename_url(@group), params: params_data, headers: @headers
+    end
     assert_response :success
     assert_equal 201, @response.status
-    assert_equal '我是新昵称', @victor.group_enrollments.find_by(group: @group_one).nickname
   end
 end
