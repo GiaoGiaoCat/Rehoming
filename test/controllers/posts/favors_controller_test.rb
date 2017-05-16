@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Posts::FavoritesControllerTest < ActionController::TestCase
+class Posts::FavorsControllerTest < ActionController::TestCase
   def setup
     @victor = users(:victor)
     @post_one = posts(:one)
