@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       %i(posts favorites).each { |r| resources r, only: :index, module: :users }
     end
 
-    resources :posts, only: [:show, :create] do
+    resources :posts, only: [:show] do
       %i(likeable commentable).each { |r| concerns r, module: :posts }
       concerns :favorable, module: :posts
     end
@@ -32,7 +32,8 @@ Rails.application.routes.draw do
     resources :groups, only: [] do
       scope module: :groups do
         %i(join quit rename).each { |r| resource r, only: [:create] }
-        %i(members posts).each { |r| resources r, only: [:index] }
+        resources :members, only: [:index]
+        resources :posts, only: [:index, :create]
       end
     end
   end
