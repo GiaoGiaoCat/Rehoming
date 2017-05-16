@@ -5,13 +5,11 @@ Rails.application.routes.draw do
     end
 
     concern :likeable do |options|
-      resource :likes, only: [:create], **options
-      resource :dislikes, only: [:create], **options
+      %i(like dislike).each { |r| resource r, only: [:create], **options }
     end
 
     concern :favorable do |options|
-      resource :favorites, only: [:create], **options
-      resource :unfavorites, only: [:create], **options
+      %i(favor unfavor).each { |r| resource r, only: [:create], **options }
     end
 
     scope module: 'users' do
@@ -19,26 +17,22 @@ Rails.application.routes.draw do
     end
 
     resources :users, only: [] do
-      resources :posts, only: :index, module: :users
+      %i(posts favorites).each { |r| resources r, only: :index, module: :users }
     end
 
     resources :posts, only: [:show, :create] do
-      concerns :likeable, module: :posts
-      concerns :commentable, module: :posts
+      %i(likeable commentable).each { |r| concerns r, module: :posts }
       concerns :favorable, module: :posts
     end
 
     resources :comments, only: [] do
-      concerns :likeable, module: :comments
-      concerns :commentable, module: :comments
+      %i(likeable commentable).each { |r| concerns r, module: :comments }
     end
 
     resources :groups, only: [] do
       scope module: :groups do
-        resource :join, only: [:create]
-        resource :quit, only: [:create]
+        %i(join quit rename).each { |r| resource r, only: [:create] }
         resources :members, only: [:index]
-        resource :rename, only: [:create]
       end
     end
   end

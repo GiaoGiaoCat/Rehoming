@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Posts::UnfavoritesControllerTest < ActionController::TestCase
+class Posts::UnfavorsControllerTest < ActionController::TestCase
   def setup
     @victor = users(:victor)
     @post_one = posts(:one)
