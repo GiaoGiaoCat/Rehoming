@@ -2,7 +2,7 @@ class Groups::PostsController < ApplicationController
   def index
     load_group
     load_posts
-    render json: @posts, include: [:author, comments: %i(attachments comments)]
+    render json: @posts, include: [:author, comments: %i(author attachments comments)]
   end
 
   private

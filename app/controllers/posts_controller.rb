@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def show
     load_post
-    render json: @post, include: [:author, comments: %i(attachments comments)]
+    render json: @post, include: [:author, comments: %i(author attachments comments)]
   end
 
   def create
