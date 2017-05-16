@@ -7,5 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 victor = User.create(unionid: '11xzxvzcvasvas1', nickname: 'Victor', headimgurl: 'ba.jpg')
+yuki = User.create(unionid: 'u3YBkQDBVetKaVJknprv', nickname: 'Yuki', headimgurl: 'ba.jpg')
+roc = User.create(unionid: 'RwcP9YchpgxLDgzwAjmb', nickname: 'Roc', headimgurl: 'ba.jpg')
 group_a = Group.create(title: 'Free Group', category: 10)
 post = Post.create(user_id: victor.id, group_id: group_a.id, content: 'hahaha')
+Post.create(user_id: victor.id, group_id: group_a.id, content: 'today is fine')
+Post.create(user_id: yuki.id, group_id: group_a.id, content: 'cool man')
+
+victor.favor post

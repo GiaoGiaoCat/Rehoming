@@ -8,6 +8,7 @@ class User < ApplicationRecord
   serialize :raw_info, Hash
   # relationships .............................................................
   has_many :posts
+  has_many :favorite_posts, through: :favorites, source: :favorable, source_type: 'Post'
   has_many :group_enrollments, class_name: 'Groups::Enrollment', foreign_key: 'user_id'
   has_many :groups, through: :group_enrollments
   # validations ...............................................................

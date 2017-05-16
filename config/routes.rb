@@ -5,13 +5,11 @@ Rails.application.routes.draw do
     end
 
     concern :likeable do |options|
-      resource :like, only: [:create], **options
-      resource :dislike, only: [:create], **options
+      %i(like dislike).each { |r| resource r, only: [:create], **options }
     end
 
     concern :favorable do |options|
-      resource :favor, only: [:create], **options
-      resource :unfavor, only: [:create], **options
+      %i(favor unfavor).each { |r| resource r, only: [:create], **options }
     end
 
     scope module: 'users' do
@@ -33,10 +31,8 @@ Rails.application.routes.draw do
 
     resources :groups, only: [] do
       scope module: :groups do
-        resource :join, only: [:create]
-        resource :quit, only: [:create]
+        %i(join quit rename).each { |r| resource r, only: [:create] }
         resources :members, only: [:index]
-        resource :rename, only: [:create]
       end
     end
   end
