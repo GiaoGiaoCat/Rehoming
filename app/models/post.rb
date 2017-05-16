@@ -8,6 +8,7 @@ class Post < ApplicationRecord
   # relationships .............................................................
   belongs_to :group
   belongs_to :user
+  belongs_to :author, class_name: 'User', foreign_key: :user_id
   has_many :attachments, as: :attachable
   has_many :comments, as: :commentable
   # has_many :latest_comments, as: :commentable, -> { limit(5) }
