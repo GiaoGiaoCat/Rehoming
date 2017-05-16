@@ -1,5 +1,5 @@
 class Groups::PostsController < ApplicationController
-  before_action :load_group
+  serialization_scope :group
 
   def index
     load_posts
@@ -17,16 +17,16 @@ class Groups::PostsController < ApplicationController
 
   private
 
-  def load_group
+  def group
     @group = Group.find(params[:group_id])
   end
 
   def load_posts
-    @posts = @group.posts
+    @posts = group.posts
   end
 
   def build_post
-    @post = @group.posts.new
+    @post = group.posts.new
     @post.attributes = post_params.merge(user_id: current_user.id)
   end
 
