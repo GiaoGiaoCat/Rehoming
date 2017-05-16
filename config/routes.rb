@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   concern :routes do
     concern :commentable do |options|
-      resource :comments, only: [:create], **options
+      resources :comments, only: [:index, :create], **options
     end
 
     concern :likeable do |options|

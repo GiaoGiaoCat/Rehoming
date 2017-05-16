@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def show
     load_post
-    render json: @post, include: %i(commments), serializer: PostSerializer
+    render json: @post, include: [comments: [:attachments, :comments]], serializer: PostSerializer
   end
 
   def create
@@ -25,6 +25,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:data).permit(attributes: [:group_id, :content, attachments_attributes: %i(category url)])
+    attrs = [:group_id, :content, attachments_attributes: %i(category url)]
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: attrs)
   end
 end

@@ -1,8 +1,8 @@
 class CommentSerializer < ApplicationSerializer
   type 'comments'
-  attributes :content, :image_url
+  attributes :content
 
   belongs_to :user
-  belongs_to :commentable, polymorphic: true
-  has_many :comments, as: :commentable
+  has_many :comments
+  has_many :attachments
 end
