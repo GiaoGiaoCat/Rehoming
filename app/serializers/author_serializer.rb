@@ -1,8 +1,9 @@
 class AuthorSerializer < ApplicationSerializer
+  cache key: 'authors', only: :nickname
+
   type 'authors'
   attributes :id, :headimgurl
   attribute :nickname
-
 
   def nickname
     return nickname unless group

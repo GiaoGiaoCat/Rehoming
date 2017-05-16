@@ -24,6 +24,9 @@ gem 'puma', '~> 3.7'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+# High performance memcached client for Ruby
+gem 'dalli'
+
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers'
 # A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard
