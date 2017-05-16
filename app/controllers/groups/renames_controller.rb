@@ -1,5 +1,6 @@
 class Groups::RenamesController < ApplicationController
   def create
+    load_group
     build_rename
     if @rename.save
       head :created
@@ -10,8 +11,16 @@ class Groups::RenamesController < ApplicationController
 
   private
 
+  def load_group
+    @group = Group.find(params[:group_id])
+  end
+
   def build_rename
     @rename = Groups::Rename.new
-    @rename.attributes = params.permit(:group_id, :name).merge(user: current_user)
+    @rename.attributes = rename_params.merge(user: current_user, group: @group)
+  end
+
+  def rename_params
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: :name)
   end
 end

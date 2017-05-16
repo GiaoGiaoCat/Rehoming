@@ -1,7 +1,7 @@
 class Groups::Enrollment < ApplicationRecord
   self.table_name = 'group_enrollments'
 
-  belongs_to :user
+  belongs_to :user, touch: true
   belongs_to :group
 
   enum role: {

@@ -9,9 +9,27 @@
 victor = User.create(unionid: '11xzxvzcvasvas1', nickname: 'Victor', headimgurl: 'ba.jpg')
 yuki = User.create(unionid: 'u3YBkQDBVetKaVJknprv', nickname: 'Yuki', headimgurl: 'ba.jpg')
 roc = User.create(unionid: 'RwcP9YchpgxLDgzwAjmb', nickname: 'Roc', headimgurl: 'ba.jpg')
+
 group_a = Group.create(title: 'Free Group', category: 10)
 post = Post.create(user_id: victor.id, group_id: group_a.id, content: 'hahaha')
+post.attachments.create(category: 'image', url: 'http://www.baidu.com/a.jpg')
+post.attachments.create(category: 'image', url: 'http://www.baidu.com/b.jpg')
+
 Post.create(user_id: victor.id, group_id: group_a.id, content: 'today is fine')
 Post.create(user_id: yuki.id, group_id: group_a.id, content: 'cool man')
 
+comment = post.comments.create(user: victor, content: "commment with attachments")
+comment.comments.create(user: yuki, content: "commment with comments 1")
+comment.comments.create(user: roc, content: "commment with comments 2")
+comment.attachments.create(category: 'image', url: 'http://www.baidu.com/hello.jpg')
+15.times do |i|
+  post.comments.create(user: victor, content: "this is the #{i} commment.")
+end
+
 victor.favor post
+
+Groups::Join.create(group_id: group_a.id, user_id: victor.id)
+victor.group_enrollments.find_by(group_id: group_a.id).update(nickname: '老王')
+
+Groups::Join.create(group_id: group_a.id, user_id: yuki.id)
+yuki.group_enrollments.find_by(group_id: group_a.id).update(nickname: '小陈')

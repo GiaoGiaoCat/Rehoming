@@ -1,16 +1,9 @@
 class PostsController < ApplicationController
+  serialization_scope :group
+
   def show
     load_post
-    render json: @post, include: %i(commments), serializer: PostSerializer
-  end
-
-  def create
-    build_post
-    if @post.save
-      render json: @post, status: :created, serializer: PostSerializer
-    else
-      render json: @post.errors.messages, status: :bad_request
-    end
+    render json: @post, include: [:author, comments: %i(author attachments comments)]
   end
 
   private
@@ -19,12 +12,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  def build_post
-    @post = Post.new
-    @post.attributes = post_params.merge(user_id: current_user.id)
-  end
-
-  def post_params
-    params.require(:data).permit(attributes: [:group_id, :content, attachments_attributes: %i(category url)])
+  def group
+    @post.group
   end
 end
