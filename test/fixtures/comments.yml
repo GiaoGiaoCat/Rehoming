@@ -1,8 +1,8 @@
 one:
-  user: users(:one)
-  commentable: posts(:one)
+  user: one
+  commentable: one
   content: 'comment one content goes here'
 two:
-  user: users(:one)
-  commentable: posts(:one)
+  user: one
+  commentable: one
   content: 'comment two content goes here'

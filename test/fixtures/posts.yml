@@ -1,14 +1,14 @@
 one:
-  group:    groups(:one)
-  user:     users(:victor)
+  group:    one
+  user:     victor
   content:  'one content goes here'
 
 two:
-  group:    groups(:one)
-  user:     users(:victor)
+  group:    one
+  user:     victor
   content:  'tow content goes here'
 
 three:
-  group:    groups(:one)
-  user:     users(:yuki)
+  group:    one
+  user:     yuki
   content:  'three content goes here'
