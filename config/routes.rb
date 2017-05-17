@@ -3,11 +3,12 @@ Rails.application.routes.draw do
     concern :commentable do |options|
       resources :comments, only: [:index, :create], **options
     end
-
     concern :likeable do |options|
       %i(like dislike).each { |r| resource r, only: [:create], **options }
     end
-
+    concern :pinable do |options|
+      %i(pin unpin).each { |r| resource r, only: [:create], **options }
+    end
     concern :favorable do |options|
       %i(favor unfavor).each { |r| resource r, only: [:create], **options }
     end
@@ -21,8 +22,7 @@ Rails.application.routes.draw do
     end
 
     resources :posts, only: [:show] do
-      %i(likeable commentable).each { |r| concerns r, module: :posts }
-      concerns :favorable, module: :posts
+      %i(likeable commentable pinable favorable).each { |r| concerns r, module: :posts }
     end
 
     resources :comments, only: [] do

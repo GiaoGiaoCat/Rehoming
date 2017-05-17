@@ -2,23 +2,27 @@ module ActsAsPinable
   module Pinable
     extend ActiveSupport::Concern
 
-    def likeable?
+    included do
+      scope :sticky, -> { where(sticky: true) }
+    end
+
+    def pinable?
       true
     end
 
-    def pin
+    def pined
       clear_sticky
       update(sticky: true)
     end
 
-    def unpin
+    def unpined
       update(sticky: false)
     end
 
     private
 
     def clear_sticky
-      group.posts.where(sticky: true).update(sticky: false)
+      group.posts.sticky.update(sticky: false)
     end
   end
 end
