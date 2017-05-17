@@ -12,9 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170514010031) do
 
-  create_table "attachments", force: :cascade do |t|
+  create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "attachable_type"
-    t.integer "attachable_id"
+    t.bigint "attachable_id"
     t.integer "category"
     t.text "url"
     t.datetime "created_at", null: false
@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(version: 20170514010031) do
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id"
   end
 
-  create_table "comments", force: :cascade do |t|
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "commentable_type"
-    t.integer "commentable_id"
-    t.integer "user_id"
+    t.bigint "commentable_id"
+    t.bigint "user_id"
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -33,19 +33,19 @@ ActiveRecord::Schema.define(version: 20170514010031) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "favorites", force: :cascade do |t|
-    t.integer "user_id"
+  create_table "favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.bigint "user_id"
     t.string "favorable_type"
-    t.integer "favorable_id"
+    t.bigint "favorable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["favorable_type", "favorable_id"], name: "index_favorites_on_favorable_type_and_favorable_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "group_enrollments", force: :cascade do |t|
-    t.integer "group_id"
-    t.integer "user_id"
+  create_table "group_enrollments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.bigint "group_id"
+    t.bigint "user_id"
     t.string "nickname"
     t.integer "role"
     t.datetime "created_at", null: false
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20170514010031) do
     t.index ["user_id"], name: "index_group_enrollments_on_user_id"
   end
 
-  create_table "groups", force: :cascade do |t|
+  create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "title", null: false
     t.text "description"
     t.text "cover"
@@ -65,20 +65,20 @@ ActiveRecord::Schema.define(version: 20170514010031) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "likes", force: :cascade do |t|
-    t.integer "user_id"
+  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.bigint "user_id"
     t.string "likeable_type"
-    t.integer "likeable_id"
+    t.bigint "likeable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.integer "group_id"
-    t.integer "user_id"
-    t.text "content", limit: 65536
+  create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.bigint "group_id"
+    t.bigint "user_id"
+    t.text "content", limit: 16777215
     t.boolean "sticky", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -86,11 +86,11 @@ ActiveRecord::Schema.define(version: 20170514010031) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "unionid", limit: 191
-    t.string "nickname", limit: 191
-    t.text "headimgurl"
-    t.text "raw_info"
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string "unionid", limit: 191, comment: "全局唯一ID"
+    t.string "nickname", limit: 191, comment: "昵称"
+    t.text "headimgurl", comment: "头像URL"
+    t.text "raw_info", comment: "微信用户原始信息"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unionid"], name: "users_unionid_index"
