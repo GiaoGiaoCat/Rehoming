@@ -11,11 +11,13 @@ module ActsAsPinable
     end
 
     def pined
+      return true if sticky?
       clear_sticky
       update(sticky: true)
     end
 
     def unpined
+      return true unless sticky?
       update(sticky: false)
     end
 
