@@ -8,7 +8,7 @@ class ObfuscateIdTest < ActiveSupport::TestCase
   end
 
   test '应该可以正常来回转换 ' do
-    assert_equal '02196387', User.first.obfuscated_id
+    assert_equal '96926233', User.first.obfuscated_id
     assert_equal 1, User.deobfuscate_id('02196387').to_i
   end
 

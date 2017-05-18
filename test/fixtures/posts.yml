@@ -1,14 +1,15 @@
 one:
-  group:    groups(:one)
-  user:     users(:victor)
+  group:    one
+  user:     victor
   content:  'one content goes here'
+  sticky: true
 
 two:
-  group:    groups(:one)
-  user:     users(:victor)
-  content:  'tow content goes here'
+  group:    one
+  user:     victor
+  content:  'two content goes here'
 
 three:
-  group:    groups(:one)
-  user:     users(:yuki)
+  group:    one
+  user:     yuki
   content:  'three content goes here'

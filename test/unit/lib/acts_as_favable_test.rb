@@ -18,7 +18,7 @@ class ActsAsFavableTest < ActiveSupport::TestCase
 
   test '验证 favored? 方法正确' do
     assert @victor.favored?(@post_one)
-    refute @victor.favored?(@post_tow)
+    assert_not @victor.favored?(@post_tow)
   end
 
   test '用户对帖子可以收藏和取消收藏' do
