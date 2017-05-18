@@ -18,7 +18,7 @@ class ActsAsLikeableTest < ActiveSupport::TestCase
 
   test '验证 liked? 方法正确' do
     assert @victor.liked?(@post_one)
-    refute @victor.liked?(@post_tow)
+    assert_not @victor.liked?(@post_tow)
   end
 
   test '用户对帖子可以赞和取消赞' do

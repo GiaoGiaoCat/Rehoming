@@ -3,42 +3,50 @@ require 'test_helper'
 class ActsAsPinableTest < ActiveSupport::TestCase
   def setup
     @victor = users(:victor)
-    @post_one = posts(:one)
-    @post_two = posts(:two)
+    @post_pined = posts(:one)
+    @post_unpined = posts(:two)
     @comment = comments(:one)
   end
 
   test '验证 pinable? 方法正确' do
-    assert @post_one.pinable?
+    assert @post_pined.pinable?
     assert_raises NoMethodError do
-      @victor.pinable?
+      @comment.pinable?
     end
   end
 
   test '用户可以置顶帖子和取消置顶' do
-    assert_difference 'Post.where(sticky: true).count' do
-      @victor.pin @post_two
+    @victor.pin @post_unpined
+    assert @post_unpined.sticky
+
+    @victor.unpin @post_unpined
+    assert_not @post_unpined.sticky
+  end
+
+  test '一个小组只能有一条置顶帖子' do
+    assert_equal 1, groups(:one).posts.sticky.size
+
+    @victor.pin @post_unpined
+    assert_equal 1, groups(:one).posts.sticky.size
+  end
+
+  test '重复置顶同一个帖子不会做数据库操作' do
+    assert_changes -> { @post_unpined.updated_at } do
+      @victor.pin @post_unpined
     end
 
-    @victor.pin @post_one
-    assert_difference 'Post.where(sticky: true).count', -1 do
-      @victor.unpin @post_one
+    assert_no_changes -> { @post_unpined.updated_at } do
+      @victor.pin @post_unpined
     end
   end
 
-  test '不能重复赞同一个帖子或评论' do
-    @victor.like @post_one
-    assert_difference '@victor.likes.count', 0 do
-      @victor.like @post_one
+  test '重复取消置顶同一个帖子不会做数据库操作' do
+    assert_changes -> { @post_pined.updated_at } do
+      @victor.unpin @post_pined
     end
-  end
 
-  test '用户对评论可以赞和取消赞' do
-    assert_difference '@victor.likes.count' do
-      @victor.like @comment
-    end
-    assert_difference '@victor.likes.count', -1 do
-      @victor.dislike @comment
+    assert_no_changes -> { @post_pined.updated_at } do
+      @victor.unpin @post_pined
     end
   end
 end

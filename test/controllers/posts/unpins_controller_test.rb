@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Posts::PinsControllerTest < ActionDispatch::IntegrationTest
+class Posts::UnpinsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @victor = users(:victor)
     @post_one = posts(:one)
@@ -8,8 +8,8 @@ class Posts::PinsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create pin' do
-    assert_no_difference('Post.sticky.count') do
-      post post_pin_url(@post_one), headers: @headers
+    assert_difference -> { Post.sticky.count }, -1 do
+      post post_unpin_url(@post_one), headers: @headers
     end
 
     assert_response :success

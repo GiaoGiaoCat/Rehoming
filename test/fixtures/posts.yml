@@ -2,11 +2,12 @@ one:
   group:    one
   user:     victor
   content:  'one content goes here'
+  sticky: true
 
 two:
   group:    one
   user:     victor
-  content:  'tow content goes here'
+  content:  'two content goes here'
 
 three:
   group:    one

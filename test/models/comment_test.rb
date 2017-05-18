@@ -25,7 +25,7 @@ class CommentTest < ActiveSupport::TestCase
   test '携带附件数量不能超过1个' do
     @new_comment.attachments.new(url: 'http://www.baidu.com/hello.jpg', category: 10)
     @new_comment.attachments.new(url: 'http://www.baidu.com/yeah.jpg', category: 10)
-    refute @new_comment.valid?
+    assert_not @new_comment.valid?
   end
 
   test '可以对 post 进行回复' do
