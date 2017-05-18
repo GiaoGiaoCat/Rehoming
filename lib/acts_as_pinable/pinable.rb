@@ -3,6 +3,7 @@ module ActsAsPinable
     extend ActiveSupport::Concern
 
     included do
+      default_scope -> { order(sticky: :desc) }
       scope :sticky, -> { where(sticky: true) }
     end
 

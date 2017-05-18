@@ -15,6 +15,13 @@ class ActsAsPinableTest < ActiveSupport::TestCase
     end
   end
 
+  test '返回的列表默认置顶贴排在第一位' do
+    @victor.pin @post_unpined
+
+    assert_equal @post_unpined, Post.first
+    assert Post.first.sticky
+  end
+
   test '用户可以置顶帖子和取消置顶' do
     @victor.pin @post_unpined
     assert @post_unpined.sticky
