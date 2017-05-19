@@ -5,6 +5,7 @@ class CreatePosts < ActiveRecord::Migration[5.1]
       t.references  :user, index: true
       t.text    :content, limit: 64.kilobytes
       t.boolean :sticky, default: false, null: false
+      t.boolean :recommended, default: false, null: false
       t.timestamps null: false
     end
   end
