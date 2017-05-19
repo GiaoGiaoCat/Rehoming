@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     concern :favorable do |options|
       %i(favor unfavor).each { |r| resource r, only: [:create], **options }
     end
+    concern :recommendable do |options|
+      resource :recommendation, only: [:create, :destroy], **options
+    end
 
     scope module: 'users' do
       resources :sessions, only: :create
@@ -22,7 +25,7 @@ Rails.application.routes.draw do
     end
 
     resources :posts, only: [:show] do
-      %i(likeable commentable pinable favorable).each { |r| concerns r, module: :posts }
+      %i(likeable commentable pinable favorable recommendable).each { |r| concerns r, module: :posts }
     end
 
     resources :comments, only: [] do
