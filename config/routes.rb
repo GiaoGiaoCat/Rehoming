@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   concern :routes do
     concern :commentable do |options|
-      resources :comments, only: [:index, :create], **options
+      resource :comments, only: [:index, :create], **options
     end
     concern :likeable do |options|
-      %i(like dislike).each { |r| resource r, only: [:create], **options }
+      # NOTE: `like` is noun NOT plurality.
+      resource :likes, only: [:create, :destroy], **options
     end
     concern :pinable do |options|
       %i(pin unpin).each { |r| resource r, only: [:create], **options }
