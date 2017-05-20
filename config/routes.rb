@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       resource :likes, only: [:create, :destroy], **options
     end
     concern :pinable do |options|
-      %i(pin unpin).each { |r| resource r, only: [:create], **options }
+      resource :pin, only: [:create, :destroy], **options
     end
     concern :favorable do |options|
       # NOTE: `favorites` is noun NOT plurality.
