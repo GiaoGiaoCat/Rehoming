@@ -4,14 +4,15 @@ Rails.application.routes.draw do
       resource :comments, only: [:index, :create], **options
     end
     concern :likeable do |options|
-      # NOTE: `like` is noun NOT plurality.
+      # NOTE: `likes` is noun NOT plurality.
       resource :likes, only: [:create, :destroy], **options
     end
     concern :pinable do |options|
       %i(pin unpin).each { |r| resource r, only: [:create], **options }
     end
     concern :favorable do |options|
-      %i(favor unfavor).each { |r| resource r, only: [:create], **options }
+      # NOTE: `favorites` is noun NOT plurality.
+      resource :favorites, only: [:create, :destroy], **options
     end
     concern :recommendable do |options|
       resource :recommendation, only: [:create, :destroy], **options
