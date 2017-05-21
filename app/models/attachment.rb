@@ -7,4 +7,6 @@ class Attachment < ApplicationRecord
     image: 10,
     video: 20
   }
+
+  encrypted_id key: 'Kpovojv2sJzPnb'
 end
