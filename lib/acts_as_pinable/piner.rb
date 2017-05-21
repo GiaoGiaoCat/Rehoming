@@ -3,13 +3,19 @@ module ActsAsPinable
     extend ActiveSupport::Concern
 
     def pin(obj)
-      return unless obj.respond_to? :pinable?
+      validate_beable_resource(obj, :pinable?)
       obj.pined
     end
 
     def unpin(obj)
-      return unless obj.respond_to? :pinable?
+      validate_beable_resource(obj, :pinable?)
       obj.unpined
+    end
+
+    private
+
+    def validate_beable_resource(obj, method)
+      return unless obj.respond_to? method
     end
   end
 end

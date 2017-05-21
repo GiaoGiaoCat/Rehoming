@@ -3,13 +3,19 @@ module ActsAsRecommendable
     extend ActiveSupport::Concern
 
     def recommend(obj)
-      return unless obj.respond_to? :recommendable?
+      validate_beable_resource(obj, :recommendable?)
       obj.starred
     end
 
     def unrecommend(obj)
-      return unless obj.respond_to? :recommendable?
+      validate_beable_resource(obj, :recommendable?)
       obj.unstarred
+    end
+
+    private
+
+    def validate_beable_resource(obj, method)
+      return unless obj.respond_to? method
     end
   end
 end
