@@ -1,13 +1,4 @@
 class Posts::FavoritesController < ApplicationController
-  before_action :load_parent
-
-  def create
-    @current_user.favor(@parent)
-    head :created
-  end
-
-  def destroy
-    @current_user.unfavor(@parent)
-    head :no_content
-  end
+  include ActsAsAction
+  define_action_names verb: :favor, unverb: :unfavor
 end

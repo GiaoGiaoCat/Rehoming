@@ -10,12 +10,12 @@ module ActsAsRecommendable
       true
     end
 
-    def stared
+    def starred
       return true if recommended?
       update(recommended: true)
     end
 
-    def unstared
+    def unstarred
       return true unless recommended?
       update(recommended: false)
     end

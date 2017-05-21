@@ -4,12 +4,12 @@ module ActsAsRecommendable
 
     def recommend(obj)
       return unless obj.respond_to? :recommendable?
-      obj.stared
+      obj.starred
     end
 
     def unrecommend(obj)
       return unless obj.respond_to? :recommendable?
-      obj.unstared
+      obj.unstarred
     end
   end
 end
