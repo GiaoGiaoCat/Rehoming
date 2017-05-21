@@ -1,17 +1,19 @@
 class Groups::MembersController < ApplicationController
+  serialization_scope :group
+
   def index
-    load_group
     load_members
-    render json: @members, each_serializer: MemberSerializer
+    render json: @members
   end
 
   private
 
-  def load_group
+
+  def group
     @group = Group.find(params[:group_id])
   end
 
   def load_members
-    @members = @group.users
+    @members = group.users
   end
 end

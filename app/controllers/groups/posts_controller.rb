@@ -3,7 +3,7 @@ class Groups::PostsController < ApplicationController
 
   def index
     load_posts
-    render json: @post, include: '**'
+    render json: @posts, include: '**'
   end
 
   def create
