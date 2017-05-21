@@ -1,16 +1,16 @@
 one:
-  group:    one
+  forum:    one
   user:     victor
   content:  'one content goes here'
   sticky: true
   recommended: true
 
 two:
-  group:    one
+  forum:    one
   user:     victor
   content:  'two content goes here'
 
 three:
-  group:    one
+  forum:    one
   user:     yuki
   content:  'three content goes here'

@@ -5,8 +5,8 @@ class UserSerializer < ApplicationSerializer
   attribute :nickname
 
   def nickname
-    return nickname unless group
-    object.group_enrollments.find_by(group_id: group.id)&.nickname ||
+    return nickname unless forum
+    object.forum_enrollments.find_by(forum_id: forum.id)&.nickname ||
       object.nickname
   end
 end

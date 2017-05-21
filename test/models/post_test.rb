@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PostTest < ActiveSupport::TestCase
   test '验证内容' do
-    p = Post.new content: '', user_id: users(:victor).id, group_id: groups(:one).id
+    p = Post.new content: '', user_id: users(:victor).id, forum_id: forums(:one).id
     assert_not p.valid?
 
     p.content = '1'
@@ -16,7 +16,7 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test '验证图片附件' do
-    p = Post.new content: 'content goes here', user_id: users(:victor).id, group_id: groups(:one).id
+    p = Post.new content: 'content goes here', user_id: users(:victor).id, forum_id: forums(:one).id
 
     9.times do |i|
       p.attachments << Attachment.new(category: 'image', url: "#{i}*100")
@@ -33,7 +33,7 @@ class PostTest < ActiveSupport::TestCase
     p = Post.new(
       content:  'content goes here',
       user_id:  users(:victor).id,
-      group_id: groups(:one).id
+      forum_id: forums(:one).id
     )
 
     1.times do |i|
@@ -52,7 +52,7 @@ class PostTest < ActiveSupport::TestCase
       p = Post.new(
         content:  '#我是标签# content goes here',
         user_id:  users(:victor).id,
-        group_id: groups(:one).id
+        forum_id: forums(:one).id
       )
       p.save!
     end
@@ -63,7 +63,7 @@ class PostTest < ActiveSupport::TestCase
       p = Post.new(
         content:  '👍 content goes here',
         user_id:  users(:victor).id,
-        group_id: groups(:one).id
+        forum_id: forums(:one).id
       )
       p.save!
     end

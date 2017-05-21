@@ -31,10 +31,10 @@ class ActsAsPinableTest < ActiveSupport::TestCase
   end
 
   test '一个小组只能有一条置顶帖子' do
-    assert_equal 1, groups(:one).posts.sticky.size
+    assert_equal 1, forums(:one).posts.sticky.size
 
     @victor.pin @post_unpined
-    assert_equal 1, groups(:one).posts.sticky.size
+    assert_equal 1, forums(:one).posts.sticky.size
   end
 
   test '重复置顶同一个帖子不会做数据库操作' do

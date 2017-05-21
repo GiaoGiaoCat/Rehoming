@@ -1,4 +1,4 @@
-class Groups::PostSerializer < ApplicationSerializer
+class Forums::PostSerializer < ApplicationSerializer
   type 'posts'
   attributes :content
 

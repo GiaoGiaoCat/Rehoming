@@ -1,14 +1,14 @@
-class Groups::Rename < ActiveType::Object
+class Forums::Rename < ActiveType::Object
   attribute :name
   attribute :user_id
-  attribute :group_id
+  attribute :forum_id
 
   belongs_to :user
-  belongs_to :group
+  belongs_to :forum
 
   validates :name, presence: true
   validates :user_id, presence: true
-  validates :group_id, presence: true
+  validates :forum_id, presence: true
   validate :join_status
 
   after_save :persist!
@@ -21,11 +21,11 @@ class Groups::Rename < ActiveType::Object
   end
 
   def persist!
-    enrollment = Groups::Enrollment.find_by(user_id: user_id, group_id: group_id)
+    enrollment = Forums::Enrollment.find_by(user_id: user_id, forum_id: forum_id)
     enrollment.update!(nickname: name)
   end
 
   def enrollment
-    @enrollment ||= Groups::Enrollment.find_by(user_id: user_id, group_id: group_id)
+    @enrollment ||= Forums::Enrollment.find_by(user_id: user_id, forum_id: forum_id)
   end
 end

@@ -1,8 +1,8 @@
-class Groups::Enrollment < ApplicationRecord
-  self.table_name = 'group_enrollments'
+class Forums::Enrollment < ApplicationRecord
+  self.table_name = 'forum_enrollments'
 
   belongs_to :user, touch: true
-  belongs_to :group
+  belongs_to :forum
 
   enum role: {
     quanzhu:         10, # 圈主

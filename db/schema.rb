@@ -43,19 +43,19 @@ ActiveRecord::Schema.define(version: 20170514010031) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "group_enrollments", force: :cascade do |t|
-    t.integer "group_id"
+  create_table "forum_enrollments", force: :cascade do |t|
+    t.integer "forum_id"
     t.integer "user_id"
     t.string "nickname"
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id", "user_id"], name: "group_enrollments_index"
-    t.index ["group_id"], name: "index_group_enrollments_on_group_id"
-    t.index ["user_id"], name: "index_group_enrollments_on_user_id"
+    t.index ["forum_id", "user_id"], name: "forum_enrollments_index"
+    t.index ["forum_id"], name: "index_forum_enrollments_on_forum_id"
+    t.index ["user_id"], name: "index_forum_enrollments_on_user_id"
   end
 
-  create_table "groups", force: :cascade do |t|
+  create_table "forums", force: :cascade do |t|
     t.string "title", null: false
     t.text "description"
     t.text "cover"
@@ -76,14 +76,14 @@ ActiveRecord::Schema.define(version: 20170514010031) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer "group_id"
+    t.integer "forum_id"
     t.integer "user_id"
     t.text "content", limit: 65536
     t.boolean "sticky", default: false, null: false
     t.boolean "recommended", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_posts_on_group_id"
+    t.index ["forum_id"], name: "index_posts_on_forum_id"
     t.index ["recommended"], name: "index_posts_on_recommended"
     t.index ["sticky"], name: "index_posts_on_sticky"
     t.index ["user_id"], name: "index_posts_on_user_id"

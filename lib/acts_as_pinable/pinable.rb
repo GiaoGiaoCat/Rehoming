@@ -25,7 +25,7 @@ module ActsAsPinable
     private
 
     def clear_sticky
-      group.posts.sticky.update(sticky: false)
+      forum.posts.sticky.update(sticky: false)
     end
   end
 end

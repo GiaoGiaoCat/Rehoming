@@ -9,8 +9,8 @@ class User < ApplicationRecord
   # relationships .............................................................
   has_many :posts
   has_many :favorite_posts, through: :favorites, source: :favorable, source_type: 'Post'
-  has_many :group_enrollments, class_name: 'Groups::Enrollment', foreign_key: 'user_id'
-  has_many :groups, through: :group_enrollments
+  has_many :forum_enrollments, class_name: 'Forums::Enrollment', foreign_key: 'user_id'
+  has_many :forums, through: :forum_enrollments
   # validations ...............................................................
   validates :unionid, presence: true, uniqueness: true
   validates :nickname, presence: true
