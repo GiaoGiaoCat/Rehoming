@@ -22,7 +22,7 @@ class Groups::PostsController < ApplicationController
   end
 
   def load_posts
-    @posts = group.posts
+    @posts = group.posts.by_filter(params[:filter])
   end
 
   def build_post

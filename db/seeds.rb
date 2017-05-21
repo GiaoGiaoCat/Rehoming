@@ -11,7 +11,7 @@ yuki = User.create(unionid: 'u3YBkQDBVetKaVJknprv', nickname: 'Yuki', headimgurl
 roc = User.create(unionid: 'RwcP9YchpgxLDgzwAjmb', nickname: 'Roc', headimgurl: 'ba.jpg')
 
 group_a = Group.create(title: 'Free Group', category: 10)
-post = Post.create(user_id: victor.id, group_id: group_a.id, content: 'hahaha')
+post = Post.create(user_id: victor.id, group_id: group_a.id, content: 'hahaha', sticky: true, recommended: true)
 post.attachments.create(category: 'image', url: 'http://www.baidu.com/a.jpg')
 post.attachments.create(category: 'image', url: 'http://www.baidu.com/b.jpg')
 
