@@ -8,7 +8,6 @@ class Groups::MembersController < ApplicationController
 
   private
 
-
   def group
     @group = Group.find(params[:group_id])
   end
