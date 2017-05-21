@@ -3,6 +3,8 @@ class ApplicationSerializer < ActiveModel::Serializer
 
   alias id to_param
 
+  attributes :id
+
   def attributes(*)
     hash = super
     hash.each do |key, value|
