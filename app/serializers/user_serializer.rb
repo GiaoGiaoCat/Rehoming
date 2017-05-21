@@ -1,8 +1,7 @@
-class AuthorSerializer < ApplicationSerializer
-  cache key: 'authors', only: :nickname
+class UserSerializer < ApplicationSerializer
+  cache key: 'users'
 
-  type 'authors'
-  attributes :id, :headimgurl
+  attribute :headimgurl
   attribute :nickname
 
   def nickname

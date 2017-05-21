@@ -27,6 +27,8 @@ comment.attachments.create(category: 'image', url: 'http://www.baidu.com/hello.j
 end
 
 victor.favor post
+victor.like post
+yuki.like post
 
 Groups::Join.create(group_id: group_a.id, user_id: victor.id)
 victor.group_enrollments.find_by(group_id: group_a.id).update(nickname: '老王')

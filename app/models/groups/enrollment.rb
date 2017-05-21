@@ -11,4 +11,6 @@ class Groups::Enrollment < ApplicationRecord
     putongchengyuan: 40, # 普通成员
     lahei:           50  # 拉黑
   }
+
+  encrypted_id key: 'MhnjnhNQZxubL9'
 end
