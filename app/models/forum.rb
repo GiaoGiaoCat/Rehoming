@@ -18,6 +18,6 @@ class Forum < ApplicationRecord
 
   encrypted_id key: 'vzmvXdcqWTVa6C'
 
-  validates :title, presence: true
+  validates :name, presence: true
   validates :category, presence: true
 end

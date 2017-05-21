@@ -1,7 +1,7 @@
 class CreateForums < ActiveRecord::Migration[5.1]
   def change
     create_table :forums do |t|
-      t.string  :title, null: false
+      t.string  :name, null: false
       t.text    :description
       t.text    :cover
       t.integer :category, null: false

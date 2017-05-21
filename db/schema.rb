@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170514010031) do
   end
 
   create_table "forums", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "name", null: false
     t.text "description"
     t.text "cover"
     t.integer "category", null: false
