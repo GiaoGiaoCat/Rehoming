@@ -1,4 +1,4 @@
 class Posts::PinsController < ApplicationController
-  include PinableResources
-  pinable_resources action: :pin
+  include ActsAsAction
+  define_action_names verb: :pin, unverb: :unpin
 end

@@ -1,4 +1,4 @@
 class Posts::LikesController < ApplicationController
-  include LikeableResources
-  likeable_resources action: :like
+  include ActsAsAction
+  define_action_names verb: :like, unverb: :dislike
 end

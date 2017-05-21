@@ -5,7 +5,7 @@ class ActsAsLikeableTest < ActiveSupport::TestCase
     @victor = users(:victor)
     @post_one = posts(:one)
     @post_two = posts(:two)
-    @comment = comments(:one)
+    @comment = comments(:two)
     @victor.like @post_one
   end
 

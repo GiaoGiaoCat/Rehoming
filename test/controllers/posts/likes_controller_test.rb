@@ -1,24 +1,26 @@
 require 'test_helper'
 
-class Posts::LikesControllerTest < ActionController::TestCase
-  def setup
+class Posts::LikesControllerTest < ActionDispatch::IntegrationTest
+  setup do
     @victor = users(:victor)
-    @post_one = posts(:one)
-    @post_two = posts(:two)
-    @victor.like @post_one
+    @post_liked = posts(:one)
+    @post_unliked = posts(:two)
   end
 
-  test '用户赞了一个主题' do
-    post :create, params: { post_id: @post_two.id }
+  test 'should create likes' do
+    assert_difference -> { @victor.likes.count } do
+      post post_likes_url(@post_unliked), headers: @headers
+    end
     assert_response :success
     assert_equal 201, @response.status
-    assert_equal 2, @victor.likes.count
   end
 
-  test '用户不能重复赞同一个主题' do
-    post :create, params: { post_id: @post_one.to_param }
+  test 'should destroy likes' do
+    assert_difference -> { @victor.likes.count }, -1 do
+      delete post_likes_url(@post_liked), headers: @headers
+    end
+
     assert_response :success
-    assert_equal 201, @response.status
-    assert_equal 1, @victor.likes.count
+    assert_equal 204, @response.status
   end
 end

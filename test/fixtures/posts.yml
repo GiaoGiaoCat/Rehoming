@@ -3,6 +3,7 @@ one:
   user:     victor
   content:  'one content goes here'
   sticky: true
+  recommended: true
 
 two:
   group:    one

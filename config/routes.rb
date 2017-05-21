@@ -1,16 +1,21 @@
 Rails.application.routes.draw do
   concern :routes do
     concern :commentable do |options|
-      resources :comments, only: [:index, :create], **options
+      resource :comments, only: [:index, :create], **options
     end
     concern :likeable do |options|
-      %i(like dislike).each { |r| resource r, only: [:create], **options }
+      # NOTE: `likes` is noun NOT plurality.
+      resource :likes, only: [:create, :destroy], **options
     end
     concern :pinable do |options|
-      %i(pin unpin).each { |r| resource r, only: [:create], **options }
+      resource :pin, only: [:create, :destroy], **options
     end
     concern :favorable do |options|
-      %i(favor unfavor).each { |r| resource r, only: [:create], **options }
+      # NOTE: `favorites` is noun NOT plurality.
+      resource :favorites, only: [:create, :destroy], **options
+    end
+    concern :recommendable do |options|
+      resource :recommendation, only: [:create, :destroy], **options
     end
 
     scope module: 'users' do
@@ -22,7 +27,7 @@ Rails.application.routes.draw do
     end
 
     resources :posts, only: [:show] do
-      %i(likeable commentable pinable favorable).each { |r| concerns r, module: :posts }
+      %i(likeable commentable pinable favorable recommendable).each { |r| concerns r, module: :posts }
     end
 
     resources :comments, only: [] do
