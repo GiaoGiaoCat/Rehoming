@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   def show
     load_post
-    render json: @post, include: [:author, comments: %i(author attachments comments)]
+    render json: @post, include: '**'
   end
 
   private

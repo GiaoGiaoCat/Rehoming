@@ -3,7 +3,7 @@ class Groups::PostsController < ApplicationController
 
   def index
     load_posts
-    render json: @posts, include: [:author, comments: %i(author attachments comments)]
+    render json: @post, include: '**'
   end
 
   def create
