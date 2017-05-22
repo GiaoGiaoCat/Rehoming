@@ -8,7 +8,7 @@ class Posts::RecommendationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create recommendation' do
-    assert_difference -> { Post.recommended.count } do
+    assert_difference -> { Post.by_recommended.count } do
       post post_recommendation_url(@post_two), headers: @headers
     end
 
@@ -17,7 +17,7 @@ class Posts::RecommendationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy recommendation' do
-    assert_difference -> { Post.recommended.count }, -1 do
+    assert_difference -> { Post.by_recommended.count }, -1 do
       delete post_recommendation_url(@post_one), headers: @headers
     end
 

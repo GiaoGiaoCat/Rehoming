@@ -3,7 +3,7 @@ module ActsAsRecommendable
     extend ActiveSupport::Concern
 
     included do
-      scope :recommended, -> { where(recommended: true) }
+      scope :by_recommended, -> { where(recommended: true) }
     end
 
     def recommendable?
