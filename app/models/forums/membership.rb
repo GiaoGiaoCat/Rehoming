@@ -1,25 +1,23 @@
-class User < ApplicationRecord
+class Forums::Membership < ApplicationRecord
+  self.table_name = 'forum_memberships'
   # extends ...................................................................
   # includes ..................................................................
-  include ActsAsLikeable::Liker
-  include ActsAsFavorable::Favoriter
-  include ActsAsPinable::Piner
-  include ActsAsRecommendable::Recommender
   # constants .................................................................
   # relationships .............................................................
-  has_many :posts
-  has_many :favorite_posts, through: :favorites, source: :favorable, source_type: 'Post'
-  has_many :forum_memberships, class_name: 'Forums::Membership', foreign_key: 'user_id'
-  has_many :forums, through: :forum_memberships
+  belongs_to :user, touch: true
+  belongs_to :forum
   # validations ...............................................................
-  validates :unionid, presence: true, uniqueness: true
-  validates :nickname, presence: true
-  validates :headimgurl, presence: true
   # callbacks .................................................................
   # scopes ....................................................................
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
-  encrypted_id key: 'gaeexiHdLTQ8Fg'
-  serialize :raw_info, Hash
+  enum role: {
+    quanzhu:         10, # 圈主
+    jiabin:          20, # 嘉宾
+    guanliyuan:      30, # 管理员
+    putongchengyuan: 40, # 普通成员
+    lahei:           50  # 拉黑
+  }
+  encrypted_id key: 'MhnjnhNQZxubL9'
   # class methods .............................................................
   # public instance methods ...................................................
   # protected instance methods ................................................

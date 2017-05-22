@@ -17,15 +17,15 @@ class Forums::Rename < ActiveType::Object
 
   def join_status
     return if user.blank?
-    errors.add :base, :must_join_first if enrollment.blank?
+    errors.add :base, :must_join_first if membership.blank?
   end
 
   def persist!
-    enrollment = Forums::Enrollment.find_by(user_id: user_id, forum_id: forum_id)
-    enrollment.update!(nickname: name)
+    membership = Forums::Membership.find_by(user_id: user_id, forum_id: forum_id)
+    membership.update!(nickname: name)
   end
 
-  def enrollment
-    @enrollment ||= Forums::Enrollment.find_by(user_id: user_id, forum_id: forum_id)
+  def membership
+    @membership ||= Forums::Membership.find_by(user_id: user_id, forum_id: forum_id)
   end
 end

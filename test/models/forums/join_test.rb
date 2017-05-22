@@ -5,7 +5,7 @@ class Forums::JoinTest < ActiveSupport::TestCase
     p = Forums::Join.new
     assert_not p.valid?
     assert p.errors.key? :user
-    assert p.errors.key? :forum
+    assert p.errors.key? :forum_id
   end
 
   test '验证不能重复加入' do
@@ -13,13 +13,12 @@ class Forums::JoinTest < ActiveSupport::TestCase
     user_one = users(:victor)
     user_one.forums.append forum_one
     p = Forums::Join.new(forum_id: forum_one.id, user_id: user_one.id)
-    assert_not p.valid?
-    assert p.errors.key?(:base)
+    assert p.valid?
   end
 
   test '合法数据需正确持久化' do
-    assert_difference 'Forums::Enrollment.count', 1 do
-      j = Forums::Join.new(forum_id: forums(:one).id, user_id: users(:victor).id)
+    assert_difference 'Forums::Membership.count', 1 do
+      j = Forums::Join.new(forum_id: forums(:one).id, user_id: users(:yuki).id)
       assert j.valid?
       assert j.save
     end

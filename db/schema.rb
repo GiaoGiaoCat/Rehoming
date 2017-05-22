@@ -43,16 +43,16 @@ ActiveRecord::Schema.define(version: 20170514010031) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "forum_enrollments", force: :cascade do |t|
+  create_table "forum_memberships", force: :cascade do |t|
     t.integer "forum_id"
     t.integer "user_id"
     t.string "nickname"
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["forum_id", "user_id"], name: "forum_enrollments_index"
-    t.index ["forum_id"], name: "index_forum_enrollments_on_forum_id"
-    t.index ["user_id"], name: "index_forum_enrollments_on_user_id"
+    t.index ["forum_id", "user_id"], name: "forum_memberships_index"
+    t.index ["forum_id"], name: "index_forum_memberships_on_forum_id"
+    t.index ["user_id"], name: "index_forum_memberships_on_user_id"
   end
 
   create_table "forums", force: :cascade do |t|

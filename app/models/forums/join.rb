@@ -3,20 +3,19 @@ class Forums::Join < ActiveType::Object
   attribute :forum_id
 
   belongs_to :user
-  belongs_to :forum
 
-  validate :join_status
+  validates :forum_id, presence: true
 
   after_save :persist!
 
-  private
-
-  def join_status
-    return if user.blank?
-    errors.add :base, :cannot_join_twice if user.forums.include?(forum)
+  def forum
+    Forum.find(forum_id)
   end
 
+  private
+
   def persist!
+    return if user.blank? || user.forums.include?(forum)
     user.forums.append forum
   end
 end

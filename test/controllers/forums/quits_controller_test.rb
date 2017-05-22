@@ -6,7 +6,7 @@ class Forums::QuitsControllerTest < ActionController::TestCase
     forum_one = forums(:one)
     @controller.instance_variable_set :@current_user, users(:victor)
     Forums::Join.create(forum_id: forum_one.id, user_id: user_one.id)
-    assert_difference 'Forums::Enrollment.count', -1 do
+    assert_difference 'Forums::Membership.count', -1 do
       post :create, params: { forum_id: forums(:one).id }
       assert_response :success
     end

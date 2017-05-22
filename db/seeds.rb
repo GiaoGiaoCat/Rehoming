@@ -31,7 +31,7 @@ victor.like post
 yuki.like post
 
 Forums::Join.create(forum_id: forum_a.id, user_id: victor.id)
-victor.forum_enrollments.find_by(forum_id: forum_a.id).update(nickname: '老王')
+victor.forum_memberships.find_by(forum_id: forum_a.id).update(nickname: '老王')
 
 Forums::Join.create(forum_id: forum_a.id, user_id: yuki.id)
-yuki.forum_enrollments.find_by(forum_id: forum_a.id).update(nickname: '小陈')
+yuki.forum_memberships.find_by(forum_id: forum_a.id).update(nickname: '小陈')
