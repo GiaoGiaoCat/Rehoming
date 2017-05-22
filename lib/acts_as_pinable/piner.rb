@@ -4,12 +4,12 @@ module ActsAsPinable
 
     def pin(obj)
       validate_beable_resource(obj, :pinable?)
-      obj.pined
+      obj.pinned
     end
 
     def unpin(obj)
       validate_beable_resource(obj, :pinable?)
-      obj.unpined
+      obj.unpinned
     end
 
     private

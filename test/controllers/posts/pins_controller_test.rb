@@ -8,7 +8,7 @@ class Posts::PinsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create pin' do
-    assert_no_difference -> { Post.sticky.count } do
+    assert_no_difference -> { Post.by_pinned.count } do
       post post_pin_url(@post_unpined), headers: @headers
     end
 
@@ -17,7 +17,7 @@ class Posts::PinsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy pin' do
-    assert_difference -> { Post.sticky.count }, -1 do
+    assert_difference -> { Post.by_pinned.count }, -1 do
       delete post_pin_url(@post_pined), headers: @headers
     end
 

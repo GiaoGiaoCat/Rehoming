@@ -4,28 +4,28 @@ module ActsAsPinable
 
     included do
       default_scope -> { order(sticky: :desc) }
-      scope :sticky, -> { where(sticky: true) }
+      scope :by_pinned, -> { where(sticky: true) }
     end
 
     def pinable?
       true
     end
 
-    def pined
-      return true if sticky?
-      clear_sticky
+    def pinned
+      return if sticky?
+      clear_pinned
       update(sticky: true)
     end
 
-    def unpined
-      return true unless sticky?
+    def unpinned
+      return unless sticky?
       update(sticky: false)
     end
 
     private
 
-    def clear_sticky
-      forum.posts.sticky.update(sticky: false)
+    def clear_pinned
+      forum.posts.by_pinned.update(sticky: false)
     end
   end
 end
