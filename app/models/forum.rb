@@ -1,8 +1,8 @@
-class Group < ApplicationRecord
+class Forum < ApplicationRecord
   obfuscate_id
 
-  has_many :group_enrollments, class_name: 'Groups::Enrollment', foreign_key: 'group_id'
-  has_many :users, through: :group_enrollments
+  has_many :forum_enrollments, class_name: 'Forums::Enrollment', foreign_key: 'forum_id'
+  has_many :users, through: :forum_enrollments
   has_many :posts
 
   enum category: {
@@ -18,6 +18,6 @@ class Group < ApplicationRecord
 
   encrypted_id key: 'vzmvXdcqWTVa6C'
 
-  validates :title, presence: true
+  validates :name, presence: true
   validates :category, presence: true
 end

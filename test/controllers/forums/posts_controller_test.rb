@@ -1,18 +1,18 @@
 require 'test_helper'
 
-class Groups::PostsControllerTest < ActionDispatch::IntegrationTest
+class Forums::PostsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @group = groups(:one)
+    @forum = forums(:one)
   end
 
   test 'should get index' do
-    get group_posts_url(@group), headers: @headers
+    get forum_posts_url(@forum), headers: @headers
     assert_response :success
   end
 
   test 'should create post' do
     assert_difference('Post.count') do
-      post group_posts_url(@group), params: { data: { attributes: { content: '合法数据' } } }, headers: @headers
+      post forum_posts_url(@forum), params: { data: { attributes: { content: '合法数据' } } }, headers: @headers
     end
 
     assert_response :success
@@ -28,7 +28,7 @@ class Groups::PostsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     assert_difference('Post.count') do
-      post group_posts_url(@group), params: params_data, headers: @headers
+      post forum_posts_url(@forum), params: params_data, headers: @headers
     end
 
     assert_response :success

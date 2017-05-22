@@ -1,7 +1,7 @@
 class CreatePosts < ActiveRecord::Migration[5.1]
   def change
     create_table :posts do |t|
-      t.references  :group, index: true
+      t.references  :forum, index: true
       t.references  :user, index: true
       t.text    :content, limit: 64.kilobytes
       t.boolean :sticky, default: false, null: false, index: true

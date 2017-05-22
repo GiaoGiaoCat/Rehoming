@@ -10,13 +10,13 @@ victor = User.create(unionid: '11xzxvzcvasvas1', nickname: 'Victor', headimgurl:
 yuki = User.create(unionid: 'u3YBkQDBVetKaVJknprv', nickname: 'Yuki', headimgurl: 'ba.jpg')
 roc = User.create(unionid: 'RwcP9YchpgxLDgzwAjmb', nickname: 'Roc', headimgurl: 'ba.jpg')
 
-group_a = Group.create(title: 'Free Group', category: 10)
-post = Post.create(user_id: victor.id, group_id: group_a.id, content: 'hahaha', sticky: true, recommended: true)
+forum_a = Forum.create(name: 'Free Group', category: 10)
+post = Post.create(user_id: victor.id, forum_id: forum_a.id, content: 'hahaha', sticky: true, recommended: true)
 post.attachments.create(category: 'image', url: 'http://www.baidu.com/a.jpg')
 post.attachments.create(category: 'image', url: 'http://www.baidu.com/b.jpg')
 
-Post.create(user_id: victor.id, group_id: group_a.id, content: 'today is fine')
-Post.create(user_id: yuki.id, group_id: group_a.id, content: 'cool man')
+Post.create(user_id: victor.id, forum_id: forum_a.id, content: 'today is fine')
+Post.create(user_id: yuki.id, forum_id: forum_a.id, content: 'cool man')
 
 comment = post.comments.create(user: victor, content: "commment with attachments")
 comment.comments.create(user: yuki, content: "commment with comments 1")
@@ -30,8 +30,8 @@ victor.favor post
 victor.like post
 yuki.like post
 
-Groups::Join.create(group_id: group_a.id, user_id: victor.id)
-victor.group_enrollments.find_by(group_id: group_a.id).update(nickname: '老王')
+Forums::Join.create(forum_id: forum_a.id, user_id: victor.id)
+victor.forum_enrollments.find_by(forum_id: forum_a.id).update(nickname: '老王')
 
-Groups::Join.create(group_id: group_a.id, user_id: yuki.id)
-yuki.group_enrollments.find_by(group_id: group_a.id).update(nickname: '小陈')
+Forums::Join.create(forum_id: forum_a.id, user_id: yuki.id)
+yuki.forum_enrollments.find_by(forum_id: forum_a.id).update(nickname: '小陈')

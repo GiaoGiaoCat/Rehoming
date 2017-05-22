@@ -1,7 +1,7 @@
-class CreateGroup < ActiveRecord::Migration[5.1]
+class CreateForums < ActiveRecord::Migration[5.1]
   def change
-    create_table :groups do |t|
-      t.string  :title, null: false
+    create_table :forums do |t|
+      t.string  :name, null: false
       t.text    :description
       t.text    :cover
       t.integer :category, null: false

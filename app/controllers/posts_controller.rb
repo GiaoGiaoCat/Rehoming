@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  serialization_scope :group
+  serialization_scope :forum
 
   def show
     load_post
@@ -12,7 +12,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  def group
-    @post.group
+  def forum
+    @post.forum
   end
 end

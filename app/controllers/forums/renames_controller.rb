@@ -1,6 +1,6 @@
-class Groups::RenamesController < ApplicationController
+class Forums::RenamesController < ApplicationController
   def create
-    load_group
+    load_forum
     build_rename
     if @rename.save
       head :created
@@ -11,13 +11,13 @@ class Groups::RenamesController < ApplicationController
 
   private
 
-  def load_group
-    @group = Group.find(params[:group_id])
+  def load_forum
+    @forum = Forum.find(params[:forum_id])
   end
 
   def build_rename
-    @rename = Groups::Rename.new
-    @rename.attributes = rename_params.merge(user: current_user, group: @group)
+    @rename = Forums::Rename.new
+    @rename.attributes = rename_params.merge(user: current_user, forum: @forum)
   end
 
   def rename_params

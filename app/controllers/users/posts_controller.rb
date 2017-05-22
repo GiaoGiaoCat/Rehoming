@@ -1,7 +1,7 @@
 class Users::PostsController < ApplicationController
   def index
     load_posts
-    render json: @posts, include: %i(group attachments)
+    render json: @posts, include: %i(forum attachments)
   end
 
   private

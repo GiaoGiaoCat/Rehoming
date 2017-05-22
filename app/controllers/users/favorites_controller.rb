@@ -1,7 +1,7 @@
 class Users::FavoritesController < ApplicationController
   def index
     load_favorites
-    render json: @favorites, include: %i(group attachments)
+    render json: @favorites, include: %i(forum attachments)
   end
 
   private
