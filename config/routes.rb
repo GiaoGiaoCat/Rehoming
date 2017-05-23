@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       %i(likeable commentable).each { |r| concerns r, module: :comments }
     end
 
-    resources :forums, only: [] do
+    resources :forums, only: [:show] do
       scope module: :forums do
         resource :membership, only: %i(create destroy)
         resource :rename, only: [:create]
