@@ -13,6 +13,6 @@ class Forums::MembersController < ApplicationController
   end
 
   def load_members
-    @members = forum.users
+    @members = forum.members
   end
 end
