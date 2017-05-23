@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(version: 20170523134918) do
 
   create_table "forums_preferences", force: :cascade do |t|
     t.integer "forum_id", null: false
-    t.boolean "member_list_protected", default: true
-    t.boolean "today_postable", default: true
+    t.boolean "member_list_protected", default: false
+    t.boolean "postable_until_tomorrow", default: false
     t.boolean "shared_post_allowed", default: true
     t.boolean "direct_message_allowed", default: true
     t.boolean "membership_approval_needed", default: false
