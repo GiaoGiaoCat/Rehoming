@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514010031) do
+ActiveRecord::Schema.define(version: 20170523134918) do
 
   create_table "attachments", force: :cascade do |t|
     t.string "attachable_type"
@@ -61,6 +61,18 @@ ActiveRecord::Schema.define(version: 20170514010031) do
     t.text "cover"
     t.integer "category", null: false
     t.string "background_color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "forums_preferences", force: :cascade do |t|
+    t.integer "forum_id", null: false
+    t.boolean "member_list_protected", default: true
+    t.boolean "today_postable", default: true
+    t.boolean "shared_post_allowed", default: true
+    t.boolean "direct_message_allowed", default: true
+    t.boolean "membership_approval_needed", default: false
+    t.integer "postable_role", default: 10
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
