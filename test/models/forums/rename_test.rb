@@ -24,7 +24,6 @@ class Forums::RenameTest < ActiveSupport::TestCase
   test '合法数据需正确持久化' do
     forum_one = forums(:one)
     user_one = users(:victor)
-    Forums::Join.create(forum_id: forum_one.id, user_id: user_one.id)
     q = Forums::Rename.new(
       forum_id: forum_one.id,
       user_id:  user_one.id,
