@@ -6,7 +6,7 @@ class Forums::PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get forum_posts_url(@forum), headers: @headers
+    get forum_posts_url(@forum.id), headers: @headers
     assert_response :success
   end
 

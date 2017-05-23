@@ -134,5 +134,3 @@ module ObfuscateId
     end
   end
 end
-
-ActiveRecord::Base.extend ObfuscateId

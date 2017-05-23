@@ -6,7 +6,7 @@ class UserSerializer < ApplicationSerializer
 
   def nickname
     return nickname unless forum
-    object.forum_enrollments.find_by(forum_id: forum.id)&.nickname ||
+    object.forum_memberships.find_by(forum_id: forum.id)&.nickname ||
       object.nickname
   end
 end

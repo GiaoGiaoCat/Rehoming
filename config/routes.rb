@@ -36,7 +36,8 @@ Rails.application.routes.draw do
 
     resources :forums, only: [] do
       scope module: :forums do
-        %i(join quit rename).each { |r| resource r, only: [:create] }
+        resource :membership, only: [:create, :destroy]
+        resource :rename, only: [:create]
         resources :members, only: [:index]
         resources :posts, only: [:index, :create]
       end

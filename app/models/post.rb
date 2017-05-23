@@ -5,7 +5,6 @@ class Post < ApplicationRecord
   include ActsAsFavorable::Favorable
   include ActsAsPinable::Pinable
   include ActsAsRecommendable::Recommendable
-  # related macros ............................................................
   # relationships .............................................................
   belongs_to :forum
   belongs_to :user

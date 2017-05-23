@@ -9,8 +9,8 @@ class User < ApplicationRecord
   # relationships .............................................................
   has_many :posts
   has_many :favorite_posts, through: :favorites, source: :favorable, source_type: 'Post'
-  has_many :forum_enrollments, class_name: 'Forums::Enrollment', foreign_key: 'user_id'
-  has_many :forums, through: :forum_enrollments
+  has_many :forum_memberships, class_name: 'Forums::Membership', foreign_key: 'user_id'
+  has_many :forums, through: :forum_memberships
   # validations ...............................................................
   validates :unionid, presence: true, uniqueness: true
   validates :nickname, presence: true
@@ -22,6 +22,15 @@ class User < ApplicationRecord
   serialize :raw_info, Hash
   # class methods .............................................................
   # public instance methods ...................................................
+  def join_forum(forum)
+    return if forums.include?(forum)
+    forums.append forum
+  end
+
+  def quit_forum(forum)
+    return unless forums.include?(forum)
+    forums.delete forum
+  end
   # protected instance methods ................................................
   # private instance methods ..................................................
 end
