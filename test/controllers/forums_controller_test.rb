@@ -1,9 +1,12 @@
 require 'test_helper'
 
 class ForumsControllerTest < ActionDispatch::IntegrationTest
-  test "should get show" do
-    get forums_show_url
-    assert_response :success
+  setup do
+    @forum = forums(:one)
   end
 
+  test "should get show" do
+    get forum_url(@forum), headers: @headers
+    assert_response :success
+  end
 end

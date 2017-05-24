@@ -9,8 +9,7 @@ class Forums::PreferencesControllerTest < ActionDispatch::IntegrationTest
     params_data = {
       data: {
         attributes: {
-          member_list_protected:   true,
-          postable_until_tomorrow: false
+          postable_until_tomorrow: true
         }
       }
     }

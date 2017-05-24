@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20170523134918) do
     t.boolean "member_list_protected", default: false
     t.boolean "postable_until_tomorrow", default: false
     t.boolean "shared_post_allowed", default: true
+    t.boolean "public_search_allowed", default: false
     t.boolean "direct_message_allowed", default: true
     t.boolean "membership_approval_needed", default: false
     t.integer "postable_role", default: 10
