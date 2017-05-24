@@ -16,6 +16,7 @@ class Post < ApplicationRecord
   # validations ...............................................................
   validates :content, presence: true, length: { in: 1..10_000 }
   validate :images_limitation, :video_limitation
+  validate :user_should_in_forum
   validate :postable_until_tomorrow
   # callbacks .................................................................
   # scopes ....................................................................
@@ -29,6 +30,10 @@ class Post < ApplicationRecord
   # private instance methods ..................................................
 
   private
+
+  def user_should_in_forum
+    errors.add :base, :not_in_forum unless author_membership
+  end
 
   def postable_until_tomorrow
     return unless forum.preference.postable_until_tomorrow

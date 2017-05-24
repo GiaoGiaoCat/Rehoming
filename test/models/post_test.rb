@@ -4,6 +4,7 @@ class PostTest < ActiveSupport::TestCase
   setup do
     @forum = forums(:one)
     @victor = users(:victor)
+    @roc = users(:roc)
   end
   test '验证图片附件' do
     p = @forum.posts.new(content: '#我是标签# content goes here', user_id: @victor.id)
@@ -31,5 +32,11 @@ class PostTest < ActiveSupport::TestCase
 
     @victor.forum_memberships.find_by(forum: @forum).update_column(:created_at, Time.current.weeks_ago(1))
     assert p.valid?
+  end
+
+  test '用户需要在圈子中才能发帖' do
+    p = @forum.posts.new(content: '#我是标签# content goes here', user_id: @roc.id)
+    assert_not p.valid?
+    assert p.errors.key?(:base)
   end
 end
