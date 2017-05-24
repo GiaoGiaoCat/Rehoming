@@ -6,7 +6,7 @@ class Forums::PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should get index' do
-    get forum_posts_url(@forum.id), headers: @headers
+    get forum_posts_url(@forum), headers: @headers
     assert_response :success
   end
 
@@ -22,7 +22,7 @@ class Forums::PostsControllerTest < ActionDispatch::IntegrationTest
     params_data = {
       data: {
         attributes: {
-          content: '#我是标签# 合法数据',
+          content:                '#我是标签# 合法数据',
           attachments_attributes: [{ category: 'image', url: '我是url' }]
         }
       }

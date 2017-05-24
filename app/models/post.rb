@@ -16,6 +16,8 @@ class Post < ApplicationRecord
   # validations ...............................................................
   validates :content, presence: true, length: { in: 1..10_000 }
   validate :images_limitation, :video_limitation
+  validate :user_should_in_forum
+  validate :postable_until_tomorrow
   # callbacks .................................................................
   # scopes ....................................................................
   scope :by_filter, ->(filter) { by_recommended if filter == 'recommended' }
@@ -29,11 +31,24 @@ class Post < ApplicationRecord
 
   private
 
+  def user_should_in_forum
+    errors.add :base, :not_in_forum unless author_membership
+  end
+
+  def postable_until_tomorrow
+    return unless forum.preference.postable_until_tomorrow
+    errors.add :base, :postable_until_tomorrow if author_membership.created_at.next_day > Time.current
+  end
+
   def images_limitation
     errors.add :base, :too_many_images if attachments.select(&:image?).count > 9
   end
 
   def video_limitation
     errors.add :base, :too_many_videos if attachments.select(&:video?).count > 1
+  end
+
+  def author_membership
+    user.forum_memberships.find_by(forum: forum)
   end
 end

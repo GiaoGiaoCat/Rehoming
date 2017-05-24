@@ -43,10 +43,6 @@ Style/AlignHash:
 Style/AsciiComments:
   Enabled: false
 
-Style/PercentLiteralDelimiters:
-  default: ()
-  '%i': ()
-
 # Mixing the styles looks just silly.
 Style/HashSyntax:
   EnforcedStyle: ruby19_no_mixed_keys

@@ -1,71 +1,42 @@
 require 'test_helper'
 
 class PostTest < ActiveSupport::TestCase
-  test '验证内容' do
-    p = Post.new content: '', user_id: users(:victor).id, forum_id: forums(:one).id
-    assert_not p.valid?
-
-    p.content = '1'
-    assert p.valid?
-
-    p.content = '1' * 10_000
-    assert p.valid?
-
-    p.content = '1' * 10_001
-    assert_not p.valid?
+  setup do
+    @forum = forums(:one)
+    @victor = users(:victor)
+    @roc = users(:roc)
   end
-
   test '验证图片附件' do
-    p = Post.new content: 'content goes here', user_id: users(:victor).id, forum_id: forums(:one).id
-
-    9.times do |i|
-      p.attachments << Attachment.new(category: 'image', url: "#{i}*100")
-    end
-    assert_nothing_raised do
-      p.save!
-    end
+    p = @forum.posts.new(content: '#我是标签# content goes here', user_id: @victor.id)
+    9.times { |i| p.attachments << Attachment.new(category: 'image', url: "#{i}*100") }
+    assert p.save
     p.attachments << Attachment.new(category: 'image', url: 'url goes here')
     assert_not p.valid?
     assert p.errors.key?(:base)
   end
 
   test '验证视频附件' do
-    p = Post.new(
-      content:  'content goes here',
-      user_id:  users(:victor).id,
-      forum_id: forums(:one).id
-    )
-
-    1.times do |i|
-      p.attachments << Attachment.new(category: 'video', url: "#{i}*100")
-    end
-    assert_nothing_raised do
-      p.save!
-    end
+    p = @forum.posts.new(content: '👍 content goes here', user_id: @victor.id, forum_id: @forum.id)
+    1.times { |i| p.attachments << Attachment.new(category: 'video', url: "#{i}*100") }
+    assert p.save
     p.attachments << Attachment.new(category: 'video', url: 'url goes here')
     assert_not p.valid?
     assert p.errors.key?(:base)
   end
 
-  test '带标签的数据需正确持久化' do
-    assert_nothing_raised do
-      p = Post.new(
-        content:  '#我是标签# content goes here',
-        user_id:  users(:victor).id,
-        forum_id: forums(:one).id
-      )
-      p.save!
-    end
+  test '发帖需要24小时' do
+    @forum.preference.update(postable_until_tomorrow: true)
+    p = @forum.posts.new(content: '#我是标签# content goes here', user_id: @victor.id)
+    assert_not p.valid?
+    assert p.errors.key?(:base)
+
+    @victor.forum_memberships.find_by(forum: @forum).update_column(:created_at, Time.current.weeks_ago(1))
+    assert p.valid?
   end
 
-  test '带 emoji 的数据需正确持久化' do
-    assert_nothing_raised do
-      p = Post.new(
-        content:  '👍 content goes here',
-        user_id:  users(:victor).id,
-        forum_id: forums(:one).id
-      )
-      p.save!
-    end
+  test '用户需要在圈子中才能发帖' do
+    p = @forum.posts.new(content: '#我是标签# content goes here', user_id: @roc.id)
+    assert_not p.valid?
+    assert p.errors.key?(:base)
   end
 end
