@@ -1,7 +1,9 @@
 class Forums::MembershipRequestsController < ApplicationController
+  serialization_scope :forum
+
   def index
     load_membership_requests
-    render json: @membership_requests
+    render json: @membership_requests, include: [:user, :forum], each_serializer: Forums::MembershipRequestSerializer
   end
 
   def update
