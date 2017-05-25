@@ -5,6 +5,13 @@ class ForumTest < ActiveSupport::TestCase
     @forum = forums(:one)
   end
 
+  test 'ensure_preference after create forum' do
+    assert_difference -> { Forums::Preference.count } do
+      @preference = Forum.create(name: 'test forum', category: 'wenyi')
+    end
+    assert @preference
+  end
+
   test 'forum load members should be check preference at first' do
     refute_empty @forum.members
 

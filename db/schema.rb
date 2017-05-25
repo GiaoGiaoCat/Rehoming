@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523134918) do
+ActiveRecord::Schema.define(version: 20170525025420) do
 
   create_table "attachments", force: :cascade do |t|
     t.string "attachable_type"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20170523134918) do
   create_table "forum_memberships", force: :cascade do |t|
     t.integer "forum_id"
     t.integer "user_id"
-    t.string "nickname"
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -55,17 +54,7 @@ ActiveRecord::Schema.define(version: 20170523134918) do
     t.index ["user_id"], name: "index_forum_memberships_on_user_id"
   end
 
-  create_table "forums", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
-    t.text "cover"
-    t.integer "category", null: false
-    t.string "background_color"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "forums_preferences", force: :cascade do |t|
+  create_table "forum_preferences", force: :cascade do |t|
     t.integer "forum_id", null: false
     t.boolean "member_list_protected", default: false
     t.boolean "postable_until_tomorrow", default: false
@@ -74,6 +63,16 @@ ActiveRecord::Schema.define(version: 20170523134918) do
     t.boolean "direct_message_allowed", default: true
     t.boolean "membership_approval_needed", default: false
     t.integer "postable_role", default: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "forums", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.text "cover"
+    t.integer "category", null: false
+    t.string "background_color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -100,6 +99,16 @@ ActiveRecord::Schema.define(version: 20170523134918) do
     t.index ["recommended"], name: "index_posts_on_recommended"
     t.index ["sticky"], name: "index_posts_on_sticky"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "user_forum_preferences", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "forum_id"
+    t.string "nickname"
+    t.boolean "follow_topics_on_mention", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["forum_id", "user_id"], name: "user_forum_preferences_index"
   end
 
   create_table "users", force: :cascade do |t|

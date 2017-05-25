@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :favorite_posts, through: :favorites, source: :favorable, source_type: 'Post'
   has_many :forum_memberships, class_name: 'Forums::Membership', foreign_key: 'user_id'
   has_many :forums, through: :forum_memberships
+  has_many :forum_preferences, class_name: 'Users::ForumPreference'
   # validations ...............................................................
   validates :unionid, presence: true, uniqueness: true
   validates :nickname, presence: true

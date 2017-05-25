@@ -11,6 +11,14 @@ yuki = User.create(unionid: 'u3YBkQDBVetKaVJknprv', nickname: 'Yuki', headimgurl
 roc = User.create(unionid: 'RwcP9YchpgxLDgzwAjmb', nickname: 'Roc', headimgurl: 'ba.jpg')
 
 forum_a = Forum.create(name: 'Free Group', category: 10)
+
+victor.join_forum(forum_a)
+yuki.join_forum(forum_a)
+
+
+victor.forum_memberships.find_by(forum: forum_a).preference.update(nickname: '老王')
+yuki.forum_memberships.find_by(forum: forum_a).preference.update(nickname: '小陈')
+
 post = Post.create(user_id: victor.id, forum_id: forum_a.id, content: 'hahaha', sticky: true, recommended: true)
 post.attachments.create(category: 'image', url: 'http://www.baidu.com/a.jpg')
 post.attachments.create(category: 'image', url: 'http://www.baidu.com/b.jpg')
@@ -29,9 +37,3 @@ end
 victor.favor post
 victor.like post
 yuki.like post
-
-Forums::Membership.create(forum_id: forum_a.id, user_id: victor.id)
-victor.forum_memberships.find_by(forum_id: forum_a.id).update(nickname: '老王')
-
-Forums::Membership.create(forum_id: forum_a.id, user_id: yuki.id)
-yuki.forum_memberships.find_by(forum_id: forum_a.id).update(nickname: '小陈')
