@@ -1,4 +1,5 @@
 class PostSerializer < ApplicationSerializer
+
   attributes :content
   attribute :sticky, key: :pinned
 
