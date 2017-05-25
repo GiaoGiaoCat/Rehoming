@@ -9,10 +9,11 @@ class Forums::MembershipTest < ActiveSupport::TestCase
   test 'ensure_preference after create membership' do
     assert_difference -> { Users::ForumPreference.count } do
       @roc.join_forum(@forum)
+      @membership = @roc.forum_memberships.find_by(forum: @forum)
+      @membership.accept
     end
-    membership = @roc.forum_memberships.find_by(forum: @forum)
-    assert membership
-    assert membership.preference
-    assert_equal @roc.nickname, membership.preference.nickname
+
+    assert @membership.preference
+    assert_equal @roc.nickname, @membership.preference.nickname
   end
 end
