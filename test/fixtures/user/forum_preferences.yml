@@ -1,2 +1,9 @@
 one:
+  user: victor
   forum: one
+  nickname: 'victor'
+
+two:
+  user: yuki
+  forum: one
+  nickname: 'yuki'
