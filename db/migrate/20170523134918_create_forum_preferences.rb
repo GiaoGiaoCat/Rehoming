@@ -1,6 +1,6 @@
-class CreateForumsPreferences < ActiveRecord::Migration[5.1]
+class CreateForumPreferences < ActiveRecord::Migration[5.1]
   def change
-    create_table :forums_preferences do |t|
+    create_table :forum_preferences do |t|
       t.references :forum, null: false, index: false
       t.boolean :member_list_protected, default: false, comment: '是否关闭圈子成员列表'
       t.boolean :postable_until_tomorrow, default: false, comment: '新成员一天后可以发主题'
