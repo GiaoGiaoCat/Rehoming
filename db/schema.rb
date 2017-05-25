@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20170525025420) do
     t.integer "forum_id"
     t.integer "user_id"
     t.integer "role"
+    t.integer "state", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["forum_id", "user_id"], name: "forum_memberships_index"

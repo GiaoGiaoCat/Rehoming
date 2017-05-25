@@ -16,6 +16,9 @@ victor.join_forum(forum_a)
 yuki.join_forum(forum_a)
 
 
+victor.forum_memberships.find_by(forum: forum_a).accept
+yuki.forum_memberships.find_by(forum: forum_a).accept
+
 victor.forum_memberships.find_by(forum: forum_a).preference.update(nickname: '老王')
 yuki.forum_memberships.find_by(forum: forum_a).preference.update(nickname: '小陈')
 

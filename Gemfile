@@ -35,6 +35,8 @@ gem 'jwt'
 gem 'figaro'
 # Make any Ruby object quack like ActiveRecord
 gem 'active_type', '~> 0.7.0'
+# AASM - State machines for Ruby classes
+gem 'aasm'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
