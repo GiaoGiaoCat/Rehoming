@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
     resources :forums, only: [:show] do
       scope module: :forums do
+        resources :membership_requests, only: %i(index update)
         resource :membership, only: %i(create destroy)
         resource :setting, only: [:update], controller: 'preferences'
         resources :members, only: [:index]

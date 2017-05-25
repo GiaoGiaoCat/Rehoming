@@ -16,6 +16,7 @@ class Forum < ApplicationRecord
   # relationships .............................................................
   has_one :preference, class_name: 'Forums::Preference'
   has_many :forum_memberships, class_name: 'Forums::Membership', foreign_key: 'forum_id'
+  has_many :membership_requests, class_name: 'Forums::MembershipRequest', foreign_key: 'forum_id'
   has_many :users, through: :forum_memberships
   has_many :posts
   # validations ...............................................................
