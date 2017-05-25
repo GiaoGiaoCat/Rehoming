@@ -10,6 +10,7 @@ class Forums::Membership < ApplicationRecord
   # validations ...............................................................
   validates :forum_id, uniqueness: { scope: :user_id }
   # callbacks .................................................................
+  after_create :ensure_preference
   # scopes ....................................................................
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
   enum role: {
@@ -20,8 +21,18 @@ class Forums::Membership < ApplicationRecord
     lahei:           50  # 拉黑
   }
   encrypted_id key: 'MhnjnhNQZxubL9'
+  delegate :forum_preferences, to: :user
   # class methods .............................................................
   # public instance methods ...................................................
+  def preference
+    forum_preferences.find_by(forum: forum)
+  end
   # protected instance methods ................................................
   # private instance methods ..................................................
+
+  private
+
+  def ensure_preference
+    forum_preferences.create(forum: forum, nickname: user.nickname)
+  end
 end
