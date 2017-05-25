@@ -14,7 +14,7 @@ class Forums::PreferencesControllerTest < ActionDispatch::IntegrationTest
       }
     }
     assert_changes -> { @forum.preference.reload.postable_until_tomorrow } do
-      put forum_preference_url(@forum), params: params_data, headers: @headers
+      put forum_setting_url(@forum), params: params_data, headers: @headers
     end
 
     assert_response :success
