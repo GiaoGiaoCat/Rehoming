@@ -2,9 +2,9 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   setup do
-    @forum = forums(:one)
-    @vitor = users(:victor)
+    @victor = users(:victor)
     @roc = users(:roc)
+    @forum = forums(:one)
   end
 
   test 'join forum should create a membership request with active status' do
@@ -26,21 +26,21 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'quit forum should change membership status to exited' do
-    assert_difference -> { @vitor.forum_memberships.active.count }, -1 do
-      @vitor.quit_forum(@forum)
+    assert_difference -> { @victor.forum_memberships.active.count }, -1 do
+      @victor.quit_forum(@forum)
     end
 
-    membership = @vitor.forum_memberships.find_by(forum: @forum)
+    membership = @victor.forum_memberships.find_by(forum: @forum)
     assert_equal 'exited', membership.status
   end
 
   test 'user can join forum again after quit' do
-    assert_difference -> { @vitor.forum_memberships.active.count }, -1 do
-      @vitor.quit_forum(@forum)
+    assert_difference -> { @victor.forum_memberships.active.count }, -1 do
+      @victor.quit_forum(@forum)
     end
 
-    assert_difference -> { @vitor.forum_memberships.active.count } do
-      @vitor.join_forum(@forum)
+    assert_difference -> { @victor.forum_memberships.active.count } do
+      @victor.join_forum(@forum)
     end
   end
 end

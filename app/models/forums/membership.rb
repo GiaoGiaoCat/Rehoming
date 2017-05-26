@@ -27,6 +27,12 @@ class Forums::Membership < ApplicationRecord
   def preference
     forum_preferences.find_by(forum: forum)
   end
+
+  def join_again
+    # ignore request when status is ignored
+    pend! if rejected?
+    rejoin! if exited?
+  end
   # protected instance methods ................................................
   # private instance methods ..................................................
 end

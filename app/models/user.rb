@@ -37,9 +37,9 @@ class User < ApplicationRecord
   private
 
   def rejoin_membership_or_create_membership_request(forum)
-    membership = forum_memberships.find_by(forum: forum)
-    return membership.rejoin! if membership
-    membership_requests.create(forum: forum)
+    forum_membership = forum_memberships.find_by(forum: forum)
+    return membership_requests.create(forum: forum) unless forum_membership
+    forum_membership.join_again
   end
 
   def exit_membership(forum)

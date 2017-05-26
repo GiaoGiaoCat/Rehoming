@@ -43,12 +43,17 @@ module MembershipState
       event :rejoin do
         transitions from: :exited, to: :active
       end
+
+      event :pend do
+        transitions from: :rejected, to: :pending
+      end
     end
   end
 
   private
 
   def ensure_preference
-    forum_preferences.create(forum: forum, nickname: user.nickname)
+    preference = forum_preferences.find_by(forum: forum)
+    forum_preferences.create(forum: forum, nickname: user.nickname) unless preference
   end
 end
