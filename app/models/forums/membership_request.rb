@@ -5,6 +5,8 @@ class Forums::MembershipRequest < ActiveType::Record[Forums::Membership]
 
   before_create :auto_approval, unless: :membership_approval_needed?
 
+  default_scope -> { pending }
+
   delegate :membership_approval_needed?, to: :forum
 
   def update_status

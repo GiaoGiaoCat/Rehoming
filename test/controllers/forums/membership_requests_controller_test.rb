@@ -5,8 +5,16 @@ class Forums::MembershipRequestsControllerTest < ActionDispatch::IntegrationTest
     @forum = forums(:two)
     @roc = users(:roc)
   end
+
   test 'should get index' do
     get forum_membership_requests_url(@forum), headers: @headers
+    assert_response :success
+  end
+
+  test 'should create membership request' do
+    assert_difference -> { Forums::MembershipRequest.count } do
+      post forum_membership_requests_url(@forum), headers: @headers
+    end
     assert_response :success
   end
 

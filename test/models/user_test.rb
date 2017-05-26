@@ -7,12 +7,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'join forum should create a membership request with active status' do
-    assert_difference -> { @roc.membership_requests.count } do
+    assert_difference -> { @roc.forum_memberships.count } do
       @roc.join_forum(forums(:one))
     end
 
-    membership_request = forums(:one).membership_requests.find_by(user: @roc)
-    assert_equal 'active', membership_request.status
+    forum_membership = forums(:one).forum_memberships.find_by(user: @roc)
+    assert_equal 'active', forum_membership.status
   end
 
   test 'join forum should create a membership request with pending status' do

@@ -6,6 +6,11 @@ class Forums::MembershipRequestsController < ApplicationController
     render json: @membership_requests, include: %i(user forum), each_serializer: Forums::MembershipRequestSerializer
   end
 
+  def create
+    @current_user.join_forum(forum)
+    head :no_content
+  end
+
   def update
     build_membership_request
     if @membership_request.update_status
