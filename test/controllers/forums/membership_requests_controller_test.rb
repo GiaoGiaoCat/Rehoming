@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Forums::MembershipRequestsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @forum = forums(:one)
+    @forum = forums(:two)
     @roc = users(:roc)
   end
   test 'should get index' do

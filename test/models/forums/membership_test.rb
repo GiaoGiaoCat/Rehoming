@@ -10,7 +10,6 @@ class Forums::MembershipTest < ActiveSupport::TestCase
     assert_difference -> { Users::ForumPreference.count } do
       @roc.join_forum(@forum)
       @membership = @roc.forum_memberships.find_by(forum: @forum)
-      @membership.accept
     end
 
     assert @membership.preference
