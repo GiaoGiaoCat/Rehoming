@@ -21,7 +21,7 @@ module MembershipState
       state :rejected, :ignored, :blocked, :active, :lapsed, :suspended, :archived, :exited
 
       event :accept, after: :ensure_preference do
-        transitions from: :pending, to: :active
+        transitions from: [:pending, :exited], to: :active
       end
 
       event :reject do
@@ -38,6 +38,10 @@ module MembershipState
 
       event :quit do
         transitions from: :active, to: :exited
+      end
+
+      event :rejoin do
+        transitions from: :exited, to: :active
       end
     end
   end

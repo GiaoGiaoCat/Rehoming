@@ -25,16 +25,25 @@ class User < ApplicationRecord
   # class methods .............................................................
   # public instance methods ...................................................
   def join_forum(forum)
-    membership = forum_memberships.find_by(forum: forum)
-    return membership.try_renew if membership
-    membership_requests.create(forum: forum)
+    rejoin_membership_or_create_membership_request(forum)
   end
 
   def quit_forum(forum)
-    membership = forum_memberships.active.find_by(forum: forum)
-    return unless membership
-    membership.quit!
+    exit_membership(forum)
   end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
+  private
+
+  def rejoin_membership_or_create_membership_request(forum)
+    membership = forum_memberships.find_by(forum: forum)
+    return membership.rejoin! if membership
+    membership_requests.create(forum: forum)
+  end
+
+  def exit_membership(forum)
+    membership = forum_memberships.active.find_by(forum: forum)
+    membership&.quit!
+  end
 end
