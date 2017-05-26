@@ -43,7 +43,7 @@ class Forums::MembershipRequestTest < ActiveSupport::TestCase
     end
 
     @membership_request.action = 'accept'
-    assert @membership_request.save
+    assert @membership_request.update_status
     assert_equal 'active', @membership_request.status
   end
 

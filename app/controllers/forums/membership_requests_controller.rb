@@ -7,8 +7,8 @@ class Forums::MembershipRequestsController < ApplicationController
   end
 
   def update
-    build_membership_requests
-    if @membership_request.save
+    build_membership_request
+    if @membership_request.update_status
       head :no_content
     else
       render json: @membership_request.errors.messages, status: :bad_request
@@ -26,7 +26,7 @@ class Forums::MembershipRequestsController < ApplicationController
   end
 
   def build_membership_request
-    @membership_request = forum.membership_requests
+    @membership_request = forum.membership_requests.find_by_encrypted_id(params[:id])
     @membership_request.attributes = membership_request_params
   end
 
