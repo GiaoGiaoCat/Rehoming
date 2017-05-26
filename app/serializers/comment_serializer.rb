@@ -1,5 +1,6 @@
 class CommentSerializer < ApplicationSerializer
-  type 'comments'
+  cache key: 'comments'
+
   attributes :content
 
   belongs_to :author

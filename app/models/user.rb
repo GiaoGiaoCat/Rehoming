@@ -10,7 +10,8 @@ class User < ApplicationRecord
   has_many :posts
   has_many :favorite_posts, through: :favorites, source: :favorable, source_type: 'Post'
   has_many :forum_memberships, class_name: 'Forums::Membership', foreign_key: 'user_id'
-  has_many :forums, through: :forum_memberships
+  has_many :forums, -> { merge(Forums::Membership.active) }, through: :forum_memberships
+  has_many :membership_requests, class_name: 'Forums::MembershipRequest', foreign_key: 'user_id'
   has_many :forum_preferences, class_name: 'Users::ForumPreference'
   # validations ...............................................................
   validates :unionid, presence: true, uniqueness: true
@@ -24,14 +25,25 @@ class User < ApplicationRecord
   # class methods .............................................................
   # public instance methods ...................................................
   def join_forum(forum)
-    return if forums.include?(forum)
-    forums.append forum
+    rejoin_membership_or_create_membership_request(forum)
   end
 
   def quit_forum(forum)
-    return unless forums.include?(forum)
-    forums.delete forum
+    exit_membership(forum)
   end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
+  private
+
+  def rejoin_membership_or_create_membership_request(forum)
+    forum_membership = forum_memberships.find_by(forum: forum)
+    return membership_requests.create(forum: forum) unless forum_membership
+    forum_membership.join_again
+  end
+
+  def exit_membership(forum)
+    membership = forum_memberships.active.find_by(forum: forum)
+    membership&.quit!
+  end
 end

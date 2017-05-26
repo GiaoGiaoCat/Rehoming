@@ -1,7 +1,9 @@
 one:
   user: victor
   forum: one
+  status: 40
 
 two:
   user: yuki
   forum: one
+  status: 40

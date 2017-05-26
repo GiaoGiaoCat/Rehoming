@@ -16,6 +16,9 @@ victor.join_forum(forum_a)
 yuki.join_forum(forum_a)
 
 
+victor.forum_memberships.find_by(forum: forum_a).accept
+yuki.forum_memberships.find_by(forum: forum_a).accept
+
 victor.forum_memberships.find_by(forum: forum_a).preference.update(nickname: '老王')
 yuki.forum_memberships.find_by(forum: forum_a).preference.update(nickname: '小陈')
 
@@ -28,7 +31,6 @@ Post.create(user_id: yuki.id, forum_id: forum_a.id, content: 'cool man')
 
 comment = post.comments.create(user: victor, content: 'commment with attachments')
 comment.comments.create(user: yuki, content: 'commment with comments 1')
-comment.comments.create(user: roc, content: 'commment with comments 2')
 comment.attachments.create(category: 'image', url: 'http://www.baidu.com/hello.jpg')
 15.times do |i|
   post.comments.create(user: victor, content: "this is the #{i} commment.")
