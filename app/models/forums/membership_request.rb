@@ -1,8 +1,8 @@
 class Forums::MembershipRequest < ActiveType::Record[Forums::Membership]
   attribute :action, :string
 
-  validates :action, presence: true, inclusion: { in: %w(accept reject ignore) }
-  
+  validates :action, presence: true, inclusion: { in: %w[accept reject ignore] }
+
   default_scope -> { pending }
 
   def save

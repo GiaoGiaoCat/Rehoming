@@ -3,7 +3,7 @@ class Forums::MembershipRequestsController < ApplicationController
 
   def index
     load_membership_requests
-    render json: @membership_requests, include: [:user, :forum], each_serializer: Forums::MembershipRequestSerializer
+    render json: @membership_requests, include: %i(user forum), each_serializer: Forums::MembershipRequestSerializer
   end
 
   def update
