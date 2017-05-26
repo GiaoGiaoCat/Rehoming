@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
     concern :favorable do |options|
       # NOTE: `favorites` is noun NOT plurality.
-      resource :favorites, :only => %i(create destroy), **options
+      resource :favorite, :only => %i(create destroy), **options
     end
     concern :recommendable do |options|
       resource :recommendation, :only => %i(create destroy), **options
