@@ -12,7 +12,8 @@ module MembershipState
       active:    40,
       lapsed:    50,
       suspended: 60,
-      archived:  70
+      archived:  70,
+      exited:    80
     }
 
     aasm column: :status, enum: true do
@@ -33,6 +34,10 @@ module MembershipState
 
       event :block do
         transitions from: :active, to: :blocked
+      end
+
+      event :exit do
+        transitions from: :active, to: :exited
       end
     end
   end
