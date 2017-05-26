@@ -13,7 +13,7 @@ class Forums::MembershipRequestTest < ActiveSupport::TestCase
     end
 
     assert @membership_request.accept
-    assert_equal 'active', @membership_request.state
+    assert_equal 'active', @membership_request.status
   end
 
   test 'reject membership request' do
@@ -23,7 +23,7 @@ class Forums::MembershipRequestTest < ActiveSupport::TestCase
     end
 
     assert @membership_request.reject
-    assert_equal 'rejected', @membership_request.state
+    assert_equal 'rejected', @membership_request.status
   end
 
   test 'ignore membership request' do
@@ -33,7 +33,7 @@ class Forums::MembershipRequestTest < ActiveSupport::TestCase
     end
 
     assert @membership_request.ignore
-    assert_equal 'ignored', @membership_request.state
+    assert_equal 'ignored', @membership_request.status
   end
 
   test 'save membership request run state machines' do
@@ -44,7 +44,7 @@ class Forums::MembershipRequestTest < ActiveSupport::TestCase
 
     @membership_request.action = 'accept'
     assert @membership_request.save
-    assert_equal 'active', @membership_request.state
+    assert_equal 'active', @membership_request.status
   end
 
   test 'can not save membership request with invalid state' do
@@ -56,6 +56,6 @@ class Forums::MembershipRequestTest < ActiveSupport::TestCase
     @membership_request.action = 'xyz'
     assert_not @membership_request.valid?
     assert @membership_request.errors.key? :action
-    assert_equal 'pending', @membership_request.state
+    assert_equal 'pending', @membership_request.status
   end
 end

@@ -4,7 +4,7 @@ module MembershipState
   included do
     include AASM
 
-    enum state: {
+    enum status: {
       pending:   0,
       rejected:  10,
       ignored:   20,
@@ -15,7 +15,7 @@ module MembershipState
       archived:  70
     }
 
-    aasm column: :state, enum: true do
+    aasm column: :status, enum: true do
       state :pending, initial: true
       state :rejected, :ignored, :blocked, :active, :lapsed, :suspended, :archived
 
