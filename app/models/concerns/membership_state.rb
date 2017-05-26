@@ -18,7 +18,7 @@ module MembershipState
 
     aasm column: :status, enum: true do
       state :pending, initial: true
-      state :rejected, :ignored, :blocked, :active, :lapsed, :suspended, :archived
+      state :rejected, :ignored, :blocked, :active, :lapsed, :suspended, :archived, :exited
 
       event :accept, after: :ensure_preference do
         transitions from: :pending, to: :active
@@ -36,7 +36,7 @@ module MembershipState
         transitions from: :active, to: :blocked
       end
 
-      event :exit do
+      event :quit do
         transitions from: :active, to: :exited
       end
     end
