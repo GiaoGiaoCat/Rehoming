@@ -15,4 +15,14 @@ class Forums::BlockedMembershipTest < ActiveSupport::TestCase
 
     assert_equal 'blocked', @membership.status
   end
+
+  test 'decrypt user id' do
+    assert_difference -> { @forum.forum_memberships.active.count }, -1 do
+      blocking = Forums::BlockedMembership.new(forum: @forum, user_id: @victor.to_param)
+      blocking.save
+      @membership = @forum.forum_memberships.find_by(user: @victor)
+    end
+
+    assert_equal 'blocked', @membership.status
+  end
 end

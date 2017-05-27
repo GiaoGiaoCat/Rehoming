@@ -37,8 +37,10 @@ Rails.application.routes.draw do
     resources :forums, only: [:show] do
       scope module: :forums do
         resource :membership, only: :destroy
-        resource :setting, only: [:update], controller: 'preferences'
         resources :membership_requests, only: %i(index create update)
+        resource :blocked_member, only: [:create, :destroy]
+
+        resource :setting, only: [:update], controller: 'preferences'
         resources :members, only: [:index]
         resources :posts, only: %i(index create)
       end
