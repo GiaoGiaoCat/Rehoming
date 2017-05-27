@@ -5,13 +5,11 @@ class Forums::MemberSerializer < ApplicationSerializer
   attribute :nickname
   attribute :status
 
+  delegate :status, to: :forum_membership
+
   def nickname
     return nickname unless forum
     forum_membership.preference.nickname
-  end
-
-  def status
-    forum_membership.status
   end
 
   private
