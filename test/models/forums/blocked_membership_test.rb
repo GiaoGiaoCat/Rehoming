@@ -6,7 +6,7 @@ class Forums::BlockedMembershipTest < ActiveSupport::TestCase
     @forum = forums(:one)
   end
 
-  test 'block a membership' do
+  test 'block a member' do
     assert_difference -> { @forum.forum_memberships.active.count }, -1 do
       blocking = Forums::BlockedMembership.new(forum: @forum, user: @victor)
       blocking.save
@@ -16,7 +16,7 @@ class Forums::BlockedMembershipTest < ActiveSupport::TestCase
     assert_equal 'blocked', @membership.status
   end
 
-  test 'decrypt user id' do
+  test 'block a member with decrypt user id' do
     assert_difference -> { @forum.forum_memberships.active.count }, -1 do
       blocking = Forums::BlockedMembership.new(forum: @forum, user_id: @victor.to_param)
       blocking.save
@@ -24,5 +24,20 @@ class Forums::BlockedMembershipTest < ActiveSupport::TestCase
     end
 
     assert_equal 'blocked', @membership.status
+  end
+
+  test 'unblock a membership' do
+
+    assert_difference -> { @forum.forum_memberships.blocked.count } do
+      Forums::BlockedMembership.create(forum: @forum, user: @victor)
+    end
+
+    assert_difference -> { @forum.forum_memberships.active.count } do
+      blocking = Forums::BlockedMembership.new(forum: @forum, user_id: @victor.to_param)
+      blocking.destroy
+    end
+
+    membership = @forum.forum_memberships.find_by(user: @victor)
+    assert_equal 'active', membership.status
   end
 end

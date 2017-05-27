@@ -47,6 +47,10 @@ module MembershipState
       event :pend do
         transitions from: :rejected, to: :pending
       end
+
+      event :unblock do
+        transitions from: :blocked, to: :active
+      end
     end
   end
 
