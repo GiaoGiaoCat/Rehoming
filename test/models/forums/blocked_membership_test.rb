@@ -27,7 +27,6 @@ class Forums::BlockedMembershipTest < ActiveSupport::TestCase
   end
 
   test 'unblock a membership' do
-
     assert_difference -> { @forum.forum_memberships.blocked.count } do
       Forums::BlockedMembership.create(forum: @forum, user: @victor)
     end

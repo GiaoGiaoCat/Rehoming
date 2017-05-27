@@ -49,6 +49,7 @@ class Post < ApplicationRecord
   end
 
   def author_membership
-    user.forum_memberships.active.find_by(forum: forum)
+    membership = user.forum_memberships.find_by(forum: forum)
+    membership if membership&.active? || membership&.blocked?
   end
 end
