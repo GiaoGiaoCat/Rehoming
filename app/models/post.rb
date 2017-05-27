@@ -49,6 +49,6 @@ class Post < ApplicationRecord
   end
 
   def author_membership
-    user.forum_memberships.find_by(forum: forum)
+    user.forum_memberships.active.find_by(forum: forum)
   end
 end

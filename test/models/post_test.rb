@@ -34,9 +34,13 @@ class PostTest < ActiveSupport::TestCase
     assert p.valid?
   end
 
-  test '用户需要在圈子中才能发帖' do
+  test '用户需要在圈子中，并且会员状态为 active 才能发帖' do
     p = @forum.posts.new(content: '#我是标签# content goes here', user_id: @roc.id)
     assert_not p.valid?
     assert p.errors.key?(:base)
+
+    @victor.quit_forum(@forum)
+    p = @forum.posts.new(content: '#我是标签# content goes here', user_id: @victor.id)
+    assert_not p.valid?
   end
 end
