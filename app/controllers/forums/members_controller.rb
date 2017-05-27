@@ -3,7 +3,7 @@ class Forums::MembersController < ApplicationController
 
   def index
     load_members
-    render json: @members
+    render json: @members, each_serializer: Forums::MemberSerializer
   end
 
   private
@@ -13,6 +13,6 @@ class Forums::MembersController < ApplicationController
   end
 
   def load_members
-    @members = forum.members
+    @members = forum.members.by_filter(params[:filter])
   end
 end
