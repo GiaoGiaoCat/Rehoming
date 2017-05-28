@@ -40,18 +40,6 @@ class CommentTest < ActiveSupport::TestCase
     end
   end
 
-  test '可以对 comment 进行回复' do
-    assert_difference '@comment.comments.count' do
-      f = Comment.new(
-        commentable: @comment,
-        user:        @victor,
-        content:     'content'
-      )
-      assert f.valid?
-      assert f.save
-    end
-  end
-
   test 'ensure_forum' do
     @new_comment.attachments.new(url: 'http://www.baidu.com/hello.jpg', category: 10)
     assert @new_comment.save

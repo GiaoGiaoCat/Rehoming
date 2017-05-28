@@ -5,7 +5,10 @@ class CreateComments < ActiveRecord::Migration[5.1]
       t.references :user, index: true
       t.text       :content
       t.references :forum, index: true
+      t.integer    :replied_user_id
       t.timestamps null: false
     end
+
+    add_index :comments, [:replied_user_id], name: 'comments_replied_user_id_index'
   end
 end
