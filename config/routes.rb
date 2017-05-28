@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
     concern :favorable do |options|
       # NOTE: `favorites` is noun NOT plurality.
-      resource :favorites, :only => %i(create destroy), **options
+      resource :favorite, :only => %i(create destroy), **options
     end
     concern :recommendable do |options|
       resource :recommendation, :only => %i(create destroy), **options
@@ -37,8 +37,10 @@ Rails.application.routes.draw do
     resources :forums, only: [:show] do
       scope module: :forums do
         resource :membership, only: :destroy
-        resource :setting, only: [:update], controller: 'preferences'
         resources :membership_requests, only: %i(index create update)
+        resource :blocked_member, only: %i(create destroy)
+
+        resource :setting, only: [:update], controller: 'preferences'
         resources :members, only: [:index]
         resources :posts, only: %i(index create)
       end

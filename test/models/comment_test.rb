@@ -51,4 +51,10 @@ class CommentTest < ActiveSupport::TestCase
       assert f.save
     end
   end
+
+  test 'ensure_forum' do
+    @new_comment.attachments.new(url: 'http://www.baidu.com/hello.jpg', category: 10)
+    assert @new_comment.save
+    assert_equal @post.forum, @new_comment.forum
+  end
 end

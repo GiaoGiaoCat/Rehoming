@@ -1,4 +1,12 @@
 class Forums::MembershipsController < ApplicationController
-  include ActsAsAction
-  define_action_names verb: :join_forum, unverb: :quit_forum
+  def destroy
+    @current_user.quit_forum(forum)
+    head :no_content
+  end
+
+  private
+
+  def forum
+    @forum = Forum.find(params[:forum_id])
+  end
 end

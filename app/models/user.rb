@@ -19,6 +19,7 @@ class User < ApplicationRecord
   validates :headimgurl, presence: true
   # callbacks .................................................................
   # scopes ....................................................................
+  scope :by_filter, ->(filter) { joins(:forum_memberships).merge(Forums::Membership.blocked) if filter == 'blocked' }
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
   encrypted_id key: 'gaeexiHdLTQ8Fg'
   serialize :raw_info, Hash
@@ -32,18 +33,22 @@ class User < ApplicationRecord
     exit_membership(forum)
   end
 
+  def membership_by_forum(forum)
+    forum_memberships.find_by(forum: forum)
+  end
   # protected instance methods ................................................
   # private instance methods ..................................................
+
   private
 
   def rejoin_membership_or_create_membership_request(forum)
-    forum_membership = forum_memberships.find_by(forum: forum)
+    forum_membership = membership_by_forum(forum)
     return membership_requests.create(forum: forum) unless forum_membership
     forum_membership.join_again
   end
 
   def exit_membership(forum)
-    membership = forum_memberships.active.find_by(forum: forum)
-    membership&.quit!
+    membership = membership_by_forum(forum)
+    membership.quit! if membership&.active?
   end
 end

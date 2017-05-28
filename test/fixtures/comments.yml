@@ -2,7 +2,9 @@ one:
   user: one
   commentable: one
   content: 'comment one content goes here'
+  forum: one
 two:
   user: one
   commentable: one
   content: 'comment two content goes here'
+  forum: one
