@@ -33,8 +33,12 @@ class User < ApplicationRecord
     exit_membership(forum)
   end
 
+  def forum_membership(forum)
+    forum_memberships.find_by(forum: forum)
+  end
   # protected instance methods ................................................
   # private instance methods ..................................................
+
   private
 
   def rejoin_membership_or_create_membership_request(forum)

@@ -8,6 +8,8 @@ class Post < ApplicationRecord
   # relationships .............................................................
   belongs_to :forum
   belongs_to :user
+  belongs_to :membership, default: -> { joins(:forum) },
+             class_name: 'Forums::Membership', foreign_key: 'user_id', primary_key: 'user_id'
   belongs_to :author, class_name: 'User', foreign_key: :user_id
   has_many :attachments, as: :attachable
   has_many :comments, as: :commentable
@@ -20,7 +22,13 @@ class Post < ApplicationRecord
   validate :postable_until_tomorrow
   # callbacks .................................................................
   # scopes ....................................................................
+  scope :active, -> { joins(:membership).where(forum_memberships: { status: Forums::Membership.statuses[:active] }) }
   scope :by_filter, ->(filter) { by_recommended if filter == 'recommended' }
+  scope :with_blocked, lambda { |user|
+    active.or(
+      joins(:membership).where(forum_memberships: { status: Forums::Membership.statuses[:blocked], user_id: user.id })
+    )
+  }
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
   accepts_nested_attributes_for :attachments
   encrypted_id key: 'kwXKxc3zRH3UFz'
