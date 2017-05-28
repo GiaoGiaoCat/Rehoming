@@ -1,5 +1,5 @@
 class Forums::MembershipRequestsController < ApplicationController
-  serialization_scope :forum
+  serialization_scope :current_forum
 
   def index
     load_membership_requests
@@ -7,7 +7,7 @@ class Forums::MembershipRequestsController < ApplicationController
   end
 
   def create
-    @current_user.join_forum(forum)
+    @current_user.join_forum(current_forum)
     head :no_content
   end
 
@@ -22,16 +22,16 @@ class Forums::MembershipRequestsController < ApplicationController
 
   private
 
-  def forum
-    @forum = Forum.find(params[:forum_id])
+  def current_forum
+    @forum ||= Forum.find(params[:forum_id])
   end
 
   def load_membership_requests
-    @membership_requests = forum.membership_requests
+    @membership_requests = current_forum.membership_requests
   end
 
   def build_membership_request
-    @membership_request = forum.membership_requests.find_by_encrypted_id(params[:id])
+    @membership_request = current_forum.membership_requests.find_by_encrypted_id(params[:id])
     @membership_request.attributes = membership_request_params
   end
 

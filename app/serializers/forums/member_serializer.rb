@@ -8,13 +8,13 @@ class Forums::MemberSerializer < ApplicationSerializer
   delegate :status, to: :forum_membership
 
   def nickname
-    return nickname unless forum
+    return nickname unless current_forum
     forum_membership.preference.nickname
   end
 
   private
 
   def forum_membership
-    object.forum_memberships.find_by(forum: forum)
+    object.forum_memberships.find_by(forum: current_forum)
   end
 end
