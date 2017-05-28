@@ -19,6 +19,6 @@ module CommentableResources
   end
 
   def comment_params
-    params.require(:data).permit(attributes: [:content, attachments_attributes: %i(category url)])
+    params.require(:data).permit(attributes: [:content, :replied_user_id, attachments_attributes: %i(category url)])
   end
 end

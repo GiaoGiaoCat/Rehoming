@@ -31,7 +31,7 @@ Rails.application.routes.draw do
     end
 
     resources :comments, only: [] do
-      %i(likeable commentable).each { |r| concerns r, module: :comments }
+      %i(likeable).each { |r| concerns r, module: :comments }
     end
 
     resources :forums, only: [:show] do
