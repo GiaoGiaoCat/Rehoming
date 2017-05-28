@@ -33,7 +33,7 @@ class User < ApplicationRecord
     exit_membership(forum)
   end
 
-  def forum_membership(forum)
+  def membership_by_forum(forum)
     forum_memberships.find_by(forum: forum)
   end
   # protected instance methods ................................................
@@ -42,13 +42,13 @@ class User < ApplicationRecord
   private
 
   def rejoin_membership_or_create_membership_request(forum)
-    forum_membership = forum_memberships.find_by(forum: forum)
+    forum_membership = membership_by_forum(forum)
     return membership_requests.create(forum: forum) unless forum_membership
     forum_membership.join_again
   end
 
   def exit_membership(forum)
-    membership = forum_memberships.active.find_by(forum: forum)
-    membership&.quit!
+    membership = membership_by_forum(forum)
+    membership.quit! if membership&.active?
   end
 end

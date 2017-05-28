@@ -22,8 +22,7 @@ class Forums::PostsController < ApplicationController
   end
 
   def load_posts
-    posts = current_forum.posts.by_filter(params[:filter])
-    @posts = current_user.forum_membership(current_forum).active? ? posts : posts.with_blocked(current_user)
+    @posts = current_forum.posts.by_filter(params[:filter]).by_user(current_user, current_forum)
   end
 
   def build_post

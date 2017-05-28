@@ -13,7 +13,6 @@ class Post < ApplicationRecord
   belongs_to :author, class_name: 'User', foreign_key: :user_id
   has_many :attachments, as: :attachable
   has_many :comments, as: :commentable
-  # has_many :latest_comments, as: :commentable, -> { limit(5) }
   has_many :latest_comments, -> { limit(5) }, as: :commentable, class_name: 'Comment'
   # validations ...............................................................
   validates :content, presence: true, length: { in: 1..10_000 }
@@ -24,6 +23,7 @@ class Post < ApplicationRecord
   # scopes ....................................................................
   scope :active, -> { joins(:membership).where(forum_memberships: { status: Forums::Membership.statuses[:active] }) }
   scope :by_filter, ->(filter) { by_recommended if filter == 'recommended' }
+  scope :by_user, ->(user, forum) { user.membership_by_forum(forum).blocked? ? with_blocked(user) : active }
   scope :with_blocked, lambda { |user|
     active.or(
       joins(:membership).where(forum_memberships: { status: Forums::Membership.statuses[:blocked], user_id: user.id })

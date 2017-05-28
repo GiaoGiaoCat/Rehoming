@@ -43,4 +43,8 @@ class UserTest < ActiveSupport::TestCase
       @victor.join_forum(@forum)
     end
   end
+
+  test 'membership_by_forum' do
+    assert_equal 'active', @victor.membership_by_forum(@forum).status
+  end
 end
