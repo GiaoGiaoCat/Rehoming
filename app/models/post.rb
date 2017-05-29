@@ -7,8 +7,10 @@ class Post < ApplicationRecord
   include ActsAsRecommendable::Recommendable
   # relationships .............................................................
   belongs_to :forum
-  belongs_to :membership, -> { joins(:forum) },
-             class_name: 'Forums::Membership', foreign_key: 'user_id', primary_key: 'user_id'
+  has_one :membership, -> { joins(:forum) },
+             class_name:  'Forums::Membership',
+             foreign_key: 'user_id',
+             primary_key: 'user_id'
   belongs_to :author, class_name: 'User', foreign_key: :user_id
   has_many :attachments, as: :attachable
   has_many :comments, as: :commentable
@@ -43,6 +45,7 @@ class Post < ApplicationRecord
   end
 
   def postable_until_tomorrow
+    return if forum.blank?
     return unless forum.preference.postable_until_tomorrow
     errors.add :base, :postable_until_tomorrow if author_membership.created_at.next_day > Time.current
   end
@@ -56,7 +59,8 @@ class Post < ApplicationRecord
   end
 
   def author_membership
-    membership = user.forum_memberships.find_by(forum: forum)
+    return if author.blank?
+    membership = author.forum_memberships.find_by(forum: forum)
     membership if membership&.active? || membership&.blocked?
   end
 end
