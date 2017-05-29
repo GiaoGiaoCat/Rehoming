@@ -14,7 +14,7 @@ module CommentableResources
   private
 
   def build_comment
-    @comment = Comments::Form.new(commentable: @parent, user: current_user)
+    @comment = Comments::Form.new(commentable: @parent, author: current_user)
     @comment.attributes = comment_params
   end
 

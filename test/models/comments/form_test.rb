@@ -3,16 +3,17 @@ require 'test_helper'
 class Comments::FormTest < ActiveSupport::TestCase
   test '仅对 post 进行评论时，只有 post 的作者能收到动态' do
     post_with_no_comment = posts(:post_with_no_comment)
-    assert_empty post_with_no_comment.author.feeds
-    assert_empty post_with_no_comment.comments
-    assert_difference 'Feed.count', 1 do
-      Comments::Form.create(
-        author:     users(:roc),
-        content:    '我要对 post 进行评论',
-        commentable: post_with_no_comment
-      )
+
+    assert_difference 'post_with_no_comment.author.feeds.count' do
+      assert_empty post_with_no_comment.comments
+      assert_difference 'Feed.count', 1 do
+        Comments::Form.create(
+          author:     users(:roc),
+          content:    '我要对 post 进行评论',
+          commentable: post_with_no_comment
+        )
+      end
     end
-    assert_equal post_with_no_comment.author.feeds.count, 1
   end
 
   test '对评论者进行回复且评论者与帖子作者非同一人时，评论的作者和帖子的作者都应收到动态' do
