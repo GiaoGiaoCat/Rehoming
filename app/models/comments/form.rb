@@ -4,15 +4,21 @@ class Comments::Form < ActiveType::Record[Comment]
   private
 
   def feed
-    commentable.author.feeds.create(
-      sourceable: self,
-      event:      'new_comment_of_post'
-    )
+    if replied_user_id.blank?
+      commentable.author.feeds.create(
+        sourceable: self,
+        event:      'new_comment_of_post'
+      )
+    else
+      replied_user.feeds.create(
+        sourceable: self,
+        event:      'new_comment_of_comment'
+      )
 
-    return if replied_user_id.blank?
-    replied_user.feeds.create(
-      sourceable: self,
-      event:      'new_comment_of_comment'
-    )
+      commentable.author.feeds.create(
+        sourceable: self,
+        event:      'new_comment_of_post'
+      ) if replied_user_id != commentable.author.id
+    end
   end
 end

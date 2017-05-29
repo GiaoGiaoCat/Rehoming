@@ -1,18 +1,19 @@
 class Forum < ApplicationRecord
   # extends ...................................................................
   obfuscate_id
+
   # includes ..................................................................
 
   # constants .................................................................
   enum category: {
-    wenyi:    10,
-    keji:     20,
-    shishang: 30,
-    yule:     40,
-    jingji:   50,
-    jiaoyu:   60,
-    jiankang: 70,
-    shenghuo: 80
+    wenyi:    10, # 文艺
+    keji:     20, # 科技
+    shishang: 30, # 时尚
+    yule:     40, # 娱乐
+    jingji:   50, # 经济
+    jiaoyu:   60, # 教育
+    jiankang: 70, # 健康
+    shenghuo: 80  # 生活
   }
 
   # relationships .............................................................

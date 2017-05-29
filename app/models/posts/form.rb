@@ -1,5 +1,4 @@
 class Posts::Form < ActiveType::Record[Post]
-
   after_create :feed_forum_members
 
   private
