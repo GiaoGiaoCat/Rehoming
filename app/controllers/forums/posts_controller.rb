@@ -26,8 +26,8 @@ class Forums::PostsController < ApplicationController
   end
 
   def build_post
-    @post = current_forum.posts.new
-    @post.attributes = post_params.merge(user_id: current_user.id)
+    @post = Posts::Form.build(form: current_forum, user_id: current_user.id)
+    @post.attributes = post_params
   end
 
   def post_params
