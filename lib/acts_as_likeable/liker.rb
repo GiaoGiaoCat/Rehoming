@@ -12,7 +12,9 @@ module ActsAsLikeable
 
     def like(obj)
       return unless obj.respond_to? :likeable?
-      find_likes(obj).create
+      return if liked?(obj)
+      # find_likes(obj).create
+      Likes::Form.create(liker: self, likeable: obj)
     end
 
     def dislike(obj)

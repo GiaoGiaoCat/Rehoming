@@ -6,6 +6,6 @@ class Feed < ApplicationRecord
     new_post:               10,
     new_comment_of_post:    20,
     new_comment_of_comment: 30,
-    thumbed_up:             40
+    like:                   40
   }
 end

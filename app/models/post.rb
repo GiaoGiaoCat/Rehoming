@@ -7,7 +7,6 @@ class Post < ApplicationRecord
   include ActsAsRecommendable::Recommendable
   # relationships .............................................................
   belongs_to :forum
-  belongs_to :user
   belongs_to :membership, -> { joins(:forum) },
              class_name: 'Forums::Membership', foreign_key: 'user_id', primary_key: 'user_id'
   belongs_to :author, class_name: 'User', foreign_key: :user_id
