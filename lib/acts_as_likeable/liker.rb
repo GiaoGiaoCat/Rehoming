@@ -14,6 +14,7 @@ module ActsAsLikeable
       return unless obj.respond_to? :likeable?
       return if liked?(obj)
       # find_likes(obj).create
+      # TODO: 删除 Likes::Form 类，改用 instrument 发送通知消息
       Likes::Form.create(liker: self, likeable: obj)
     end
 
