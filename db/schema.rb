@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525025420) do
+ActiveRecord::Schema.define(version: 20170528151536) do
 
   create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "attachable_type"
@@ -45,6 +45,19 @@ ActiveRecord::Schema.define(version: 20170525025420) do
     t.datetime "updated_at", null: false
     t.index ["favorable_type", "favorable_id"], name: "index_favorites_on_favorable_type_and_favorable_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "feeds", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string "sourceable_type"
+    t.bigint "sourceable_id"
+    t.string "targetable_type"
+    t.bigint "targetable_id"
+    t.integer "event", null: false
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sourceable_type", "sourceable_id"], name: "index_feeds_on_sourceable_type_and_sourceable_id"
+    t.index ["targetable_type", "targetable_id"], name: "index_feeds_on_targetable_type_and_targetable_id"
   end
 
   create_table "forum_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
