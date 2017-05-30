@@ -22,7 +22,7 @@ class Posts::LikesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'create likes should not feed when post author is current user' do
-    assert_difference -> { @victor.feeds.count } do
+    assert_no_difference -> { @victor.feeds.count } do
       post post_likes_url(posts(:two)), headers: @headers
     end
   end

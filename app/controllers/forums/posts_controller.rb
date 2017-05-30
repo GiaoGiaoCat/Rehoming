@@ -31,7 +31,6 @@ class Forums::PostsController < ApplicationController
   end
 
   def post_params
-    attrs = [:content, attachments_attributes: %i(category url)]
-    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: attrs)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: %i(content attachments_attributes))
   end
 end
