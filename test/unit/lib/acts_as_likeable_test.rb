@@ -23,7 +23,9 @@ class ActsAsLikeableTest < ActiveSupport::TestCase
 
   test '用户对帖子可以赞和取消赞' do
     assert_difference '@victor.likes.count' do
-      @victor.like @post_two
+      @victor.like(@post_two) { |liker, likeable|
+        Likes::Form.create(liker: liker, likeable: likeable)
+      }
     end
     assert_difference '@victor.likes.count', -1 do
       @victor.dislike @post_one
@@ -32,16 +34,36 @@ class ActsAsLikeableTest < ActiveSupport::TestCase
 
   test '不同重复赞同一个帖子或评论' do
     assert_difference '@victor.likes.count', 0 do
-      @victor.like @post_one
+      @victor.like(@post_one) { |liker, likeable|
+        Likes::Form.create(liker: liker, likeable: likeable)
+      }
     end
   end
 
   test '用户对评论可以赞和取消赞' do
     assert_difference '@victor.likes.count' do
-      @victor.like @comment
+      @victor.like(@comment) { |liker, likeable|
+        Likes::Form.create(liker: liker, likeable: likeable)
+      }
     end
     assert_difference '@victor.likes.count', -1 do
       @victor.dislike @comment
+    end
+  end
+
+  test '赞自己的帖子不产生动态' do
+    assert_no_difference '@victor.feeds.count' do
+      @victor.like(@post_one) { |liker, likeable|
+        Likes::Form.create(liker: liker, likeable: likeable)
+      }
+    end
+  end
+
+  test '赞别人的帖子产生动态' do
+    assert_difference 'users(:yuki).feeds.count' do
+      @victor.like(posts(:three)) { |liker, likeable|
+        Likes::Form.create(liker: liker, likeable: likeable)
+      }
     end
   end
 end

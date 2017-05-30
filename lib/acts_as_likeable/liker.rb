@@ -10,9 +10,12 @@ module ActsAsLikeable
       find_likes(obj).any?
     end
 
-    def like(obj)
+    def like(obj, &blk)
       return unless obj.respond_to? :likeable?
-      find_likes(obj).create
+      return if liked?(obj)
+      # find_likes(obj).create
+      # TODO: 删除 Likes::Form 类，改用 instrument 发送通知消息
+      blk.call(self, obj) if block_given?
     end
 
     def dislike(obj)

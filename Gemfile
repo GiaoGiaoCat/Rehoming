@@ -26,7 +26,6 @@ gem 'puma', '~> 3.7'
 
 # High performance memcached client for Ruby
 gem 'dalli'
-
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers'
 # A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard
@@ -37,6 +36,8 @@ gem 'figaro'
 gem 'active_type', '~> 0.7.0'
 # AASM - State machines for Ruby classes
 gem 'aasm'
+# Simple, efficient background processing for Ruby
+gem 'sidekiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

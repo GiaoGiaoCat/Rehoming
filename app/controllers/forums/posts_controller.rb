@@ -9,7 +9,7 @@ class Forums::PostsController < ApplicationController
   def create
     build_post
     if @post.save
-      render json: @post, status: :created
+      render json: @post.becomes(Post), status: :created
     else
       render json: @post.errors.messages, status: :bad_request
     end
@@ -26,8 +26,8 @@ class Forums::PostsController < ApplicationController
   end
 
   def build_post
-    @post = current_forum.posts.new
-    @post.attributes = post_params.merge(user_id: current_user.id)
+    @post = Posts::Form.new(forum: current_forum, user_id: current_user.id)
+    @post.attributes = post_params
   end
 
   def post_params

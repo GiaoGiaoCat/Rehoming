@@ -5,13 +5,13 @@ class CommentTest < ActiveSupport::TestCase
     @victor = users(:victor)
     @post = posts(:one)
     @comment = comments(:one)
-    @new_comment = Comment.new(commentable: @post, user: @victor)
+    @new_comment = Comment.new(commentable: @post, author: @victor)
   end
 
   test '验证必填项' do
     f = Comment.new
     assert_not f.valid?
-    assert f.errors.key? :user
+    assert f.errors.key? :author
     assert f.errors.key? :content
     assert f.errors.key? :commentable
   end
@@ -32,7 +32,7 @@ class CommentTest < ActiveSupport::TestCase
     assert_difference '@post.comments.count' do
       f = Comment.new(
         commentable: @post,
-        user:        @victor,
+        author:      @victor,
         content:     'comment goes here'
       )
       assert f.valid?

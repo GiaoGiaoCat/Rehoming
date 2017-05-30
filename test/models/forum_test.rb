@@ -12,10 +12,10 @@ class ForumTest < ActiveSupport::TestCase
     assert @preference
   end
 
-  test 'forum load members should be check preference at first' do
-    refute_empty @forum.members
+  test '论坛可见的会员列表由 member_list_protected 决定' do
+    refute_empty @forum.visible_members
 
     @forum.preference.update(member_list_protected: true)
-    assert_nil @forum.members
+    assert_nil @forum.visible_members
   end
 end

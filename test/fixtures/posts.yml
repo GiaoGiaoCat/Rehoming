@@ -1,16 +1,21 @@
 one:
-  forum:    one
-  user:     victor
-  content:  'one content goes here'
-  sticky: true
-  recommended: true
+  forum:        one
+  author:       victor
+  content:      'one content goes here'
+  sticky:       true
+  recommended:  true
 
 two:
   forum:    one
-  user:     victor
+  author:   victor
   content:  'two content goes here'
 
 three:
   forum:    one
-  user:     yuki
+  author:   yuki
   content:  'three content goes here'
+
+post_with_no_comment:
+  forum: one
+  author: yuki
+  content: 'post with no comment goes here'
