@@ -17,7 +17,7 @@ class Comments::FormTest < ActiveSupport::TestCase
   end
 
   test '对评论者进行回复且评论者与帖子作者非同一人时，评论的作者和帖子的作者都应收到动态' do
-    comment_two = comments(:two)
+    comment_two = comments(:three)
     assert_not_equal comment_two.author.id, comment_two.commentable.author.id
 
     assert_difference 'Feed.count', 2 do

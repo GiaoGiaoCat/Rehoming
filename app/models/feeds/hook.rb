@@ -27,7 +27,13 @@ class Feeds::Hook < ActiveType::Object
   end
 
   def liked_comment
+    return if source.author == payload[:handler_id]
     source.author.feeds.create(sourceable: source, event: 'new_like_of_comment')
+  end
+
+  def liked_post
+    return if source.author == payload[:handler_id]
+    source.author.feeds.create(sourceable: source, event: 'new_like_of_post')
   end
 
   # def liked_comment
