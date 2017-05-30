@@ -16,7 +16,6 @@ module ActsAsAction
 
   def create
     @current_user.send(self.class.verb, @parent)
-    # TODO: 根据 verb 参数和 parent 对象所属类不同，instrument 不同的事件
     instrument self.class.instrument_name, obj_id: @parent.id, handler_id: current_user.id if instrument_name
     head :created
   end

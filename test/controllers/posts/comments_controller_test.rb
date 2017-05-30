@@ -49,22 +49,18 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
   test 'create comment to replyer should feeds' do
     params_data = { data: { attributes: { content: '合法数据', replied_user_id: @roc.to_param } } }
     assert_difference -> { @roc.feeds.count } do
-      post post_comments_url(@post), params: params_data, headers: @headers
-    end
-
-    assert_difference -> { @post.author.feeds.count } do
-      post post_comments_url(@post), params: params_data, headers: @headers
+      assert_difference -> { @post.author.feeds.count } do
+        post post_comments_url(@post), params: params_data, headers: @headers
+      end
     end
   end
 
   test 'create comment to replyer should not feed to post author when post author is current user' do
     params_data = { data: { attributes: { content: '合法数据', replied_user_id: @roc.to_param } } }
     assert_difference -> { @roc.feeds.count } do
-      post post_comments_url(posts(:one)), params: params_data, headers: @headers
-    end
-
-    assert_no_difference -> { posts(:one).author.feeds.count } do
-      post post_comments_url(posts(:one)), params: params_data, headers: @headers
+      assert_no_difference -> { posts(:one).author.feeds.count } do
+        post post_comments_url(posts(:one)), params: params_data, headers: @headers
+      end
     end
   end
 end
