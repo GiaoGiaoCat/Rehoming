@@ -37,7 +37,7 @@ gem 'active_type', '~> 0.7.0'
 # AASM - State machines for Ruby classes
 gem 'aasm'
 # Simple, efficient background processing for Ruby
-gem 'sidekiq'
+# gem 'sidekiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
