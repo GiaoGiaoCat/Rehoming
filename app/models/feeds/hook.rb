@@ -42,6 +42,11 @@ class Feeds::Hook < ActiveType::Object
     source_obj.replied_user.feeds.create(sourceable: source_obj, event: 'new_comment_of_post')
   end
 
+  # 圈子有新帖提示圈子成员
+  def created_post
+    Feeds::PostJob.perform_later(source_obj.forum.member_ids, source_obj.id)
+  end
+
   def common_feed(event_name)
     return if source_obj.author.id == payload[:handler_id]
     source_obj.author.feeds.create(sourceable: source_obj, event: event_name)

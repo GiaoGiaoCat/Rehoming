@@ -9,6 +9,7 @@ class Forums::PostsController < ApplicationController
   def create
     build_post
     if @post.save
+      instrument 'created.post', obj_id: @post.id, handler_id: current_user.id
       render json: @post.becomes(Post), status: :created
     else
       render json: @post.errors.messages, status: :bad_request
@@ -26,7 +27,7 @@ class Forums::PostsController < ApplicationController
   end
 
   def build_post
-    @post = Posts::Form.new(forum: current_forum, user_id: current_user.id)
+    @post = current_forum.posts.new(user_id: current_user.id)
     @post.attributes = post_params
   end
 
