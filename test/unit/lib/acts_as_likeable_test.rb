@@ -44,16 +44,4 @@ class ActsAsLikeableTest < ActiveSupport::TestCase
       @victor.dislike @comment
     end
   end
-
-  test '赞自己的帖子不产生动态' do
-    assert_no_difference '@victor.feeds.count' do
-      @victor.like @post_one
-    end
-  end
-
-  test '赞别人的帖子产生动态' do
-    assert_difference 'users(:yuki).feeds.count' do
-      @victor.like posts(:three)
-    end
-  end
 end

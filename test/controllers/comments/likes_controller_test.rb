@@ -15,6 +15,12 @@ class Comments::LikesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 201, @response.status
   end
 
+  test 'create likes should feed' do
+    assert_difference -> { users(:yuki).feeds.count } do
+      post comment_likes_url(@comment_unliked), headers: @headers
+    end
+  end
+
   test 'should destroy likes' do
     assert_difference -> { @victor.likes.count }, -1 do
       delete comment_likes_url(@comment_liked), headers: @headers
