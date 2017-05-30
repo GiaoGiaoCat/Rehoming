@@ -45,7 +45,6 @@ class Post < ApplicationRecord
   end
 
   def postable_until_tomorrow
-    return if forum.blank?
     return unless forum.preference.postable_until_tomorrow
     errors.add :base, :postable_until_tomorrow if author_membership.created_at.next_day > Time.current
   end
@@ -59,7 +58,6 @@ class Post < ApplicationRecord
   end
 
   def author_membership
-    return if author.blank?
     membership = author.forum_memberships.find_by(forum: forum)
     membership if membership&.active? || membership&.blocked?
   end

@@ -21,34 +21,30 @@ class Feeds::Hook < ActiveType::Object
     name.split('.').last.to_s.camelize.constantize
   end
 
-  def source
+  def source_obj
     # REVIEW: payload 在产品环境可能需要 symbolize_keys
     @source ||= source_class.find_by(id: payload[:obj_id])
   end
 
   def liked_comment
-    return if source.author == payload[:handler_id]
-    source.author.feeds.create(sourceable: source, event: 'new_like_of_comment')
+    return if source_obj.author.id == payload[:handler_id]
+    source_obj.author.feeds.create(sourceable: source_obj, event: 'new_like_of_comment')
   end
 
   def liked_post
-    return if source.author == payload[:handler_id]
-    source.author.feeds.create(sourceable: source, event: 'new_like_of_post')
+    return if source_obj.author.id == payload[:handler_id]
+    source_obj.author.feeds.create(sourceable: source_obj, event: 'new_like_of_post')
   end
 
-  # def liked_comment
-  #   return feed_commentable_author if source.replied_user_id.blank?
-  #   feed_replied_user
-  #   feed_commentable_author if source.replied_user_id != source.author.id
-  # end
+  # 评论后给给题主发送动态
+  def commented_post
+    return if source_obj.author.id == payload[:handler_id]
+    source_obj.author.feeds.create(sourceable: source_obj, event: 'new_comment_of_post')
+  end
 
-  # 发送给被题主的动态
-  # def feed_commentable_author
-  #   source.commentable.author.feeds.create(sourceable: source, event: 'new_comment_of_post')
-  # end
-
-  # 发送给被回复者的动态
-  # def feed_replied_user
-  #   source.replied_user.feeds.create(sourceable: source, event: 'new_comment_of_comment')
-  # end
+  # 回复某人后给被回复者发送动态
+  def replied_comment
+    return if source_obj.replied_user_id.blank? || source_obj.replied_user_id == payload[:handler_id]
+    source_obj.replied_user.feeds.create(sourceable: source_obj, event: 'new_comment_of_post')
+  end
 end
