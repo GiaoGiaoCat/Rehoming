@@ -58,8 +58,8 @@ class Feeds::Hook < ActiveType::Object
     feed_job event_name, feed_owner_id: source_obj.author.id
   end
 
-  def feed_job(event_name, *args)
-    # perform(event_name, source_id, source_class, *args)
+  def feed_job(event_name, args = {})
+    # perform(event_name, source_id, source_class, args = {})
     FeedJob.perform_later(event_name, payload[:obj_id], source_class.to_s, args)
   end
 end

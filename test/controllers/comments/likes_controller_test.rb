@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class Comments::LikesControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+
   setup do
     @victor = users(:victor)
     @comment_liked = comments(:one)
@@ -17,13 +19,18 @@ class Comments::LikesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create likes should feed' do
     assert_difference -> { users(:yuki).feeds.count } do
-      post comment_likes_url(@comment_unliked), headers: @headers
+      job_params = ['new_like_of_comment', @comment_unliked.id, 'Comment', feed_owner_id: @comment_unliked.author.id]
+      assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
+        post comment_likes_url(@comment_unliked), headers: @headers
+      end
     end
   end
 
   test 'create likes should not feed when comment author is current user' do
     assert_no_difference -> { @victor.feeds.count } do
-      post comment_likes_url(comments(:two)), headers: @headers
+      assert_no_performed_jobs do
+        post comment_likes_url(comments(:two)), headers: @headers
+      end
     end
   end
 
