@@ -37,7 +37,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
   test 'create comment should feed' do
     params_data = { data: { attributes: { content: '合法数据' } } }
     assert_difference -> { @post.author.feeds.count } do
-      job_params = ['new_comment_of_post', @post.id, 'Post', feed_owner_id: @post.author.id]
+      job_params = ['new_comment_of_post', @post.id, 'Post', @post.author.id]
       assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
         post post_comments_url(@post), params: params_data, headers: @headers
       end
@@ -53,21 +53,41 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'create comment to replyer should feeds' do
+  test 'create comment to replyer should two feeds' do
     params_data = { data: { attributes: { content: '合法数据', replied_user_id: @roc.to_param } } }
     assert_difference -> { @roc.feeds.count } do
       assert_difference -> { @post.author.feeds.count } do
-        post post_comments_url(@post), params: params_data, headers: @headers
+        job_params = ['new_comment_of_post', @post.id, 'Post', @post.author.id]
+        assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
+          post post_comments_url(@post), params: params_data, headers: @headers
+        end
       end
     end
+
+    assert_performed_jobs 2
   end
 
   test 'create comment to replyer should not feed to post author when post author is current user' do
     params_data = { data: { attributes: { content: '合法数据', replied_user_id: @roc.to_param } } }
     assert_difference -> { @roc.feeds.count } do
       assert_no_difference -> { posts(:one).author.feeds.count } do
-        post post_comments_url(posts(:one)), params: params_data, headers: @headers
+        perform_enqueued_jobs do
+          post post_comments_url(posts(:one)), params: params_data, headers: @headers
+        end
       end
     end
+
+    assert_performed_jobs 1
+  end
+
+  test 'create comment to replyer should not feed to replyer when post author is replyer' do
+    params_data = { data: { attributes: { content: '合法数据', replied_user_id: users(:yuki).to_param } } }
+    assert_difference -> { posts(:three).author.feeds.count } do
+      perform_enqueued_jobs do
+        post post_comments_url(posts(:three)), params: params_data, headers: @headers
+      end
+    end
+
+    assert_performed_jobs 1
   end
 end
