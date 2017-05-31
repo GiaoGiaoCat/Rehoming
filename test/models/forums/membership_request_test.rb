@@ -31,9 +31,9 @@ class Forums::MembershipRequestTest < ActiveSupport::TestCase
   end
 
   test 'should be auto approval when forum membership approval needed is false' do
-    assert_difference -> { @forum_a.forum_memberships.count } do
+    assert_difference -> { @forum_a.memberships.count } do
       @roc.join_forum(@forum_a)
-      @forum_membership = @forum_a.forum_memberships.find_by(user: @roc)
+      @forum_membership = @forum_a.memberships.find_by(user: @roc)
     end
 
     assert_equal 'active', @forum_membership.status

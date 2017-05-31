@@ -38,7 +38,7 @@ Style/SymbolArray:
 # Most readable form.
 Style/AlignHash:
   EnforcedHashRocketStyle: table
-  EnforcedColonStyle: table
+  # EnforcedColonStyle: table
 
 Style/AsciiComments:
   Enabled: false

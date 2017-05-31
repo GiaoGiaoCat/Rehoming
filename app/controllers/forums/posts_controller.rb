@@ -9,7 +9,8 @@ class Forums::PostsController < ApplicationController
   def create
     build_post
     if @post.save
-      render json: @post, status: :created
+      instrument 'created.post', obj_id: @post.id, handler_id: current_user.id
+      render json: @post.becomes(Post), status: :created
     else
       render json: @post.errors.messages, status: :bad_request
     end
@@ -26,12 +27,11 @@ class Forums::PostsController < ApplicationController
   end
 
   def build_post
-    @post = current_forum.posts.new
-    @post.attributes = post_params.merge(user_id: current_user.id)
+    @post = current_forum.posts.new(user_id: current_user.id)
+    @post.attributes = post_params
   end
 
   def post_params
-    attrs = [:content, attachments_attributes: %i(category url)]
-    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: attrs)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: %i(content attachments_attributes))
   end
 end

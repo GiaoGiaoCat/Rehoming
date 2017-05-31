@@ -9,7 +9,7 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
   test 'should create blocked member' do
     params_data = { data: { attributes: { user_id: @victor.to_param } } }
 
-    assert_difference -> { @forum.forum_memberships.blocked.count } do
+    assert_difference -> { @forum.memberships.blocked.count } do
       post forum_blocked_member_url(@forum), params: params_data, headers: @headers
     end
 
@@ -21,7 +21,7 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
 
     params_data = { data: { attributes: { user_id: @victor.to_param } } }
 
-    assert_difference -> { @forum.forum_memberships.blocked.count }, -1 do
+    assert_difference -> { @forum.memberships.blocked.count }, -1 do
       delete forum_blocked_member_url(@forum), params: params_data, headers: @headers
     end
 
@@ -32,7 +32,7 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
   private
 
   def block_victor_at_first
-    assert_difference -> { @forum.forum_memberships.blocked.count } do
+    assert_difference -> { @forum.memberships.blocked.count } do
       Forums::BlockedMembership.create(forum: @forum, user: @victor)
     end
   end

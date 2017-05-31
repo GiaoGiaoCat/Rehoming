@@ -1,10 +1,15 @@
 one:
-  user: one
-  commentable: one
+  author: victor
+  commentable: one (Post)
   content: 'comment one content goes here'
   forum: one
 two:
-  user: one
-  commentable: one
+  author: victor
+  commentable: one (Post)
   content: 'comment two content goes here'
+  forum: one
+three:
+  author: yuki
+  commentable: one (Post)
+  content: 'comment three content goes here'
   forum: one

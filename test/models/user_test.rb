@@ -12,7 +12,7 @@ class UserTest < ActiveSupport::TestCase
       @roc.join_forum(@forum)
     end
 
-    forum_membership = @forum.forum_memberships.find_by(user: @roc)
+    forum_membership = @forum.memberships.find_by(user: @roc)
     assert_equal 'active', forum_membership.status
   end
 

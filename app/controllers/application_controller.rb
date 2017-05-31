@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::API
+  extend Forwardable
   include AuthenticateRequest
   include SupportMethod
+
+  def_delegator ActiveSupport::Notifications, :instrument
 
   private
 

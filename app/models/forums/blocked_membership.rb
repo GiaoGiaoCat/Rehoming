@@ -12,7 +12,7 @@ class Forums::BlockedMembership < ActiveType::Object
   after_save :block_membership
 
   def destroy
-    forum.forum_memberships.find_by(user_id: decrypt_user_id).unblock!
+    forum.memberships.find_by(user_id: decrypt_user_id).unblock!
   end
 
   private
@@ -26,7 +26,7 @@ class Forums::BlockedMembership < ActiveType::Object
   end
 
   def block_membership
-    membership = forum.forum_memberships.find_by(user: user)
+    membership = forum.memberships.find_by(user: user)
     membership&.block!
   end
 end
