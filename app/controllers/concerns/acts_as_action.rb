@@ -15,13 +15,13 @@ module ActsAsAction
   end
 
   def create
-    @current_user.send(self.class.verb, @parent)
-    instrument self.class.instrument_name, obj_id: @parent.id, handler_id: current_user.id if instrument_name
+    @current_user.send(verb, @parent)
+    instrument instrument_name, obj_id: @parent.id, handler_id: current_user.id if instrument_name
     head :created
   end
 
   def destroy
-    @current_user.send(self.class.unverb, @parent)
+    @current_user.send(unverb, @parent)
     head :no_content
   end
 end
