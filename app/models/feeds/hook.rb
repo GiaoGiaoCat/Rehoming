@@ -23,7 +23,6 @@ class Feeds::Hook < ActiveType::Object
 
   def source_obj
     # REVIEW: payload 在产品环境可能需要 symbolize_keys
-
     @source ||= source_class.find_by(id: payload[:obj_id])
   end
 
@@ -43,22 +42,24 @@ class Feeds::Hook < ActiveType::Object
   # 回复某人后给被回复者发送动态
   def replied_comment
     return if source_obj.replied_user_id.blank? || source_obj.replied_user_id == payload[:handler_id]
-    # source_obj.replied_user.feeds.create(sourceable: source_obj, event: 'new_comment_of_post')
     feed_job 'new_reply_of_comment', feed_owner_id: source_obj.replied_user_id
   end
 
   # 圈子有新帖提示圈子成员
   def created_post
     # Feeds::PostJob.perform_later(source_obj.forum.member_ids, source_obj.id)
-    feed_job 'new_post'
+    user_id = source_obj.user_id
+    member_ids = source_obj.forum.member_ids.delete_if { |member_id| member_id == user_id }
+    feed_job 'new_post', feed_owner_ids: member_ids
   end
 
   def common_feed(event_name)
     return if source_obj.author.id == payload[:handler_id]
-    feed_job event_name
+    feed_job event_name, feed_owner_id: source_obj.author.id
   end
 
   def feed_job(event_name, *args)
+    # perform(event_name, source_id, source_class, *args)
     FeedJob.perform_later(event_name, payload[:obj_id], source_class.to_s, args)
   end
 end

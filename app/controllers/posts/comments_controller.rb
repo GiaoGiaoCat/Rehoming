@@ -1,6 +1,7 @@
 class Posts::CommentsController < ApplicationController
+  before_action :load_parent
+
   def create
-    load_parent
     build_comment
     if @comment.save
       instrument 'commented.post', obj_id: @parent.id, handler_id: current_user.id
