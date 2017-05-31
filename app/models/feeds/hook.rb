@@ -11,7 +11,6 @@ class Feeds::Hook < ActiveType::Object
 
   private
 
-  # 根据 payload 的数据，创建 feed，并扔到 jobs 中，不影响主线程操作事件
   def feed
     method_name = name.sub('.', '_').to_sym
     send(method_name) if private_methods.include? method_name
@@ -26,40 +25,40 @@ class Feeds::Hook < ActiveType::Object
     @source ||= source_class.find_by(id: payload[:obj_id])
   end
 
+  # 点赞一条回复 -> 给被赞的回复作者发送动态
   def liked_comment
     common_feed('new_like_of_comment')
   end
 
+  # 点赞一条主题 -> 给被赞的题主发送动态
   def liked_post
     common_feed('new_like_of_post')
   end
 
-  # 评论后给给题主发送动态
+  # 添加一条评论 -> 给被回复的题主发送动态
   def commented_post
     common_feed('new_comment_of_post')
   end
 
-  # 回复某人后给被回复者发送动态
+  # 回复中提及某人 -> 给被提及者发送动态
   def replied_comment
     return if source_obj.replied_user_id.blank? || source_obj.replied_user_id == payload[:handler_id]
-    feed_job 'new_reply_of_comment', feed_owner_id: source_obj.replied_user_id
+    feed_job 'new_reply_of_comment', source_obj.replied_user_id
   end
 
-  # 圈子有新帖提示圈子成员
+  # 添加一条主题 -> 给主题所在的圈子中，题主之外的所有成员发送动态
   def created_post
-    # Feeds::PostJob.perform_later(source_obj.forum.member_ids, source_obj.id)
     user_id = source_obj.user_id
     member_ids = source_obj.forum.member_ids.delete_if { |member_id| member_id == user_id }
-    feed_job 'new_post', feed_owner_ids: member_ids
+    feed_job 'new_post', member_ids
   end
 
   def common_feed(event_name)
     return if source_obj.author.id == payload[:handler_id]
-    feed_job event_name, feed_owner_id: source_obj.author.id
+    feed_job event_name, source_obj.author.id
   end
 
-  def feed_job(event_name, args = {})
-    # perform(event_name, source_id, source_class, args = {})
-    FeedJob.perform_later(event_name, payload[:obj_id], source_class.to_s, args)
+  def feed_job(event_name, feed_owner_ids)
+    FeedJob.perform_later(event_name, payload[:obj_id], source_class.to_s, feed_owner_ids)
   end
 end
