@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+
   setup do
     @post = posts(:post_with_no_comment)
     @comment = comments(:three)
@@ -35,14 +37,19 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
   test 'create comment should feed' do
     params_data = { data: { attributes: { content: '合法数据' } } }
     assert_difference -> { @post.author.feeds.count } do
-      post post_comments_url(@post), params: params_data, headers: @headers
+      job_params = ['new_comment_of_post', @post.id, 'Post', feed_owner_id: @post.author.id]
+      assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
+        post post_comments_url(@post), params: params_data, headers: @headers
+      end
     end
   end
 
   test 'create comment should not feed when post author is current user' do
     params_data = { data: { attributes: { content: '合法数据' } } }
     assert_no_difference -> { posts(:one).author.feeds.count } do
-      post post_comments_url(posts(:one)), params: params_data, headers: @headers
+      assert_no_performed_jobs do
+        post post_comments_url(posts(:one)), params: params_data, headers: @headers
+      end
     end
   end
 
