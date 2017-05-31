@@ -43,6 +43,7 @@ class Feeds::Hook < ActiveType::Object
   # 回复中提及某人 -> 给被提及者发送动态
   def replied_comment
     replied_user_id = source_obj.replied_user_id
+    return if replied_user_id.blank?
     return if replied_user_id == payload[:handler_id] || replied_user_id == source_obj.commentable.author.id
     feed_job 'new_reply_of_comment', source_obj.replied_user_id
   end
