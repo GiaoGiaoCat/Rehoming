@@ -20,6 +20,14 @@ class User < ApplicationRecord
   validates :headimgurl, presence: true
   # callbacks .................................................................
   # scopes ....................................................................
+  scope :active, lambda {
+    joins(:forum_memberships).where(forum_memberships: { status: Forums::Membership.statuses[:active] })
+  }
+  scope :blocked, lambda {
+    joins(:forum_memberships).where(forum_memberships: { status: Forums::Membership.statuses[:blocked] })
+  }
+  scope :active_or_blocked, -> { active.or(blocked) }
+  scope :feed_allowed, -> { joins(:forum_preferences).merge(Users::ForumPreference.feed_allowed) }
   scope :by_filter, ->(filter) { joins(:forum_memberships).merge(Forums::Membership.blocked) if filter == 'blocked' }
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
   encrypted_id key: 'gaeexiHdLTQ8Fg'

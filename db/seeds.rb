@@ -39,3 +39,5 @@ end
 victor.favor post
 victor.like post
 yuki.like post
+
+Feed.create(targetable: victor, sourceable: post, event: 10)

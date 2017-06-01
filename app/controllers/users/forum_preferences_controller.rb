@@ -9,6 +9,6 @@ class Users::ForumPreferencesController < ApplicationController
   end
 
   def preference_attrs
-    %i(nickname follow_topics_on_mention)
+    %i(nickname feed_allowed)
   end
 end

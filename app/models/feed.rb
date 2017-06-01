@@ -9,4 +9,10 @@ class Feed < ApplicationRecord
     new_like_of_post:       40,
     new_like_of_comment:    50
   }
+
+  encrypted_id key: 'XfFjRRfRaU7yKr'
+
+  def make_as_read!
+    update(read: true)
+  end
 end

@@ -51,13 +51,19 @@ class Feeds::Hook < ActiveType::Object
   # 添加一条主题 -> 给主题所在的圈子中，题主之外的所有成员发送动态
   def created_post
     user_id = source_obj.user_id
-    member_ids = source_obj.forum.member_ids.delete_if { |member_id| member_id == user_id }
+    member_ids = source_obj.forum.members.feed_allowed.map(&:id).delete_if { |member_id| member_id == user_id }
     feed_job 'new_post', member_ids
   end
 
   def common_feed(event_name)
-    return if source_obj.author.id == payload[:handler_id]
+    return if source_obj.author.id == payload[:handler_id] || disable_feed?
     feed_job event_name, source_obj.author.id
+  end
+
+  def disable_feed?
+    feed_owner ||= source_obj.author
+    preference = feed_owner.forum_preferences.find_by(forum: source_obj.forum)
+    !preference.feed_allowed
   end
 
   def feed_job(event_name, feed_owner_ids)

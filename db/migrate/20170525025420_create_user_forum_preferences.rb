@@ -4,8 +4,7 @@ class CreateUserForumPreferences < ActiveRecord::Migration[5.1]
       t.references :user, index: false
       t.references :forum, index: false
       t.string     :nickname
-      t.boolean :follow_topics_on_mention, default: true
-
+      t.boolean :feed_allowed, default: true
       t.timestamps
     end
 

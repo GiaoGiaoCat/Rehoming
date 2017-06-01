@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       end
       resource :preference, only: [:update], controller: 'forum_preferences', module: :users
     end
+    resources :feeds, only: [:index, :update]
   end
 
   if Rails.env.production?
