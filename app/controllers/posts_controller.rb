@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  serialization_scope :current_forum
+  serialization_scope :view_variables
 
   def show
     load_post
@@ -12,7 +12,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  def current_forum
-    @post.forum
+  def view_variables
+    { current_forum: @post.forum, current_user: current_user }
   end
 end
