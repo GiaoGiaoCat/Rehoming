@@ -1,5 +1,5 @@
 class Forums::MembershipRequestsController < ApplicationController
-  serialization_scope :current_forum
+  serialization_scope :view_variables
 
   def index
     load_membership_requests
@@ -37,5 +37,9 @@ class Forums::MembershipRequestsController < ApplicationController
 
   def membership_request_params
     ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: :action)
+  end
+
+  def view_variables
+    { current_forum: current_forum, current_user: current_user }
   end
 end

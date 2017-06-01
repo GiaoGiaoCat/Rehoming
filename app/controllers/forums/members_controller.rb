@@ -1,5 +1,5 @@
 class Forums::MembersController < ApplicationController
-  serialization_scope :current_forum
+  serialization_scope :view_variables
 
   def index
     load_members
@@ -14,5 +14,9 @@ class Forums::MembersController < ApplicationController
 
   def load_members
     @members = current_forum.visible_members.by_filter(params[:filter])
+  end
+
+  def view_variables
+    { current_forum: current_forum, current_user: current_user }
   end
 end

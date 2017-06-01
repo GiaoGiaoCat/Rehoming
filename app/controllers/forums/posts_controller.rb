@@ -1,5 +1,5 @@
 class Forums::PostsController < ApplicationController
-  serialization_scope :current_forum
+  serialization_scope :view_variables
 
   def index
     load_posts
@@ -33,5 +33,9 @@ class Forums::PostsController < ApplicationController
 
   def post_params
     ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: %i(content attachments_attributes))
+  end
+
+  def view_variables
+    { current_forum: current_forum, current_user: current_user }
   end
 end

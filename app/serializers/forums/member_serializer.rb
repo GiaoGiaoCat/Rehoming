@@ -17,4 +17,8 @@ class Forums::MemberSerializer < ApplicationSerializer
   def forum_membership
     object.forum_memberships.find_by(forum: current_forum)
   end
+
+  def current_forum
+    view_variables[:current_forum]
+  end
 end
