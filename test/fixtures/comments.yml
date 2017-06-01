@@ -13,3 +13,15 @@ three:
   commentable: one (Post)
   content: 'comment three content goes here'
   forum: one
+four:
+  author: yuki
+  commentable: one (Post)
+  content: 'comment three content goes here'
+  forum: one
+  replied_user: victor
+five:
+  author: yuki
+  commentable: one (Post)
+  content: 'comment three content goes here'
+  forum: one
+  replied_user: roc

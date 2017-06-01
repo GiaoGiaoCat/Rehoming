@@ -11,8 +11,9 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update feed read status' do
-    patch feed_url(@feed), headers: @headers
+    assert_difference -> { Feed.where(read: true).count } do
+      patch feed_url(@feed), headers: @headers
+    end
     assert_response :success
-    assert @feed.reload.read
   end
 end
