@@ -1,8 +1,9 @@
 class PostsController < ApplicationController
   serialization_scope :view_variables
 
+  before_action :load_post
+
   def show
-    load_post
     render json: @post, include: '**'
   end
 

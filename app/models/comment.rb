@@ -9,7 +9,6 @@ class Comment < ApplicationRecord
   belongs_to :commentable, polymorphic: true, optional: true
   belongs_to :forum
   belongs_to :replied_user, class_name: 'User', foreign_key: 'replied_user_id', required: false
-
   has_many :attachments, as: :attachable
   # validations ...............................................................
   validates :forum_id, presence: true
