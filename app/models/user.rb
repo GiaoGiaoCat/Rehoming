@@ -20,10 +20,10 @@ class User < ApplicationRecord
   validates :headimgurl, presence: true
   # callbacks .................................................................
   # scopes ....................................................................
-  scope :active, -> {
+  scope :active, lambda {
     joins(:forum_memberships).where(forum_memberships: { status: Forums::Membership.statuses[:active] })
   }
-  scope :blocked, -> {
+  scope :blocked, lambda {
     joins(:forum_memberships).where(forum_memberships: { status: Forums::Membership.statuses[:blocked] })
   }
   scope :active_or_blocked, -> { active.or(blocked) }
