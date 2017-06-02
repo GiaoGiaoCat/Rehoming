@@ -9,8 +9,6 @@ class ForumsController < ApplicationController
     if @forum_form.save
       head :created
     else
-      puts @forum_form.errors.inspect
-
       render json: @forum_form.errors.messages, status: :bad_request
     end
   end
@@ -23,6 +21,8 @@ class ForumsController < ApplicationController
   end
 
   def forum_form_params
-    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: %i[name description cover category background_color])
+    ActiveModelSerializers::Deserialization.jsonapi_parse(
+      params, only: %w(name description cover category background_color)
+    )
   end
 end
