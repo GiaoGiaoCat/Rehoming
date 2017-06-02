@@ -39,6 +39,12 @@ gem 'aasm'
 # Simple, efficient background processing for Ruby
 # gem 'sidekiq'
 
+# Very simple Roles library without any authorization enforcement supporting scope on resource objects (instance or class). Supports ActiveRecord and Mongoid ORMs.
+gem 'rolify', '~> 5.1'
+
+# Object oriented authorization for Rails applications
+gem 'pundit', '~> 1.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
