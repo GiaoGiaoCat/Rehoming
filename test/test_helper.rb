@@ -27,4 +27,8 @@ class ActiveSupport::TestCase
   def setup
     @headers = { 'HTTP_AUTHORIZATION' => JsonWebToken.issue(user_id: users(:victor).id) }
   end
+
+  def current_user
+    @current_user ||= users(:victor)
+  end
 end
