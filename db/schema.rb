@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20170602101838) do
     t.boolean "public_search_allowed", default: false, comment: "允许外部搜索"
     t.boolean "direct_message_allowed", default: true, comment: "允许成员私聊"
     t.boolean "membership_approval_needed", default: false, comment: "成员加入需要审批"
-    t.integer "postable_role", default: 10, comment: "设置发主题权限"
+    t.text "postable_roles", comment: "发主题权限"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 20170602101838) do
     t.bigint "user_id"
     t.bigint "forum_id"
     t.string "nickname"
-    t.boolean "follow_topics_on_mention", default: true
+    t.boolean "feed_allowed", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["forum_id", "user_id"], name: "user_forum_preferences_index"

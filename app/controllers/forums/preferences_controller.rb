@@ -5,6 +5,7 @@ class Forums::PreferencesController < ApplicationController
 
   def build_preference
     @preference = forum.preference
+    authorize @preference
     @preference.attributes = preference_params
   end
 
