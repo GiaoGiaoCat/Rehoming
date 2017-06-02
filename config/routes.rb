@@ -41,7 +41,9 @@ Rails.application.routes.draw do
         resource :blocked_member, only: %i(create destroy)
 
         resource :setting, only: [:update], controller: 'preferences'
-        resources :members, only: [:index]
+        resources :members, only: [:index] do
+          resource :admin, only: [:create, :destroy]
+        end
         resources :posts, only: %i(index create)
       end
       resource :preference, only: [:update], controller: 'forum_preferences', module: :users

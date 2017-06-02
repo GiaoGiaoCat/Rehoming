@@ -3,6 +3,8 @@ class ApplicationController < ActionController::API
   include AuthenticateRequest
   include SupportMethod
 
+  include Pundit
+
   def_delegator ActiveSupport::Notifications, :instrument
 
   private
