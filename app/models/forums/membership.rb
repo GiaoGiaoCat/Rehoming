@@ -14,11 +14,10 @@ class Forums::Membership < ApplicationRecord
   # scopes ....................................................................
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
   enum role: {
-    quanzhu:         10, # 圈主
-    jiabin:          20, # 嘉宾
-    guanliyuan:      30, # 管理员
-    putongchengyuan: 40, # 普通成员
-    lahei:           50  # 拉黑
+    owner:        10, # 圈主
+    collaborator: 20, # 嘉宾
+    admin:        30, # 管理员
+    member:       40  # 普通成员
   }
   encrypted_id key: 'MhnjnhNQZxubL9'
   delegate :forum_preferences, to: :user

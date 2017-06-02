@@ -7,7 +7,7 @@ class Forums::Preference < ApplicationRecord
   # relationships .............................................................
   belongs_to :forum
   # validations ...............................................................
-  validate :must_of_valid_roles
+  validate :ensure_valid_roles
   # callbacks .................................................................
   # scopes ....................................................................
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
@@ -20,10 +20,8 @@ class Forums::Preference < ApplicationRecord
 
   private
 
-  def must_of_valid_roles
-    roles = Forums::Membership.roles.values
-    postable_roles.each do |role|
-      errors.add(:postable_roles, 'Must be right role') unless roles.include? role
-    end
+  def ensure_valid_roles
+    return if postable_roles.all? { |r| !r.in?(Forums::Membership.roles.values) }
+    errors.add :postable_roles, '可发帖的用户组数据非法'
   end
 end
