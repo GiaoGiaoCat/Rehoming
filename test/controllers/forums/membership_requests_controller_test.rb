@@ -16,8 +16,10 @@ class Forums::MembershipRequestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create membership request' do
+    headers = { 'HTTP_AUTHORIZATION' => JsonWebToken.issue(user_id: users(:roc).id) }
+
     assert_difference -> { Forums::MembershipRequest.count } do
-      post forum_membership_requests_url(@forum), headers: @headers
+      post forum_membership_requests_url(@forum), headers: headers
     end
     assert_response :success
   end

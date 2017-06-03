@@ -9,8 +9,12 @@ class Forums::MembershipRequestsController < ApplicationController
   end
 
   def create
-    @current_user.join_forum(current_forum)
-    head :no_content
+    build_membership_request
+    if @membership_request.save
+      head :created
+    else
+      render json: @membership_request.errors.messages, status: :bad_request
+    end
   end
 
   def update
@@ -40,7 +44,7 @@ class Forums::MembershipRequestsController < ApplicationController
   end
 
   def build_membership_request
-    @membership_request ||= Forums::MembershipRequest.new
+    @membership_request ||= Forums::MembershipRequest.new(forum: current_forum, user: current_user)
     @membership_request.attributes = membership_request_params
   end
 

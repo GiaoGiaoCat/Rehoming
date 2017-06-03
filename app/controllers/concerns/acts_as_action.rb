@@ -11,7 +11,7 @@ module ActsAsAction
       self.verb = options[:verb].to_sym
       self.unverb = options[:unverb].to_sym
       self.instrument_name = options[:instrument_name].to_s
-      self.authorize_name = options[:authorize_name].to_sym
+      self.authorize_name = options[:authorize_name].to_sym if options[:authorize_name]
     end
   end
 
