@@ -17,14 +17,9 @@ end
 require 'minitest/reporters'
 Minitest::Reporters.use!
 
-ActiveRecord::Base.logger = Logger.new(STDOUT) if defined?(ActiveRecord::Base)
-
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  set_fixture_class(
-    'user/forum_preferences' => Users::ForumPreference,
-    'forums/memberships'     => Forums::Membership
-  )
+  set_fixture_class 'user/forum_preferences' => Users::ForumPreference
   fixtures :all
 
   # Add more helper methods to be used by all tests here...

@@ -15,14 +15,12 @@ module ActsAsAction
   end
 
   def create
-    authorize @parent, "#{verb}_#{@parent.class.name.downcase}?".to_sym
     @current_user.send(verb, @parent)
     instrument instrument_name, obj_id: @parent.id, handler_id: current_user.id if instrument_name
     head :created
   end
 
   def destroy
-    authorize @parent, "#{unverb}_#{@parent.class.name.downcase}?".to_sym
     @current_user.send(unverb, @parent)
     head :no_content
   end
