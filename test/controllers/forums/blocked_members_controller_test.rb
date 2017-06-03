@@ -12,13 +12,13 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     assert_empty current_user.roles
     get_forum_blocked_members(:forbidden)
     # 圈主可查看
-    setup_role(:owner) { get_forum_blocked_members(:ok) }
+    setup_role(:owner, @forum) { get_forum_blocked_members(:ok) }
     # 管理员可查看
-    setup_role(:admin) { get_forum_blocked_members(:ok) }
+    setup_role(:admin, @forum) { get_forum_blocked_members(:ok) }
     # 嘉宾不可查看
-    setup_role(:collaborator) { get_forum_blocked_members(:forbidden) }
+    setup_role(:collaborator, @forum) { get_forum_blocked_members(:forbidden) }
     # 普通成员不可查看
-    setup_role(:member) { get_forum_blocked_members(:forbidden) }
+    setup_role(:member, @forum) { get_forum_blocked_members(:forbidden) }
   end
 
   test '只有圈主、管理员才能拉黑成员' do
@@ -27,22 +27,22 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     assert_blocked_members_no_difference(:post, :forbidden)
 
     # 圈主可操作
-    setup_role(:owner) do
+    setup_role(:owner, @forum) do
       assert_blocked_members_difference(:post, :created, 1)
       @forum.memberships.each { |m| m.update(status: 40) } # 恢复状态
     end
 
     # 管理员可操作
-    setup_role(:admin) do
+    setup_role(:admin, @forum) do
       assert_blocked_members_difference(:post, :created, 1)
       @forum.memberships.each { |m| m.update(status: 40) } # 恢复状态
     end
 
     # 嘉宾不可操作
-    setup_role(:collaborator) { assert_blocked_members_no_difference(:post, :forbidden) }
+    setup_role(:collaborator, @forum) { assert_blocked_members_no_difference(:post, :forbidden) }
 
     # 普通成员不可操作
-    setup_role(:member) { assert_blocked_members_no_difference(:post, :forbidden) }
+    setup_role(:member, @forum) { assert_blocked_members_no_difference(:post, :forbidden) }
   end
 
   test '只有圈主、管理员才能取消拉黑成员' do
@@ -53,17 +53,17 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     assert_blocked_members_no_difference(:delete, :forbidden)
 
     # 嘉宾不可操作
-    setup_role(:collaborator) { assert_blocked_members_no_difference(:delete, :forbidden) }
+    setup_role(:collaborator, @forum) { assert_blocked_members_no_difference(:delete, :forbidden) }
 
     # 普通成员不可操作
-    setup_role(:member) { assert_blocked_members_no_difference(:delete, :forbidden) }
+    setup_role(:member, @forum) { assert_blocked_members_no_difference(:delete, :forbidden) }
 
     # 圈主可操作
-    setup_role(:owner) { assert_blocked_members_difference(:delete, :no_content, -1) }
+    setup_role(:owner, @forum) { assert_blocked_members_difference(:delete, :no_content, -1) }
 
     # 管理员可操作
     block_victor_at_first
-    setup_role(:admin) { assert_blocked_members_difference(:delete, :no_content, -1) }
+    setup_role(:admin, @forum) { assert_blocked_members_difference(:delete, :no_content, -1) }
   end
 
   private

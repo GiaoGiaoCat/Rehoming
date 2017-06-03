@@ -14,7 +14,7 @@ class Forums::MembersControllerTest < ActionDispatch::IntegrationTest
 
   test "only forum's owner and admin can destroy member" do
     # 圈主可操作
-    setup_role(:owner) do
+    setup_role(:owner, @forum) do
       assert_difference -> { @forum.members.count }, -1 do
         delete forum_member_url(@forum, @yuki), headers: @headers
       end
@@ -22,7 +22,7 @@ class Forums::MembersControllerTest < ActionDispatch::IntegrationTest
 
     # 管理员可操作
     @yuki.join_forum(@forum)
-    setup_role(:admin) do
+    setup_role(:admin, @forum) do
       assert_difference -> { @forum.members.count }, -1 do
         delete forum_member_url(@forum, @yuki), headers: @headers
       end
@@ -30,13 +30,13 @@ class Forums::MembersControllerTest < ActionDispatch::IntegrationTest
 
     # 嘉宾不可操作
     @yuki.join_forum(@forum)
-    setup_role(:collaborator) do
+    setup_role(:collaborator, @forum) do
       assert_no_difference -> { @forum.members.count } { delete forum_member_url(@forum, @yuki), headers: @headers }
     end
 
     # 普通成员不可操作
     @yuki.join_forum(@forum)
-    setup_role(:member) do
+    setup_role(:member, @forum) do
       assert_no_difference -> { @forum.members.count } { delete forum_member_url(@forum, @yuki), headers: @headers }
     end
   end

@@ -34,10 +34,10 @@ class ActiveSupport::TestCase
 
   private
 
-  def setup_role(role)
-    current_user.add_role role, @forum
+  def setup_role(role, forum)
+    current_user.add_role role, forum
     yield
-    current_user.remove_role role, @forum
+    current_user.remove_role role, forum
     assert_empty current_user.roles
   end
 end
