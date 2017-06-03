@@ -1,13 +1,13 @@
 class Forums::Form < ActiveType::Record[Forum]
-  attribute :user
+  attribute :owner
 
-  validates :user, presence: true
+  validates :owner, presence: true
 
   after_create :ensure_owner
 
   private
 
   def ensure_owner
-    user.add_role :owner, becomes(Forum)
+    owner.add_role :owner, becomes(Forum)
   end
 end

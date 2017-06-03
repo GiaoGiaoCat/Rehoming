@@ -13,7 +13,7 @@ class Forums::MembersController < ApplicationController
   end
 
   def load_members
-    @members = current_forum.visible_members.by_filter(params[:filter])
+    @members = current_forum.visible_members
   end
 
   def view_variables

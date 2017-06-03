@@ -44,6 +44,13 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  test 'user has same role when rejoin forum' do
+    assert @victor.add_role(:admin, @forum)
+    @victor.quit_forum(@forum)
+    @victor.join_forum(@forum)
+    assert @victor.has_role?(:admin, @forum)
+  end
+
   test 'membership_by_forum' do
     assert_equal 'active', @victor.membership_by_forum(@forum).status
   end

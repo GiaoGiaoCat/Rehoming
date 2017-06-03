@@ -1,9 +1,7 @@
 class Forums::AdminsController < ApplicationController
-  def create
-    load_forum
-    load_member
-    build_form_member_as_admin
+  before_action :load_forum, :load_member, :build_form_member_as_admin
 
+  def create
     if @as_admin.save
       head :created
     else
@@ -12,12 +10,8 @@ class Forums::AdminsController < ApplicationController
   end
 
   def destroy
-    load_forum
-    load_member
-    build_form_member_as_admin
-
     if @as_admin.destroy
-      head :created
+      head :no_content
     else
       render json: @as_admin.errors.messages, status: :bad_request
     end
