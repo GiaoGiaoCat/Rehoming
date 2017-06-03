@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::API
   extend Forwardable
+
   include AuthenticateRequest
   include SupportMethod
-
   include Pundit
 
   def_delegator ActiveSupport::Notifications, :instrument
@@ -27,6 +27,7 @@ class ApplicationController < ActionController::API
     render_403('无执行此操作的权限')
   end
 
+  # https://apidock.com/rails/ActionController/StatusCodes
   def render_403(message = '')
     render json: { message: message }, status: 403
   end
