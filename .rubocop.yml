@@ -51,6 +51,9 @@ Style/HashSyntax:
 Style/FormatString:
   EnforcedStyle: percent
 
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
 Style/CollectionMethods:
   Enabled: true
   PreferredMethods:
