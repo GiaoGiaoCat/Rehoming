@@ -35,7 +35,7 @@ class Forums::MembershipRequestsController < ApplicationController
 
   def load_membership_request
     @membership_request = current_forum.membership_requests
-                                       .find_with_encrypted_id(params[:id])
+                                       .find_by_encrypted_id(params[:id])
     authorize @membership_request.becomes(Forums::MembershipRequest)
   end
 

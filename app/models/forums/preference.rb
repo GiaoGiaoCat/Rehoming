@@ -22,7 +22,7 @@ class Forums::Preference < ApplicationRecord
 
   def ensure_valid_roles
     return if postable_roles.blank?
-    return if postable_roles.all? { |r| !r.in?(Forums::Membership.roles.values) }
+    return if postable_roles.all? { |r| r.in?(Forums::Membership.roles.values) }
     errors.add :postable_roles, '可发帖的用户组数据非法'
   end
 end

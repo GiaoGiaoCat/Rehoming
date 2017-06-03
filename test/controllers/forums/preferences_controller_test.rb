@@ -31,8 +31,7 @@ class Forums::PreferencesControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_raises Pundit::NotAuthorizedError do
-      put forum_setting_url(@forum), params: params_data, headers: @headers
-    end
+    put forum_setting_url(@forum), params: params_data, headers: @headers
+    assert_response 403
   end
 end

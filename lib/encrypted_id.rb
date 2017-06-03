@@ -27,7 +27,7 @@ module EncryptedId
       super(scope)
     end
 
-    def find_with_encrypted_id(*args)
+    def find_by_encrypted_id(*args)
       find(*args)
     end
 

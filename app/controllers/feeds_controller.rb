@@ -17,6 +17,6 @@ class FeedsController < ApplicationController
   end
 
   def build_feed
-    @feed = current_user.feeds.find_with_encrypted_id(params[:id])
+    @feed = current_user.feeds.find_by_encrypted_id(params[:id])
   end
 end

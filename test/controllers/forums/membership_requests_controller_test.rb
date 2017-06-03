@@ -23,9 +23,8 @@ class Forums::MembershipRequestsControllerTest < ActionDispatch::IntegrationTest
     membership_request = @forum.membership_requests.find_by(user: @roc)
     params_data = { data: { attributes: { action: 'accept' } } }
 
-    assert_raises Pundit::NotAuthorizedError do
-      put forum_membership_request_url(@forum, membership_request), params: params_data, headers: @headers
-    end
+    put forum_membership_request_url(@forum, membership_request), params: params_data, headers: @headers
+    assert_response 403
 
     current_user.add_role :owner, @forum
     assert_difference -> { Forums::Membership.active.count } do
