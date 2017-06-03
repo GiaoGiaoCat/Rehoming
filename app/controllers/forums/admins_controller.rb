@@ -27,7 +27,6 @@ class Forums::AdminsController < ApplicationController
 
   def load_forum
     @forum = Forum.find(params[:forum_id])
-    authorize @forum
   end
 
   def load_member
@@ -36,5 +35,6 @@ class Forums::AdminsController < ApplicationController
 
   def build_form_member_as_admin
     @as_admin = Forums::Members::AsAdmin.new(forum: @forum, user: @member)
+    authorize @as_admin
   end
 end
