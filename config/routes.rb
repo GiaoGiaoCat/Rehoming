@@ -34,21 +34,21 @@ Rails.application.routes.draw do
       %i(likeable).each { |r| concerns r, module: :comments }
     end
 
-    resources :forums, only: [:show, :create] do
+    resources :forums, only: %i(show create) do
       scope module: :forums do
         resource :membership, only: :destroy
         resources :membership_requests, only: %i(index create update)
         resources :blocked_members, only: %i(index create destroy)
 
         resource :setting, only: [:update], controller: 'preferences'
-        resources :members, only: [:index] do
-          resource :admin, only: [:create, :destroy]
+        resources :members, only: %i(index destroy) do
+          resource :admin, only: %i(create destroy)
         end
         resources :posts, only: %i(index create)
       end
       resource :preference, only: [:update], controller: 'forum_preferences', module: :users
     end
-    resources :feeds, only: [:index, :update]
+    resources :feeds, only: %i(index update)
   end
 
   if Rails.env.production?

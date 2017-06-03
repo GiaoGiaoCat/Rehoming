@@ -8,4 +8,5 @@ class ForumPolicy < ApplicationPolicy
   end
   alias create_blocked_member? view_blocked_members?
   alias destroy_blocked_member? view_blocked_members?
+  alias destroy_member? view_blocked_members?
 end

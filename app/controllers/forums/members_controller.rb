@@ -6,6 +6,13 @@ class Forums::MembersController < ApplicationController
     render json: @members, each_serializer: Forums::MemberSerializer
   end
 
+  def destroy
+    load_member
+    authorize @forum, :destroy_member?
+    @member.quit_forum(@forum)
+    head :no_content
+  end
+
   private
 
   def current_forum
@@ -14,6 +21,10 @@ class Forums::MembersController < ApplicationController
 
   def load_members
     @members = current_forum.visible_members
+  end
+
+  def load_member
+    @member = current_forum.visible_members.find(params[:id])
   end
 
   def view_variables

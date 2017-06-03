@@ -29,7 +29,7 @@ module MembershipState
       end
 
       event :ignore do
-        transitions from: :pending, to: :ignored
+        transitions from: %i(pending exited), to: :ignored
       end
 
       event :block do

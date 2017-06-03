@@ -74,13 +74,6 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  def setup_role(role)
-    current_user.add_role role, @forum
-    yield
-    current_user.remove_role role, @forum
-    assert_empty current_user.roles
-  end
-
   def assert_blocked_members_difference(action, status_code, step)
     assert_difference -> { @forum.memberships.blocked.count }, step do
       assert_status_code_after_run_action(action, status_code)
