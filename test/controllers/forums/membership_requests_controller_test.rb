@@ -18,14 +18,19 @@ class Forums::MembershipRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'should update membership request' do
+  test '只有圈主能审批加圈申请' do
     @roc.join_forum(@forum)
     membership_request = @forum.membership_requests.find_by(user: @roc)
     params_data = { data: { attributes: { action: 'accept' } } }
-    assert_difference -> { Forums::Membership.active.count } do
+
+    assert_raises Pundit::NotAuthorizedError do
       put forum_membership_request_url(@forum, membership_request), params: params_data, headers: @headers
     end
 
-    assert_response :success
+    current_user.add_role :owner, @forum
+    assert_difference -> { Forums::Membership.active.count } do
+      put forum_membership_request_url(@forum, membership_request), params: params_data, headers: @headers
+      assert_response :success
+    end
   end
 end

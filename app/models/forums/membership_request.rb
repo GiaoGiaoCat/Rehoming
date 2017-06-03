@@ -21,6 +21,10 @@ class Forums::MembershipRequest < ActiveType::Record[Forums::Membership]
   # protected instance methods ................................................
   # private instance methods ..................................................
 
+  def self.policy_class
+    Forums::MembershipRequestPolicy
+  end
+
   private
 
   def auto_approval

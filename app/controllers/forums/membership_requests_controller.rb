@@ -3,7 +3,9 @@ class Forums::MembershipRequestsController < ApplicationController
 
   def index
     load_membership_requests
-    render json: @membership_requests, include: %i(user forum), each_serializer: Forums::MembershipRequestSerializer
+    render json: @membership_requests,
+           include: %i(user forum),
+           each_serializer: Forums::MembershipRequestSerializer
   end
 
   def create
@@ -12,6 +14,7 @@ class Forums::MembershipRequestsController < ApplicationController
   end
 
   def update
+    load_membership_request
     build_membership_request
     if @membership_request.update_status
       head :no_content
@@ -30,8 +33,14 @@ class Forums::MembershipRequestsController < ApplicationController
     @membership_requests = current_forum.membership_requests
   end
 
+  def load_membership_request
+    @membership_request = current_forum.membership_requests
+                                       .find_with_encrypted_id(params[:id])
+    authorize @membership_request.becomes(Forums::MembershipRequest)
+  end
+
   def build_membership_request
-    @membership_request = current_forum.membership_requests.find_by_encrypted_id(params[:id])
+    @membership_request ||= Forums::MembershipRequest.new
     @membership_request.attributes = membership_request_params
   end
 
