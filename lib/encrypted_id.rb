@@ -27,10 +27,6 @@ module EncryptedId
       super(scope)
     end
 
-    def find_by_encrypted_id(*args)
-      find(*args)
-    end
-
     def encrypted_id_default_key
       name
     end

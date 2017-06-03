@@ -31,11 +31,11 @@ class Forums::MembershipRequestsController < ApplicationController
 
   def load_membership_requests
     @membership_requests = current_forum.membership_requests
+    authorize @forum, :view_membership_requests?
   end
 
   def load_membership_request
-    @membership_request = current_forum.membership_requests
-                                       .find_by_encrypted_id(params[:id])
+    @membership_request = current_forum.membership_requests.find(params[:id])
     authorize @membership_request.becomes(Forums::MembershipRequest)
   end
 
