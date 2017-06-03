@@ -39,10 +39,10 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     end
 
     # 嘉宾不可操作
-    assert_blocked_members(action: :post, role: :collaborator, difference: false)
+    setup_role(:collaborator) { assert_blocked_members_no_difference(:post, :forbidden) }
 
     # 普通成员不可操作
-    assert_blocked_members(action: :post, role: :member, difference: false)
+    setup_role(:member) { assert_blocked_members_no_difference(:post, :forbidden) }
   end
 
   test '只有圈主、管理员才能取消拉黑成员' do
@@ -53,17 +53,17 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     assert_blocked_members_no_difference(:delete, :forbidden)
 
     # 嘉宾不可操作
-    assert_blocked_members(action: :delete, role: :collaborator, difference: false)
+    setup_role(:collaborator) { assert_blocked_members_no_difference(:delete, :forbidden) }
 
     # 普通成员不可操作
-    assert_blocked_members(action: :delete, role: :member, difference: false)
+    setup_role(:member) { assert_blocked_members_no_difference(:delete, :forbidden) }
 
     # 圈主可操作
-    assert_blocked_members(action: :delete, role: :owner, difference: true, step: -1)
+    setup_role(:owner) { assert_blocked_members_difference(:delete, :no_content, -1) }
 
     # 管理员可操作
     block_victor_at_first
-    assert_blocked_members(action: :delete, role: :admin, difference: true, step: -1)
+    setup_role(:admin) { assert_blocked_members_difference(:delete, :no_content, -1) }
   end
 
   private
@@ -81,31 +81,22 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     assert_empty current_user.roles
   end
 
-  def assert_blocked_members(action:, role:, difference: true, step: 1)
-    setup_role(role) do
-      if difference
-        assert_blocked_members_difference(action, :no_content, step)
-      else
-        assert_blocked_members_no_difference(action, :forbidden)
-      end
-    end
-  end
-
   def assert_blocked_members_difference(action, status_code, step)
     assert_difference -> { @forum.memberships.blocked.count }, step do
-      case action
-      when :delete then delete_forum_blocked_member(status_code)
-      when :post then post_forum_blocked_member(status_code)
-      end
+      assert_status_code_after_run_action(action, status_code)
     end
   end
 
   def assert_blocked_members_no_difference(action, status_code)
     assert_no_difference -> { @forum.memberships.blocked.count } do
-      case action
-      when :delete then delete_forum_blocked_member(status_code)
-      when :post then post_forum_blocked_member(status_code)
-      end
+      assert_status_code_after_run_action(action, status_code)
+    end
+  end
+
+  def assert_status_code_after_run_action(action, status_code)
+    case action
+    when :delete then delete_forum_blocked_member(status_code)
+    when :post then post_forum_blocked_member(status_code)
     end
   end
 
