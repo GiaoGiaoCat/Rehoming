@@ -8,7 +8,7 @@ class CreateForumPreferences < ActiveRecord::Migration[5.1]
       t.boolean :public_search_allowed, default: false, comment: '允许外部搜索'
       t.boolean :direct_message_allowed, default: true, comment: '允许成员私聊'
       t.boolean :membership_approval_needed, default: false, comment: '成员加入需要审批'
-      t.integer :postable_role, default: 10, comment: '设置发主题权限'
+      t.text :postable_roles, comment: '发主题权限'
       t.timestamps
     end
   end

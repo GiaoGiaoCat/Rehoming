@@ -1,6 +1,7 @@
 class Forum < ApplicationRecord
   # extends ...................................................................
   obfuscate_id
+  resourcify
 
   # includes ..................................................................
 
@@ -21,6 +22,7 @@ class Forum < ApplicationRecord
   has_many :memberships, class_name: 'Forums::Membership', foreign_key: 'forum_id'
   has_many :membership_requests, class_name: 'Forums::MembershipRequest', foreign_key: 'forum_id'
   has_many :members, -> { active_or_blocked }, class_name: 'User', through: :memberships, source: :user
+  has_many :blocked_members, -> { blocked }, class_name: 'User', through: :memberships, source: :user
   has_many :posts
 
   # validations ...............................................................

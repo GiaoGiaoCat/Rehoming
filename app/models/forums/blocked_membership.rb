@@ -1,15 +1,15 @@
 class Forums::BlockedMembership < ActiveType::Object
-  belongs_to :user
-  belongs_to :forum
-
   attribute :user_id, :string
   attribute :forum_id, :integer
+
+  belongs_to :user
+  belongs_to :forum
 
   validates :user_id, presence: true, numericality: { only_integer: true }, if: -> { user.blank? }
   validates :forum_id, presence: true
 
   before_validation :decrypt_user_id, if: -> { user.blank? }
-  after_save :block_membership
+  after_save :block_member
 
   def destroy
     forum.memberships.find_by(user_id: decrypt_user_id).unblock!
@@ -25,8 +25,7 @@ class Forums::BlockedMembership < ActiveType::Object
     User.decrypt(User.encrypted_id_key, user_id)
   end
 
-  def block_membership
-    membership = forum.memberships.find_by(user: user)
-    membership&.block!
+  def block_member
+    forum.memberships.find_by(user: user).try(:block!)
   end
 end

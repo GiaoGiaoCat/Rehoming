@@ -1,0 +1,8 @@
+zh-CN:
+  activerecord:
+    errors:
+      models:
+        forums/members/as_admin:
+          attributes:
+            base:
+              need_membership: '只有成员能被设置为管理员'

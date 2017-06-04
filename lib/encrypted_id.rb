@@ -8,27 +8,12 @@ module EncryptedId
   end
 
   module ClassMethods
+    include RailsExt::ActiveRecordFinder
+
     def encrypted_id(options = {})
       cattr_accessor :encrypted_id_key
       self.encrypted_id_key = Digest::SHA256.digest(options[:key] || encrypted_id_default_key)
       define_singleton_method(:find_single, -> { logger.info 'foo' })
-    end
-
-    def find(*args)
-      scope = args.slice!(0)
-      options = args.slice!(0) || {}
-      if !options[:no_encrypted_id] && scope.to_s !~ /\A\d+\z/
-        begin
-          scope = process_scope(scope)
-        rescue OpenSSL::Cipher::CipherError
-          raise ActiveRecord::RecordNotFound.new("Could not decrypt ID #{scope}")
-        end
-      end
-      super(scope)
-    end
-
-    def find_by_encrypted_id(*args)
-      find(*args)
     end
 
     def encrypted_id_default_key

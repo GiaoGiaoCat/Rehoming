@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170528151536) do
+ActiveRecord::Schema.define(version: 20170602101838) do
 
   create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "attachable_type"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20170528151536) do
     t.boolean "public_search_allowed", default: false, comment: "允许外部搜索"
     t.boolean "direct_message_allowed", default: true, comment: "允许成员私聊"
     t.boolean "membership_approval_needed", default: false, comment: "成员加入需要审批"
-    t.integer "postable_role", default: 10, comment: "设置发主题权限"
+    t.text "postable_roles", comment: "发主题权限"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -119,11 +119,22 @@ ActiveRecord::Schema.define(version: 20170528151536) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["name"], name: "index_roles_on_name"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
   create_table "user_forum_preferences", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "user_id"
     t.bigint "forum_id"
     t.string "nickname"
-    t.boolean "follow_topics_on_mention", default: true
+    t.boolean "feed_allowed", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["forum_id", "user_id"], name: "user_forum_preferences_index"
@@ -137,6 +148,14 @@ ActiveRecord::Schema.define(version: 20170528151536) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unionid"], name: "users_unionid_index"
+  end
+
+  create_table "users_roles", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
 end

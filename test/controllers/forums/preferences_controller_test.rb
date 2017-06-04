@@ -5,18 +5,21 @@ class Forums::PreferencesControllerTest < ActionDispatch::IntegrationTest
     @forum = forums(:one)
   end
 
-  test 'should update forum preference' do
-    params_data = {
-      data: {
-        attributes: {
-          postable_until_tomorrow: true
-        }
-      }
-    }
+  test '圈主可以更改圈子设置' do
+    current_user.add_role :owner, @forum
+    params_data = { data: { attributes: { postable_until_tomorrow: true } } }
+
     assert_changes -> { @forum.preference.reload.postable_until_tomorrow } do
       put forum_setting_url(@forum), params: params_data, headers: @headers
     end
 
     assert_response :success
+  end
+
+  test '非圈主不可以更改圈子设置' do
+    params_data = { data: { attributes: { postable_until_tomorrow: true } } }
+
+    put forum_setting_url(@forum), params: params_data, headers: @headers
+    assert_response 403
   end
 end
