@@ -13,6 +13,10 @@ class Forums::MembershipRequest < ActiveType::Record[Forums::Membership]
   attribute :action, :string
   delegate :membership_approval_needed?, to: :forum
   # class methods .............................................................
+  def self.policy_class
+    Forums::MembershipRequestPolicy
+  end
+
   # public instance methods ...................................................
   def update_status
     return false if invalid? || !respond_to?(action)
@@ -20,10 +24,6 @@ class Forums::MembershipRequest < ActiveType::Record[Forums::Membership]
   end
   # protected instance methods ................................................
   # private instance methods ..................................................
-
-  def self.policy_class
-    Forums::MembershipRequestPolicy
-  end
 
   private
 
