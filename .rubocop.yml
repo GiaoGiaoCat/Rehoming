@@ -7,12 +7,11 @@ AllCops:
     - 'lib/**/*.rake'
   Exclude:
     - 'bin/*'
-    - 'lib/generators/weplus/**/*'
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
 Rails:
   Enabled: true

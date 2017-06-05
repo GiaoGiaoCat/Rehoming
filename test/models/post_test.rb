@@ -45,7 +45,7 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test '会员状态为 blocked 能发帖' do
-    Forums::BlockedMembership.create(forum: @forum, user: @victor)
+    Forums::BlockedMember.create(forum: @forum, user: @victor)
 
     p = @forum.posts.new(content: '#我是标签# content goes here', user_id: @victor.id)
     assert p.valid?

@@ -4,8 +4,8 @@ class Posts::CommentsController < ApplicationController
   def create
     build_comment
     if @comment.save
-      instrument 'commented.post', obj_id: @parent.id, handler_id: current_user.id
-      instrument 'replied.comment', obj_id: @comment.id, handler_id: current_user.id
+      instrument 'commented.post', sourceable: @parent, handler: current_user
+      instrument 'replied.comment', sourceable: @comment, handler: current_user
       head :created
     else
       render json: @comment.errors.messages, status: :bad_request

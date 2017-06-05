@@ -32,7 +32,7 @@ class Forums::BlockedMembersController < ApplicationController
   end
 
   def build_blocked_member
-    @blocked_member = Forums::BlockedMembership.new(forum: @forum)
+    @blocked_member = Forums::BlockedMember.new(forum: @forum)
     @blocked_member.attributes = blocked_member_params
   end
 

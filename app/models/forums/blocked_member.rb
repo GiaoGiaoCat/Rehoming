@@ -1,4 +1,4 @@
-class Forums::BlockedMembership < ActiveType::Object
+class Forums::BlockedMember < ActiveType::Object
   attribute :user_id, :string
   attribute :forum_id, :integer
 
