@@ -37,7 +37,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
   test 'create comment should feed' do
     params_data = { data: { attributes: { content: '合法数据' } } }
     assert_difference -> { @post.author.feeds.count } do
-      job_params = ['new_comment_of_post', @post.id, 'Post', @post.author.id]
+      job_params = ['new_comment_of_post', @post, @post.author.id]
       assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
         post post_comments_url(@post), params: params_data, headers: @headers
       end
@@ -57,7 +57,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
     params_data = { data: { attributes: { content: '合法数据', replied_user_id: @roc.to_param } } }
     assert_difference -> { @roc.feeds.count } do
       assert_difference -> { @post.author.feeds.count } do
-        job_params = ['new_comment_of_post', @post.id, 'Post', @post.author.id]
+        job_params = ['new_comment_of_post', @post, @post.author.id]
         assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
           post post_comments_url(@post), params: params_data, headers: @headers
         end

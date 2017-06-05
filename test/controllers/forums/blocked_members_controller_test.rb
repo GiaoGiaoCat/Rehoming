@@ -70,7 +70,7 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
 
   def block_victor_at_first
     assert_difference -> { @forum.memberships.blocked.count } do
-      Forums::BlockedMembership.create(forum: @forum, user: @victor)
+      Forums::BlockedMember.create(forum: @forum, user: @victor)
     end
   end
 

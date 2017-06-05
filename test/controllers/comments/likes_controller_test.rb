@@ -19,7 +19,7 @@ class Comments::LikesControllerTest < ActionDispatch::IntegrationTest
 
   test 'create likes should feed' do
     assert_difference -> { users(:yuki).feeds.count } do
-      job_params = ['new_like_of_comment', @comment_unliked.id, 'Comment', @comment_unliked.author.id]
+      job_params = ['new_like_of_comment', @comment_unliked, @comment_unliked.author.id]
       assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
         post comment_likes_url(@comment_unliked), headers: @headers
       end

@@ -18,7 +18,7 @@ module ActsAsAction
   def create
     authorize @parent.forum, authorize_name if authorize_name
     @current_user.send(verb, @parent)
-    instrument instrument_name, obj_id: @parent.id, handler_id: current_user.id if instrument_name
+    instrument instrument_name, sourceable: @parent, handler: current_user if instrument_name
     head :created
   end
 
