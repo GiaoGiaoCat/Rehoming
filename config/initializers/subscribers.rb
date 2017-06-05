@@ -4,7 +4,7 @@ subsribers.each do |key, value|
   value.each do |action|
     ActiveSupport::Notifications.subscribe("#{action}.#{key}") do |*args|
       event = ActiveSupport::Notifications::Event.new(*args)
-      Services::Feeds::Create.call(event.name, event.transaction_id, event.payload)
+      Services::Feeds::Create.call(event)
     end
   end
 end

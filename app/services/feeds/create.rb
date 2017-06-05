@@ -1,8 +1,8 @@
 class Services::Feeds::Create < ApplicationService
-  def call(name, _transaction_id, payload)
-    method_name = name.sub('.', '_').to_sym
-    @sourceable = payload[:sourceable]
-    @handler = payload[:handler]
+  def call(event)
+    method_name = event.name.sub('.', '_').to_sym
+    @sourceable = event.payload[:sourceable]
+    @handler = event.payload[:handler]
     send(method_name) if private_methods.include? method_name
   end
 
