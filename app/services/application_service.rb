@@ -1,2 +1,2 @@
-class ApplicationService < Services::Base
+class ApplicationService < ActiveType::Object
 end

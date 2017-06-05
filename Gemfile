@@ -45,8 +45,6 @@ gem 'aasm'
 gem 'rolify', '~> 5.1'
 # Object oriented authorization for Rails applications
 gem 'pundit', '~> 1.1'
-# A nifty service layer for your Rails app
-gem 'services'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
