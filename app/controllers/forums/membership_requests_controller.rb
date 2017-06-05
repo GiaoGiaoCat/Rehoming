@@ -49,7 +49,7 @@ class Forums::MembershipRequestsController < ApplicationController
   end
 
   def membership_request_params
-    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: :action)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params, only: %i(action invitation_token))
   end
 
   def view_variables
