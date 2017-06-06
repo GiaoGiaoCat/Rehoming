@@ -45,6 +45,8 @@ Rails.application.routes.draw do
           resource :admin, only: %i(create destroy)
         end
         resources :posts, only: %i(index create)
+        resources :invitations, only: %i(create)
+        resources :collaborators, only: %i(create destroy)
       end
       resource :preference, only: [:update], controller: 'forum_preferences', module: :users
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602101838) do
+ActiveRecord::Schema.define(version: 20170604104451) do
 
   create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "attachable_type"
@@ -93,6 +93,18 @@ ActiveRecord::Schema.define(version: 20170602101838) do
     t.string "background_color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "invitations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string "token"
+    t.datetime "accepted_at"
+    t.bigint "forum_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["forum_id"], name: "index_invitations_on_forum_id"
+    t.index ["token"], name: "invitations_token_index"
+    t.index ["user_id"], name: "index_invitations_on_user_id"
   end
 
   create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|

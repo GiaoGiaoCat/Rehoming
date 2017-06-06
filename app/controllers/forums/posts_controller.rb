@@ -27,7 +27,7 @@ class Forums::PostsController < ApplicationController
   end
 
   def build_post
-    @post = current_forum.posts.new(user_id: current_user.id)
+    @post = Posts::CreateService.new(forum: current_forum, author: current_user)
     @post.attributes = post_params
   end
 

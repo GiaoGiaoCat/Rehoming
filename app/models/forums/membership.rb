@@ -28,7 +28,7 @@ class Forums::Membership < ApplicationRecord
   end
 
   def join_again
-    # ignore request when status is ignored
+    # ignore request when status is ignored or active
     pend! if rejected?
     rejoin! if exited?
   end

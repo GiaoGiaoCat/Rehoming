@@ -1,37 +1,32 @@
-class Post < ApplicationRecord
+class Forums::Invitation < ApplicationRecord
   # extends ...................................................................
   # includes ..................................................................
-  include ActsAsLikeable::Likeable
-  include ActsAsFavorable::Favorable
-  include ActsAsPinable::Pinable
-  include ActsAsRecommendable::Recommendable
-  include ScopeByUser
+  # constants .................................................................
   # relationships .............................................................
   belongs_to :forum
-  belongs_to :author, class_name: 'User', foreign_key: :user_id
-  has_many :attachments, as: :attachable
-  has_many :comments, as: :commentable
+  belongs_to :user, optional: true
   # validations ...............................................................
-  validates :content, presence: true, length: { in: 1..10_000 }
-  validate :images_limitation, :video_limitation
+  validates :token, presence: true, uniqueness: true
   # callbacks .................................................................
+  before_validation :ensure_token
   # scopes ....................................................................
-  scope :by_filter, ->(filter) { by_recommended if filter == 'recommended' }
+  scope :available, -> { where(accepted_at: nil) }
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
-  accepts_nested_attributes_for :attachments
-  encrypted_id key: 'kwXKxc3zRH3UFz'
   # class methods .............................................................
   # public instance methods ...................................................
+  def used_by(user)
+    update(user: user, accepted_at: Time.zone.now)
+  end
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 
   private
 
-  def images_limitation
-    errors.add :base, :too_many_images if attachments.select(&:image?).count > 9
-  end
-
-  def video_limitation
-    errors.add :base, :too_many_videos if attachments.select(&:video?).count > 1
+  def ensure_token
+    self.token ||= loop do
+      random_token = SecureRandom.urlsafe_base64(nil, false)
+      break random_token unless self.class.exists?(token: random_token)
+    end
   end
 end

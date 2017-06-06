@@ -7,8 +7,10 @@ class Forums::Preference < ApplicationRecord
   # relationships .............................................................
   belongs_to :forum
   # validations ...............................................................
+  validates :postable_roles, presence: true
   validate :ensure_valid_roles
   # callbacks .................................................................
+  after_initialize :initialize_postable_roles
   # scopes ....................................................................
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
   serialize :postable_roles, Array
@@ -20,8 +22,11 @@ class Forums::Preference < ApplicationRecord
 
   private
 
+  def initialize_postable_roles
+    self.postable_roles = Forums::Membership.roles.values if new_record?
+  end
+
   def ensure_valid_roles
-    return if postable_roles.blank?
     return if postable_roles.all? { |r| r.in?(Forums::Membership.roles.values) }
     errors.add :postable_roles, '可发帖的用户组数据非法'
   end

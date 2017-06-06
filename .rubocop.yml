@@ -28,7 +28,7 @@ Metrics/MethodLength:
 
 # The guiding principle of classes is SRP, SRP can't be accurately measured by LoC
 Metrics/ClassLength:
-  Max: 500
+  Max: 125
 
 # We do not need to support Ruby 1.9, so this is good to use.
 Style/SymbolArray:
