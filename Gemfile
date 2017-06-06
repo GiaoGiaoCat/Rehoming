@@ -47,9 +47,8 @@ gem 'rolify', '~> 5.1'
 gem 'pundit', '~> 1.1'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
   gem 'awesome_print', '~> 1.7'
+  gem 'byebug'
   gem 'sqlite3'
 end
 

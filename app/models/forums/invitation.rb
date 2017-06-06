@@ -17,7 +17,7 @@ class Forums::Invitation < ApplicationRecord
   def used_by(user)
     update(user: user, accepted_at: Time.zone.now)
   end
-    
+
   # protected instance methods ................................................
   # private instance methods ..................................................
 

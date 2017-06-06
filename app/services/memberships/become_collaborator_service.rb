@@ -38,7 +38,8 @@ class Memberships::BecomeCollaboratorService < ApplicationService
   end
 
   def act_as_collaborator
-    user.add_role :collaborator, forum
+    return if user.has_role?(:owner, forum) || user.has_role?(:collaborator, forum)
+    user.add_role(:collaborator, forum)
     invitation.used_by(user)
   end
 end
