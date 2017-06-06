@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  rolify
   # extends ...................................................................
+  rolify
   # includes ..................................................................
   include ActsAsLikeable::Liker
   include ActsAsFavorable::Favoriter
