@@ -42,7 +42,7 @@ class Feeds::SendService < ApplicationService
   # 添加一条主题 -> 给主题所在的圈子中，题主之外的所有成员发送动态
   def created_post
     user_id = sourceable.user_id
-    member_ids = sourceable.forum.members.feed_allowed.map(&:id).delete_if { |member_id| member_id == user_id }
+    member_ids = sourceable.forum.members.feed_allowed.map(&:id).reject { |member_id| member_id == user_id }
     feed_job 'new_post', member_ids
   end
 
