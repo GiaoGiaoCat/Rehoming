@@ -6,7 +6,9 @@
 #
 one:
   forum: one
+  postable_roles: [10, 20, 30, 40]
 
 two:
   forum: two
   membership_approval_needed: true
+  postable_roles: [10, 20, 30, 40]
