@@ -23,11 +23,11 @@ class Forums::Preference < ApplicationRecord
   private
 
   def initialize_postable_roles
-    self.postable_roles = Forums::Membership.roles.values if new_record?
+    self.postable_roles = Role::PERMISSIONS if new_record?
   end
 
   def ensure_valid_roles
-    return if postable_roles.all? { |r| r.in?(Forums::Membership.roles.values) }
+    return if postable_roles.all? { |r| r.in?(Role::PERMISSIONS) }
     errors.add :postable_roles, '可发帖的用户组数据非法'
   end
 end

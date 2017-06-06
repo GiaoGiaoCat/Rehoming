@@ -6,9 +6,9 @@
 #
 one:
   forum: one
-  postable_roles: [10, 20, 30, 40]
+  postable_roles: ["owner", "collaborator", "admin"]
 
 two:
   forum: two
   membership_approval_needed: true
-  postable_roles: [10, 20, 30, 40]
+  postable_roles: ["owner", "collaborator", "admin"]

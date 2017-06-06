@@ -15,9 +15,8 @@ class Posts::CreateService < ActiveType::Record[Post]
   end
 
   def author_role_can_post
-    names = Forums::Membership.roles.symbolize_keys.select { |k,v| forum.postable_roles.include? v }.keys
-    roles = names.map { |name| { name: name, resource: forum } }
-    author.has_any_role?(*roles)
+    roles = Role::PERMISSIONS & forum.postable_roles & author.roles.where(resource: forum).map(&:name)
+    errors.add :base, :no_permissions if roles.empty?
   end
 
   def author_membership
