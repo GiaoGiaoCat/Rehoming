@@ -1,4 +1,4 @@
-class Memberships::BecomeCollaboratorService < ApplicationService
+class Roles::BecomeCollaboratorService < ApplicationService
   attribute :invitation_token, :string
   attribute :user_id, :integer
   attribute :invitation_id, :integer

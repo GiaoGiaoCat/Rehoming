@@ -7,7 +7,11 @@ class ForumPolicy < ApplicationPolicy
     user.has_role?(:moderator, record) || user.has_role?(:admin, record)
   end
 
-  %i(create_blocked_member? destroy_blocked_member? destroy_member? manage_recommend? manage_pin?).each do |new_method|
+  %i(manage_blocked_member? destroy_member? manage_recommend? manage_pin?).each do |new_method|
     alias_method new_method, :view_blocked_members?
+  end
+
+  %i(destroy_collaborator?).each do |new_method|
+    alias_method new_method, :view_membership_requests?
   end
 end

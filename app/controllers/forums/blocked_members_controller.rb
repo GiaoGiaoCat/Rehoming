@@ -8,14 +8,14 @@ class Forums::BlockedMembersController < ApplicationController
   end
 
   def create
-    authorize @forum, :create_blocked_member?
+    authorize @forum, :manage_blocked_member?
     build_blocked_member
     @blocked_member.save
     head :created
   end
 
   def destroy
-    authorize @forum, :destroy_blocked_member?
+    authorize @forum, :manage_blocked_member?
     build_blocked_member
     @blocked_member.destroy
     head :no_content
