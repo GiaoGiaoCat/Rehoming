@@ -6,7 +6,6 @@ class Roles::BecomeCollaboratorService < ApplicationService
   belongs_to :user
   belongs_to :invitation, class_name: 'Forums::Invitation', optional: true
 
-  validates :user, presence: true
   validates :invitation_token, presence: true
   validate :ensure_invitation_is_available
 

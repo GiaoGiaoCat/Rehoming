@@ -35,7 +35,7 @@ class Feeds::SendService < ApplicationService
   def replied_comment
     replied_user_id = sourceable.replied_user_id
     return if replied_user_id.blank?
-    return if replied_user_id == handler.id || replied_user_id == sourceable.commentable.author.id
+    return if [handler.id, sourceable.commentable.author.id].include?(replied_user_id)
     feed_job 'new_reply_of_comment', sourceable.replied_user_id
   end
 

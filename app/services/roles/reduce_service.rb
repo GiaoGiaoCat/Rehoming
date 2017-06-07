@@ -1,10 +1,11 @@
 class Roles::ReduceService < ApplicationService
-  attribute :forum
-  attribute :user
+  attribute :forum_id, :integer
+  attribute :user_id, :integer
   attribute :role
 
-  validates :forum, presence: true
-  validates :user, presence: true
+  belongs_to :user
+  belongs_to :forum
+
   validates :role, inclusion: { in: Role::PERMISSIONS }
 
   before_validation :format_role

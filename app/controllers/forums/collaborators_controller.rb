@@ -20,14 +20,14 @@ class Forums::CollaboratorsController < ApplicationController
     @forum ||= Forum.find(params[:forum_id])
   end
 
-  def build_reduce_collaborator
-    user = @forum.members.find(params[:id])
-    @reduce_collaborator = Roles::ReduceService.new(forum: @forum, user: user, role: :collaborator)
-  end
-
   def build_collaborator
     @collaborator = Roles::BecomeCollaboratorService.new(user: current_user)
     @collaborator.attributes = collaborator_params
+  end
+
+  def build_reduce_collaborator
+    user = @forum.members.find(params[:id])
+    @reduce_collaborator = Roles::ReduceService.new(forum: @forum, user: user, role: :collaborator)
   end
 
   def collaborator_params
