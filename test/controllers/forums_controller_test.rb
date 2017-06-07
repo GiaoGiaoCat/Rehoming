@@ -14,7 +14,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     assert_difference 'Forum.count' do
       params = { data: { attributes: { name: 'Forum one', category: 'wenyi' } } }
       post forums_url, headers: @headers, params: params
-      assert current_user.has_role? :owner, Forum.last
+      assert current_user.has_role? :moderator, Forum.last
     end
   end
 end

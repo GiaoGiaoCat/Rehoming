@@ -6,7 +6,7 @@
 #
 one:
   forum: one
-  postable_roles: ["owner", "collaborator", "admin"]
+  postable_roles: []
 
 two:
   forum: two

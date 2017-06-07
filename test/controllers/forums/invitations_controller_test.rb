@@ -8,7 +8,7 @@ class Forums::InvitationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :forbidden
 
     assert_difference 'Forums::Invitation.where(forum: forum).count' do
-      current_user.add_role :owner, forum
+      current_user.add_role :moderator, forum
       post forum_invitations_url(forum_id: forum.id), headers: @headers
       assert_response :created
     end

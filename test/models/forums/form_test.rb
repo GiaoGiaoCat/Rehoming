@@ -9,6 +9,6 @@ class Forums::FormTest < ActiveSupport::TestCase
     assert_difference -> { @victor.roles.count } do
       Forums::Form.create(owner: @victor, name: 'test forum', category: 20)
     end
-    assert @victor.reload.has_role?(:owner, Forum.last)
+    assert @victor.reload.has_role?(:moderator, Forum.last)
   end
 end

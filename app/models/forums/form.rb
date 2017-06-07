@@ -8,6 +8,7 @@ class Forums::Form < ActiveType::Record[Forum]
   private
 
   def ensure_owner
-    owner.add_role :owner, becomes(Forum)
+    owner.join_forum(self)
+    owner.add_role :moderator, becomes(Forum)
   end
 end

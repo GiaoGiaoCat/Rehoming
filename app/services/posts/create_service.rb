@@ -15,7 +15,9 @@ class Posts::CreateService < ActiveType::Record[Post]
   end
 
   def author_role_can_post
-    roles = Role::PERMISSIONS & forum.postable_roles & author.roles.where(resource: forum).map(&:name)
+    postable_roles = forum.postable_roles
+    return if postable_roles.empty?
+    roles = Role::PERMISSIONS & postable_roles & author.roles.where(resource: forum).map(&:name)
     errors.add :base, :no_permissions if roles.empty?
   end
 

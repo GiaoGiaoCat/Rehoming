@@ -1,5 +1,5 @@
 class Forums::PreferencePolicy < ApplicationPolicy
   def update?
-    user.has_role? :owner, record.forum
+    user.has_role? :moderator, record.forum
   end
 end

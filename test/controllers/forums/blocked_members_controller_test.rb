@@ -12,7 +12,7 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     assert_empty current_user.roles
     get_forum_blocked_members(:forbidden)
     # 圈主可查看
-    setup_role(:owner, @forum) { get_forum_blocked_members(:ok) }
+    setup_role(:moderator, @forum) { get_forum_blocked_members(:ok) }
     # 管理员可查看
     setup_role(:admin, @forum) { get_forum_blocked_members(:ok) }
     # 嘉宾不可查看
@@ -27,7 +27,7 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     assert_blocked_members_no_difference(:post, :forbidden)
 
     # 圈主可操作
-    setup_role(:owner, @forum) do
+    setup_role(:moderator, @forum) do
       assert_blocked_members_difference(:post, :created, 1)
       @forum.memberships.each { |m| m.update(status: 40) } # 恢复状态
     end
@@ -59,7 +59,7 @@ class Forums::BlockedMembersControllerTest < ActionDispatch::IntegrationTest
     setup_role(:member, @forum) { assert_blocked_members_no_difference(:delete, :forbidden) }
 
     # 圈主可操作
-    setup_role(:owner, @forum) { assert_blocked_members_difference(:delete, :no_content, -1) }
+    setup_role(:moderator, @forum) { assert_blocked_members_difference(:delete, :no_content, -1) }
 
     # 管理员可操作
     block_victor_at_first

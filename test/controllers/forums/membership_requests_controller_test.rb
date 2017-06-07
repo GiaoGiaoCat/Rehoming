@@ -6,11 +6,11 @@ class Forums::MembershipRequestsControllerTest < ActionDispatch::IntegrationTest
     @roc = users(:roc)
   end
 
-  test "only forum's owner can get index" do
+  test "only forum's moderator can get index" do
     get forum_membership_requests_url(@forum), headers: @headers
     assert_response :forbidden
 
-    users(:victor).add_role :owner, @forum
+    users(:victor).add_role :moderator, @forum
     get forum_membership_requests_url(@forum), headers: @headers
     assert_response :success
   end
@@ -24,7 +24,7 @@ class Forums::MembershipRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "only forum's owner can examine and approve membership request" do
+  test "only forum's moderator can examine and approve membership request" do
     @roc.join_forum(@forum)
     membership_request = @forum.membership_requests.find_by(user: @roc)
     params_data = { data: { attributes: { action: 'accept' } } }
@@ -32,7 +32,7 @@ class Forums::MembershipRequestsControllerTest < ActionDispatch::IntegrationTest
     put forum_membership_request_url(@forum, membership_request), params: params_data, headers: @headers
     assert_response :forbidden
 
-    current_user.add_role :owner, @forum
+    current_user.add_role :moderator, @forum
     assert_difference -> { Forums::Membership.active.count } do
       put forum_membership_request_url(@forum, membership_request), params: params_data, headers: @headers
       assert_response :success
