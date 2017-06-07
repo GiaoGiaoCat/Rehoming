@@ -1,7 +1,7 @@
 class Memberships::BecomeCollaboratorService < ApplicationService
   attribute :invitation_token, :string
-  attribute :user_id
-  attribute :invitation_id
+  attribute :user_id, :integer
+  attribute :invitation_id, :integer
 
   belongs_to :user
   belongs_to :invitation, class_name: 'Forums::Invitation', optional: true

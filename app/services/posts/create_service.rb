@@ -3,6 +3,8 @@ class Posts::CreateService < ActiveType::Record[Post]
   validate :postable_until_tomorrow
   validate :author_role_can_post
 
+  delegate :forum_memberships, to: :author
+
   private
 
   def user_should_in_forum
@@ -10,7 +12,7 @@ class Posts::CreateService < ActiveType::Record[Post]
   end
 
   def postable_until_tomorrow
-    return unless forum.preference.postable_until_tomorrow
+    return unless forum.postable_until_tomorrow?
     errors.add :base, :postable_until_tomorrow if author_membership.created_at.next_day > Time.current
   end
 
@@ -22,7 +24,6 @@ class Posts::CreateService < ActiveType::Record[Post]
   end
 
   def author_membership
-    membership = author.forum_memberships.find_by(forum: forum)
-    membership if membership&.active? || membership&.blocked?
+    forum_memberships.available.find_by(forum: forum)
   end
 end

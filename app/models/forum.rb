@@ -35,7 +35,11 @@ class Forum < ApplicationRecord
   # scopes ....................................................................
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
   encrypted_id key: 'vzmvXdcqWTVa6C'
-  delegate :membership_approval_needed?, :member_list_protected?, :postable_roles, to: :preference
+  delegate :membership_approval_needed?,
+           :member_list_protected?,
+           :postable_until_tomorrow?,
+           :postable_roles,
+           to: :preference
 
   # class methods .............................................................
 
