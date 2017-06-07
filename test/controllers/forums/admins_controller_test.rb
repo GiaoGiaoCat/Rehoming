@@ -5,6 +5,15 @@ class Forums::AdminsControllerTest < ActionDispatch::IntegrationTest
     @forum = forums(:one)
   end
 
+  test '只有圈主能修改管理员' do
+    member = @forum.members.first
+    assert_empty member.reload.roles
+
+    assert_no_difference -> { member.roles.reload.count } do
+      post forum_admins_url(forum_id: @forum.id, id: member.id), headers: @headers
+    end
+  end
+
   test '将成员设置为管理员' do
     current_user.add_role :moderator, @forum
     member = @forum.members.first

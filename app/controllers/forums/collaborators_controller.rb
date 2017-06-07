@@ -9,7 +9,7 @@ class Forums::CollaboratorsController < ApplicationController
 
   def destroy
     build_reduce_collaborator
-    authorize @forum, :destroy_collaborator?
+    authorize @forum, :manage_collaborator?
     @reduce_collaborator.save
     head :no_content
   end

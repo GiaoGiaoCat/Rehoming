@@ -11,7 +11,7 @@ class ForumPolicy < ApplicationPolicy
     alias_method new_method, :view_blocked_members?
   end
 
-  %i(destroy_collaborator?).each do |new_method|
+  %i(manage_collaborator? manage_admin?).each do |new_method|
     alias_method new_method, :view_membership_requests?
   end
 end

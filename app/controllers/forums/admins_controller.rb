@@ -3,12 +3,14 @@ class Forums::AdminsController < ApplicationController
 
   def create
     build_admin
+    authorize @forum, :manage_admin?
     @admin.save
     head :created
   end
 
   def destroy
     build_reduce_admin
+    authorize @forum, :manage_admin?
     @reduce_admin.save
     head :no_content
   end
