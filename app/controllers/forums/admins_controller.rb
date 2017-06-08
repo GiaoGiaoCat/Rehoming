@@ -1,20 +1,18 @@
 class Forums::AdminsController < ApplicationController
-  before_action :load_forum, :load_member, :build_form_member_as_admin
+  before_action :load_forum, :load_member
 
   def create
-    if @as_admin.save
-      head :created
-    else
-      render json: @as_admin.errors.messages, status: :bad_request
-    end
+    build_admin
+    authorize @forum, :manage_admin?
+    @admin.save
+    head :created
   end
 
   def destroy
-    if @as_admin.destroy
-      head :no_content
-    else
-      render json: @as_admin.errors.messages, status: :bad_request
-    end
+    build_reduce_admin
+    authorize @forum, :manage_admin?
+    @reduce_admin.save
+    head :no_content
   end
 
   private
@@ -24,11 +22,14 @@ class Forums::AdminsController < ApplicationController
   end
 
   def load_member
-    @member = @forum.members.find(params[:member_id])
+    @member = @forum.members.find(params[:id])
   end
 
-  def build_form_member_as_admin
-    @as_admin = Forums::Members::AsAdmin.new(forum: @forum, user: @member)
-    authorize @as_admin
+  def build_admin
+    @admin = Roles::BecomeAdminService.new(forum: @forum, user: @member)
+  end
+
+  def build_reduce_admin
+    @reduce_admin = Roles::ReduceService.new(forum: @forum, user: @member, role: :admin)
   end
 end

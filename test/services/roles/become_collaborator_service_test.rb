@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Memberships::BecomeCollaboratorServiceTest < ActiveSupport::TestCase
+class Roles::BecomeCollaboratorServiceTest < ActiveSupport::TestCase
   setup do
     @invitation = forums_invitations(:one)
     @roc = users(:roc)
@@ -8,7 +8,7 @@ class Memberships::BecomeCollaboratorServiceTest < ActiveSupport::TestCase
 
   test '用户通过邀请码成为嘉宾' do
     assert_difference -> { Forums::Membership.where(status: 'active').count } do
-      service = Memberships::BecomeCollaboratorService.new(invitation_token: @invitation.token, user: @roc)
+      service = Roles::BecomeCollaboratorService.new(invitation_token: @invitation.token, user: @roc)
       assert service.save
     end
 

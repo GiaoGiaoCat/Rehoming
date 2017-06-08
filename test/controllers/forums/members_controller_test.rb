@@ -12,9 +12,9 @@ class Forums::MembersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "only forum's owner and admin can destroy member" do
+  test "only forum's moderator and admin can destroy member" do
     # 圈主可操作
-    setup_role(:owner, @forum) do
+    setup_role(:moderator, @forum) do
       assert_difference -> { @forum.members.count }, -1 do
         delete forum_member_url(@forum, @yuki), headers: @headers
       end

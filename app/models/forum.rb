@@ -21,7 +21,7 @@ class Forum < ApplicationRecord
   has_one :preference, class_name: 'Forums::Preference'
   has_many :memberships, class_name: 'Forums::Membership', foreign_key: 'forum_id'
   has_many :membership_requests, class_name: 'Forums::MembershipRequest', foreign_key: 'forum_id'
-  has_many :members, -> { active_or_blocked }, class_name: 'User', through: :memberships, source: :user
+  has_many :members, -> { available }, class_name: 'User', through: :memberships, source: :user
   has_many :blocked_members, -> { blocked }, class_name: 'User', through: :memberships, source: :user
   has_many :posts
 
@@ -35,7 +35,11 @@ class Forum < ApplicationRecord
   # scopes ....................................................................
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
   encrypted_id key: 'vzmvXdcqWTVa6C'
-  delegate :membership_approval_needed?, :member_list_protected?, :postable_roles, to: :preference
+  delegate :membership_approval_needed?,
+           :member_list_protected?,
+           :postable_until_tomorrow?,
+           :postable_roles,
+           to: :preference
 
   # class methods .............................................................
 

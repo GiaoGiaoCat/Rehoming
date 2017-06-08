@@ -3,7 +3,6 @@ class CreateForumMemberships < ActiveRecord::Migration[5.1]
     create_table :forum_memberships do |t|
       t.references  :forum
       t.references  :user
-      t.integer     :role
       t.integer     :status, default: 0
       t.timestamps null: false
     end

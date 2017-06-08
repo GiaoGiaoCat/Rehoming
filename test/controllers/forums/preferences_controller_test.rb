@@ -6,7 +6,7 @@ class Forums::PreferencesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '圈主可以更改圈子设置' do
-    current_user.add_role :owner, @forum
+    current_user.add_role :moderator, @forum
     params_data = { data: { attributes: { postable_until_tomorrow: true } } }
 
     assert_changes -> { @forum.preference.reload.postable_until_tomorrow } do

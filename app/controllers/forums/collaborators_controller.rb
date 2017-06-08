@@ -7,6 +7,13 @@ class Forums::CollaboratorsController < ApplicationController
     head :created
   end
 
+  def destroy
+    build_reduce_collaborator
+    authorize @forum, :manage_collaborator?
+    @reduce_collaborator.save
+    head :no_content
+  end
+
   private
 
   def load_forum
@@ -14,8 +21,13 @@ class Forums::CollaboratorsController < ApplicationController
   end
 
   def build_collaborator
-    @collaborator = Memberships::BecomeCollaboratorService.new(user: current_user)
+    @collaborator = Roles::BecomeCollaboratorService.new(user: current_user)
     @collaborator.attributes = collaborator_params
+  end
+
+  def build_reduce_collaborator
+    user = @forum.members.find(params[:id])
+    @reduce_collaborator = Roles::ReduceService.new(forum: @forum, user: user, role: :collaborator)
   end
 
   def collaborator_params

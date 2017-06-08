@@ -9,7 +9,7 @@ class Posts::RecommendationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '圈主才能设置精华帖' do
-    setup_role(:owner, @forum) { assert_recommendeds_difference(:post, :created, 1) }
+    setup_role(:moderator, @forum) { assert_recommendeds_difference(:post, :created, 1) }
   end
 
   test '管理员能设置精华帖' do
@@ -17,7 +17,7 @@ class Posts::RecommendationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '圈主才能取消精华帖' do
-    setup_role(:owner, @forum) { assert_recommendeds_difference(:delete, :no_content, -1) }
+    setup_role(:moderator, @forum) { assert_recommendeds_difference(:delete, :no_content, -1) }
   end
 
   test '管理员能取消精华帖' do
