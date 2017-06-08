@@ -110,11 +110,24 @@ class Feeds::SendServiceTest < ActiveSupport::TestCase
 
   test '发布新主题，给作者之外的其它圈子成员，发送 feed' do
     assert_difference -> { users(:yuki).feeds.count } do
-      assert_no_difference -> { @victor.feeds.count } do
-        perform_enqueued_jobs do
-          params = { name: 'created.post', sourceable: posts(:one), handler: @victor }
-          Feeds::SendService.create(params)
-        end
+      no_feed_to_author_after_post
+    end
+  end
+
+  test '发布新主题，给作者之外的其它圈子成员，发送 feed，圈子成员关闭通知不给该成员发送 feed' do
+    users(:yuki).membership_by_forum(forums(:one)).preference.update(feed_allowed: false)
+    assert_no_difference -> { users(:yuki).feeds.count } do
+      no_feed_to_author_after_post
+    end
+  end
+
+  private
+
+  def no_feed_to_author_after_post
+    assert_no_difference -> { @victor.feeds.count } do
+      perform_enqueued_jobs do
+        params = { name: 'created.post', sourceable: posts(:one), handler: @victor }
+        Feeds::SendService.create(params)
       end
     end
   end
