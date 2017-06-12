@@ -8,10 +8,10 @@ module ScopeByUser
             primary_key: 'user_id'
 
     scope :by_user, ->(user, forum) { user.membership_by_forum(forum).blocked? ? with_blocked(user) : active }
-    scope :active, -> { joins(:membership).where(forum_memberships: { status: Forums::Membership.statuses[:active] }) }
+    scope :active, -> { joins(:membership).merge(Forums::Membership.active) }
     scope :with_blocked, lambda { |user|
       active.or(
-        joins(:membership).where(forum_memberships: { status: Forums::Membership.statuses[:blocked], user_id: user.id })
+        joins(:membership).where(forum_memberships: { status: Forums::Membership::STATE_BLOCKED, user_id: user.id })
       )
     }
   end
