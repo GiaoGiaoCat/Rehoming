@@ -6,19 +6,15 @@ class Posts::CreateForm < ApplicationForm
   validate :postable_until_tomorrow
   validate :author_role_can_post
 
-  Post.column_names.each { |attr| delegate attr.to_sym, "#{attr}=".to_sym, to: :form_object }
-  delegate :attachments_attributes=, to: :form_object
+  Post.column_names.each { |attr| delegate attr.to_sym, "#{attr}=".to_sym, to: :object }
+  delegate :attachments_attributes=, to: :object
   delegate :forum_memberships, to: :author
 
   private
 
-  def sync
-    form_object.save
-  end
-
   def setup_associations
-    form_object.forum = forum
-    form_object.author = author
+    object.forum = forum
+    object.author = author
   end
 
   def user_should_in_forum

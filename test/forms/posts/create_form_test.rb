@@ -10,7 +10,7 @@ class Posts::CreateFormTest < ActiveSupport::TestCase
   test '发帖需要24小时' do
     @forum.preference.update(postable_until_tomorrow: true)
 
-    post = Posts::CreateForm.new(form_object: Post.new, forum: @forum, author: @victor, content: '#我是标签# content goes here')
+    post = Posts::CreateForm.new(forum: @forum, author: @victor, content: '#我是标签# content goes here')
 
     assert_not post.valid?
     assert post.errors.key?(:base)
@@ -20,18 +20,18 @@ class Posts::CreateFormTest < ActiveSupport::TestCase
   end
 
   test '用户需要在圈子中，会员状态为 active 能发帖' do
-    post = Posts::CreateForm.new(form_object: Post.new, forum: @forum, author: @roc, content: '#我是标签# content goes here')
+    post = Posts::CreateForm.new(forum: @forum, author: @roc, content: '#我是标签# content goes here')
     assert_not post.valid?
     assert post.errors.key?(:base)
 
     @victor.quit_forum(@forum)
-    post = Posts::CreateForm.new(form_object: Post.new, forum: @forum, author: @victor, content: '#我是标签# content goes here')
+    post = Posts::CreateForm.new(forum: @forum, author: @victor, content: '#我是标签# content goes here')
     assert_not post.valid?
   end
 
   test '会员状态为 blocked 能发帖' do
     Forums::BlockedMember.create(forum: @forum, user: @victor)
-    post = Posts::CreateForm.new(form_object: Post.new, forum: @forum, author: @victor, content: '#我是标签# content goes here')
+    post = Posts::CreateForm.new(forum: @forum, author: @victor, content: '#我是标签# content goes here')
     assert post.valid?
   end
 end

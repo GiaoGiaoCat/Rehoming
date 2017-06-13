@@ -8,11 +8,11 @@ class Forums::PostsController < ApplicationController
 
   def create
     build_form
-    if @form.save
-      instrument 'created.post', sourceable: @form.form_object, handler: current_user
-      render json: @form.form_object.becomes(Post), status: :created
+    if @post_form.save
+      instrument 'created.post', sourceable: @post_form.object, handler: current_user
+      render json: @post_form.object.becomes(Post), status: :created
     else
-      render json: @form.form_object.errors.messages, status: :bad_request
+      render json: @post_form.object.errors.messages, status: :bad_request
     end
   end
 
@@ -27,8 +27,8 @@ class Forums::PostsController < ApplicationController
   end
 
   def build_form
-    @form = Posts::CreateForm.new(form_object: Post.new, forum: current_forum, author: current_user)
-    @form.attributes = post_params
+    @post_form = Posts::CreateForm.new(forum: current_forum, author: current_user)
+    @post_form.attributes = post_params
   end
 
   def post_params
