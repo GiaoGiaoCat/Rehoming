@@ -7,12 +7,12 @@ class Forums::PostsController < ApplicationController
   end
 
   def create
-    build_post
-    if @post.save
-      instrument 'created.post', sourceable: @post, handler: current_user
-      render json: @post.becomes(Post), status: :created
+    build_form
+    if @form.save
+      instrument 'created.post', sourceable: @form.form_object, handler: current_user
+      render json: @form.form_object.becomes(Post), status: :created
     else
-      render json: @post.errors.messages, status: :bad_request
+      render json: @form.form_object.errors.messages, status: :bad_request
     end
   end
 
@@ -26,9 +26,9 @@ class Forums::PostsController < ApplicationController
     @posts = current_forum.posts.by_filter(params[:filter]).by_user(current_user, current_forum)
   end
 
-  def build_post
-    @post = Posts::CreateService.new(forum: current_forum, author: current_user)
-    @post.attributes = post_params
+  def build_form
+    @form = Posts::CreateForm.new(form_object: Post.new, forum: current_forum, author: current_user)
+    @form.attributes = post_params
   end
 
   def post_params

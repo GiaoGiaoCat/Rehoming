@@ -27,8 +27,12 @@ class ApplicationForm < ActiveType::Object
   end
 
   def verify_form_object_valid
+    setup_associations
     promote_errors(form_object.errors) unless form_object.valid?
   end
+
+  # NOTE: can implemented by subtypes.
+  def setup_associations; end
 
   def promote_errors(child_errors)
     child_errors.each { |attribute, message| errors.add(attribute, message) }

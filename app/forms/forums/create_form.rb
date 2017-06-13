@@ -3,9 +3,7 @@ class Forums::CreateForm < ApplicationForm
 
   validates :moderator, presence: true
 
-  Forum.column_names.each do |attr|
-    delegate attr.to_sym, "#{attr}=".to_sym, to: :form_object
-  end
+  Forum.column_names.each { |attr| delegate attr.to_sym, "#{attr}=".to_sym, to: :form_object }
 
   private
 
