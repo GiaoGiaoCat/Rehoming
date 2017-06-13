@@ -16,7 +16,7 @@ class ForumsController < ApplicationController
   private
 
   def build_forum
-    @forum_form = Forums::CreateService.new(moderator: current_user)
+    @forum_form = Forums::CreateForm.new(moderator: current_user)
     @forum_form.attributes = forum_form_params
   end
 

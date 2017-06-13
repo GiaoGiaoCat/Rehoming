@@ -3,20 +3,20 @@ class Posts::CommentsController < ApplicationController
 
   def create
     build_comment
-    if @comment.save
+    if @comment_form.save
       instrument 'commented.post', sourceable: @parent, handler: current_user
-      instrument 'replied.comment', sourceable: @comment, handler: current_user
+      instrument 'replied.comment', sourceable: @comment_form.object, handler: current_user
       head :created
     else
-      render json: @comment.errors.messages, status: :bad_request
+      render json: @comment_form.errors.messages, status: :bad_request
     end
   end
 
   private
 
   def build_comment
-    @comment = @parent.comments.new(author: current_user)
-    @comment.attributes = comment_params.merge(decrypted_replied_user_id)
+    @comment_form = Comments::CreateForm.new(commentable: @parent, author: current_user)
+    @comment_form.attributes = comment_params.merge(decrypted_replied_user_id)
   end
 
   def comment_params
