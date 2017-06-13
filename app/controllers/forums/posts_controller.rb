@@ -12,7 +12,7 @@ class Forums::PostsController < ApplicationController
       instrument 'created.post', sourceable: @post_form.object, handler: current_user
       render json: @post_form.object.becomes(Post), status: :created
     else
-      render json: @post_form.object.errors.messages, status: :bad_request
+      render json: @post_form.errors.messages, status: :bad_request
     end
   end
 
