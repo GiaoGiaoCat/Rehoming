@@ -7,7 +7,7 @@ class Posts::CreateFormTest < ActiveSupport::TestCase
     @roc = users(:roc)
   end
 
-  test '发帖需要24小时' do
+  test '会员通过审核24小时后才能发帖' do
     @forum.preference.update(postable_until_tomorrow: true)
 
     post = Posts::CreateForm.new(forum: @forum, author: @victor, content: '#我是标签# content goes here')
@@ -15,7 +15,7 @@ class Posts::CreateFormTest < ActiveSupport::TestCase
     assert_not post.valid?
     assert post.errors.key?(:base)
 
-    @victor.forum_memberships.find_by(forum: @forum).update_column(:created_at, Time.current.weeks_ago(1))
+    @victor.forum_memberships.find_by(forum: @forum).update_column(:accepted_at, Time.current.weeks_ago(1))
     assert post.valid?
   end
 
