@@ -58,6 +58,4 @@ group :test do
   gem 'codeclimate-test-reporter', '~> 1.0.0'
   gem 'minitest-reporters'
   gem 'simplecov'
-  # A library for generating fake data such as names, addresses, and phone numbers.
-  gem 'faker'
 end

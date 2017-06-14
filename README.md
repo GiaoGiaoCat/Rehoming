@@ -13,6 +13,10 @@
 * Services (job queues, cache servers, search engines, etc.)
 * Deployment instructions
 
+### Gems
+
+* [active_type](https://github.com/makandra/active_type)
+
 ## 测试
 
 ```
