@@ -6,7 +6,7 @@ class Forums::MembershipRequest < ActiveType::Record[Forums::Membership]
   # validations ...............................................................
   validates :action, presence: true, inclusion: { in: %w(accept reject ignore) }, allow_blank: true
   # callbacks .................................................................
-  before_save :auto_approval, unless: :membership_approval_needed?, if: :pending?
+  after_save :auto_approval, unless: :membership_approval_needed?, if: :pending?
   # scopes ....................................................................
   default_scope -> { pending }
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
@@ -28,6 +28,6 @@ class Forums::MembershipRequest < ActiveType::Record[Forums::Membership]
   private
 
   def auto_approval
-    accept
+    accept!
   end
 end

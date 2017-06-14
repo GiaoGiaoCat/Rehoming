@@ -18,9 +18,6 @@ gem 'puma', '~> 3.7'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
@@ -39,9 +36,7 @@ gem 'aasm'
 # Simple, efficient background processing for Ruby
 # gem 'sidekiq'
 
-# Very simple Roles library without any authorization enforcement supporting
-# scope on resource objects (instance or class). Supports ActiveRecord
-# and Mongoid ORMs.
+# Role management library with resource scoping
 gem 'rolify', '~> 5.1'
 # Object oriented authorization for Rails applications
 gem 'pundit', '~> 1.1'

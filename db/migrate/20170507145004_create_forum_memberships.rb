@@ -4,6 +4,7 @@ class CreateForumMemberships < ActiveRecord::Migration[5.1]
       t.references  :forum
       t.references  :user
       t.integer     :status, default: 0
+      t.datetime    :accepted_at
       t.timestamps null: false
     end
 
