@@ -2,8 +2,10 @@ one:
   user: victor
   forum: one
   status: 40
+  accepted_at: <%= Time.current.to_s(:db) %>
 
 two:
   user: yuki
   forum: one
   status: 40
+  accepted_at: <%= 5.day.ago.to_s(:db) %>

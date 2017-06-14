@@ -14,6 +14,6 @@ module ValidPostingRights
 
   def postable_until_tomorrow
     return unless forum.postable_until_tomorrow?
-    errors.add :base, :postable_until_tomorrow if author_membership.created_at.next_day > Time.current
+    errors.add :base, :postable_until_tomorrow if author_membership.accepted_at.next_day > Time.current
   end
 end
