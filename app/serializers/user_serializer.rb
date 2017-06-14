@@ -6,12 +6,21 @@ class UserSerializer < ApplicationSerializer
 
   def nickname
     return nickname unless current_forum
-    object.forum_memberships.find_by(forum: current_forum).preference.nickname
+    membership.preference.nickname
+  end
+
+  def id
+    return to_param unless current_forum
+    membership.to_param
   end
 
   private
 
   def current_forum
     view_variables[:current_forum]
+  end
+
+  def membership
+    object.membership_by_forum(current_forum)
   end
 end
