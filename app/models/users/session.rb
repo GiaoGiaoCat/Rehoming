@@ -3,15 +3,14 @@ class Users::Session < ActiveType::Object
   attribute :user
 
   validates :user, presence: true
-  validates :auth_token, presence: true
 
-  before_validation :set_auth_token
+  after_save :ensure_auth_token
 
   delegate :id, :to_param, to: :user, allow_nil: true
 
   private
 
-  def set_auth_token
+  def ensure_auth_token_has_a_value
     self.auth_token = JsonWebToken.encode(payload)
   end
 
