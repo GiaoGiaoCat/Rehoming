@@ -38,7 +38,7 @@ class Users::SignIn < ActiveType::Object
   def ensure_user_id_has_a_value
     return unless userinfo
     return unless registration
-    self.user_id = registration.object.id
+    self.user_id = registration.user.id
   end
 
   def ensure_auth_token_has_a_value

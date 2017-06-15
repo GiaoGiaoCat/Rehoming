@@ -5,6 +5,6 @@ class Users::RegistrationServiceTest < ActiveSupport::TestCase
     userinfo = OpenStruct.new(JSON.parse(file_fixture('wechat_oauth_userinfo.json').read))
     registration = Users::RegistrationService.new(info: userinfo)
     assert registration.save
-    assert registration.object
+    assert registration.user
   end
 end
