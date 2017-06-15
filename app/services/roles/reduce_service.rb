@@ -1,4 +1,4 @@
-class Roles::ReduceService < ApplicationService
+class Roles::ReduceService < ActiveType::Object
   attribute :forum_id, :integer
   attribute :user_id, :integer
   attribute :role

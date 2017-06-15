@@ -18,6 +18,8 @@ class UserSerializer < ApplicationSerializer
 
   def current_forum
     view_variables[:current_forum]
+  rescue
+    nil
   end
 
   def membership
