@@ -33,9 +33,13 @@ class ApplicationForm < ActiveType::Object
   end
 
   def verify_object_valid
+    setup_object_attributes
     setup_associations
     promote_errors(object.errors) unless object.valid?
   end
+
+  # NOTE: can implemented by subtypes.
+  def setup_object_attributes; end
 
   # NOTE: can implemented by subtypes.
   def setup_associations; end
