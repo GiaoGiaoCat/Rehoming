@@ -10,7 +10,7 @@ class Users::Session < ActiveType::Object
 
   private
 
-  def ensure_auth_token_has_a_value
+  def ensure_auth_token
     self.auth_token = JsonWebToken.encode(payload)
   end
 
