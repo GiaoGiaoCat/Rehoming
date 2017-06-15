@@ -37,8 +37,8 @@ class Users::SignIn < ActiveType::Object
 
   def ensure_user_id_has_a_value
     return unless userinfo
-    user = Users::Generator.find_or_create_user_by(raw_info: userinfo)
-    self.user_id = user.id
+    return unless registration
+    self.user_id = registration.object.id
   end
 
   def ensure_auth_token_has_a_value
@@ -53,5 +53,11 @@ class Users::SignIn < ActiveType::Object
 
   def validate_userinfo_exists
     errors.add(:userinfo, userinfo.errmsg) if userinfo && userinfo.errcode
+  end
+
+  def registration
+    registration = Users::RegistrationService.new(info: userinfo)
+    return unless registration.save
+    registration
   end
 end
