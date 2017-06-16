@@ -4,7 +4,7 @@ class Posts::CommentsController < ApplicationController
   def create
     build_comment
     if @comment_form.save
-      instrument 'commented.post', sourceable: @parent, handler: current_user
+      instrument 'commented.post', sourceable: @comment_form.object, handler: current_user
       instrument 'replied.comment', sourceable: @comment_form.object, handler: current_user
       head :created
     else

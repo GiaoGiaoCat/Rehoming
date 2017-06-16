@@ -8,7 +8,7 @@ class Feeds::SendServiceTest < ActiveSupport::TestCase
     params = { handler: @victor }
     @like_comment_params = params.merge(sourceable: comments(:three), name: 'liked.comment')
     @like_post_params = params.merge(sourceable: posts(:three), name: 'liked.post')
-    @comment_params = params.merge(sourceable: posts(:three), name: 'commented.post')
+    @comment_params = params.merge(sourceable: comments(:three), name: 'commented.post')
   end
 
   test '赞一条评论，发送 feed' do
@@ -60,15 +60,15 @@ class Feeds::SendServiceTest < ActiveSupport::TestCase
   end
 
   test '评论一条主题，发送 feed' do
-    assert_difference -> { posts(:three).author.feeds.count } do
+    assert_difference -> { comments(:three).commentable.author.feeds.count } do
       perform_enqueued_jobs { Feeds::SendService.create(@comment_params) }
     end
   end
 
   test '评论一条主题，主题作者是评论者本人，不发送 feed' do
-    assert_no_difference -> { posts(:one).author.feeds.count } do
+    assert_no_difference -> { comments(:one).commentable.author.feeds.count } do
       perform_enqueued_jobs do
-        @comment_params[:sourceable] = posts(:one)
+        @comment_params[:sourceable] = comments(:one)
         Feeds::SendService.create(@comment_params)
       end
     end
@@ -76,7 +76,7 @@ class Feeds::SendServiceTest < ActiveSupport::TestCase
 
   test '评论一条主题，主题作者关闭通知，不发送 feed' do
     users(:yuki).membership_by_forum(forums(:one)).preference.update(feed_allowed: false)
-    assert_no_difference -> { posts(:three).author.feeds.count } do
+    assert_no_difference -> { comments(:three).commentable.author.feeds.count } do
       perform_enqueued_jobs { Feeds::SendService.create(@comment_params) }
     end
   end

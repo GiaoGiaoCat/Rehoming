@@ -5,12 +5,12 @@ one:
   forum: one
 two:
   author: victor
-  commentable: one (Post)
+  commentable: three (Post)
   content: 'comment two content goes here'
   forum: one
 three:
   author: yuki
-  commentable: one (Post)
+  commentable: three (Post)
   content: 'comment three content goes here'
   forum: one
 four:
