@@ -99,10 +99,20 @@ class Feeds::SendServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test '回复提及题主，不发送 feed' do
-    assert_no_difference -> { comments(:five).replied_user.feeds.count } do
+  test '回复提及题主，发送 feed' do
+    assert_difference -> { comments(:four).replied_user.feeds.count } do
       perform_enqueued_jobs do
-        params = { name: 'replied.comment', sourceable: comments(:five), handler: users(:roc) }
+        params = { name: 'replied.comment', sourceable: comments(:four), handler: users(:roc) }
+        Feeds::SendService.create(params)
+      end
+    end
+  end
+
+  test '回复提及题主，题主关闭推送，发送 feed' do
+    users(:victor).membership_by_forum(forums(:one)).preference.update(feed_allowed: false)
+    assert_difference -> { comments(:four).replied_user.feeds.count } do
+      perform_enqueued_jobs do
+        params = { name: 'replied.comment', sourceable: comments(:four), handler: users(:roc) }
         Feeds::SendService.create(params)
       end
     end
