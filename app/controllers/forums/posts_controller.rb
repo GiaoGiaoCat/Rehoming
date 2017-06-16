@@ -23,7 +23,7 @@ class Forums::PostsController < ApplicationController
   end
 
   def load_posts
-    @posts = current_forum.posts.by_filter(params[:filter]).by_user(current_user, current_forum)
+    @posts = current_forum.posts.by_filter(params[:filter]).by_user(current_user, current_forum).page(pagination_number)
   end
 
   def build_form

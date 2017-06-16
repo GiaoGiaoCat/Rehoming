@@ -23,6 +23,8 @@ gem 'puma', '~> 3.7'
 
 # High performance memcached client for Ruby
 gem 'dalli'
+# A Scope & Engine based, clean, powerful, customizable and sophisticated paginator
+gem 'kaminari'
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers'
 # A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard
