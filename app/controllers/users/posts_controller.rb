@@ -7,6 +7,6 @@ class Users::PostsController < ApplicationController
   private
 
   def load_posts
-    @posts = current_user.posts
+    @posts = current_user.posts.page(pagination_number)
   end
 end

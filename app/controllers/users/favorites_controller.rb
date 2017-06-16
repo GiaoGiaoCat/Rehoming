@@ -7,6 +7,6 @@ class Users::FavoritesController < ApplicationController
   private
 
   def load_favorites
-    @favorites = current_user.favorite_posts
+    @favorites = current_user.favorite_posts.page(pagination_number)
   end
 end
