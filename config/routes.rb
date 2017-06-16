@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   concern :routes do
     concern :commentable do |options|
-      resource :comments, :only => %i(index create), **options
+      resources :comments, :only => %i(index create), **options
     end
     concern :likeable do |options|
       # NOTE: `likes` is noun NOT plurality.

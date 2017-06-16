@@ -13,7 +13,7 @@ class FeedsController < ApplicationController
   private
 
   def load_feeds
-    @feeds = current_user.feeds
+    @feeds = current_user.feeds.page(pagination_number)
   end
 
   def build_feed

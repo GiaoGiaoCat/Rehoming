@@ -1,6 +1,11 @@
 class Posts::CommentsController < ApplicationController
   before_action :load_parent
 
+  def index
+    load_comments
+    render json: @comments
+  end
+
   def create
     build_comment
     if @comment_form.save
@@ -13,6 +18,10 @@ class Posts::CommentsController < ApplicationController
   end
 
   private
+
+  def load_comments
+    @comments = @parent.comments.page(pagination_number)
+  end
 
   def build_comment
     @comment_form = Comments::CreateForm.new(commentable: @parent, author: current_user)
