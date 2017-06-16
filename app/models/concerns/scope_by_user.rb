@@ -7,7 +7,10 @@ module ScopeByUser
             foreign_key: 'user_id',
             primary_key: 'user_id'
 
-    scope :by_user, ->(user, forum) { user.membership_by_forum(forum).blocked? ? with_blocked(user) : active }
+    scope :by_user, lambda { |user, forum|
+      return unless user && forum
+      user.membership_by_forum(forum).blocked? ? with_blocked(user) : active
+    }
     scope :active, -> { joins(:membership).merge(Forums::Membership.active) }
     scope :with_blocked, lambda { |user|
       active.or(

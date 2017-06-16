@@ -7,7 +7,7 @@ module SupportMethod
     resource, id = request.path.split('/')[1, 2]
     @parent = resource.singularize.classify.constantize.find(id)
   end
-  
+
   def pagination_number
     params[:page].blank? ? 1 : params[:page][:number]
   end
