@@ -16,6 +16,7 @@
 ### Gems
 
 * [active_type](https://github.com/makandra/active_type)
+* [active_model_serializers](https://github.com/rails-api/active_model_serializers)
 
 ## 测试
 

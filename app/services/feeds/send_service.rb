@@ -1,4 +1,4 @@
-class Feeds::SendService < ApplicationService
+class Feeds::SendService < ActiveType::Object
   attribute :name, :string
   attribute :sourceable
   attribute :handler

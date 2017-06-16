@@ -1,4 +1,4 @@
-class Roles::BecomeAdminService < ApplicationService
+class Roles::BecomeAdminService < ActiveType::Object
   attribute :forum_id, :integer
   attribute :user_id, :integer
 

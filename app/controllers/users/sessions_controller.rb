@@ -2,11 +2,11 @@ class Users::SessionsController < ApplicationController
   skip_before_action :authenticate_request!
 
   def create
-    @session = Users::SignIn.new(session_params)
+    @session = Users::SignInForm.new(session_params)
     if @session.save
-      render json: @session, status: :created, serializer: SessionSerializer
+      render json: @session.object, status: :created
     else
-      render_error_msg(@session, :access_token, :userinfo, :user_id)
+      render_error_msg(@session, :user, :userinfo)
     end
   end
 
