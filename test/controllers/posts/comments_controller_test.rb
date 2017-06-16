@@ -36,12 +36,13 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
 
   test 'create comment should feed' do
     params_data = { data: { attributes: { content: '合法数据' } } }
-    assert_difference -> { @post.author.feeds.count } do
-      job_params = ['new_comment_of_post', @post, @post.author.id]
-      assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
+    assert_difference -> { @comment.commentable.author.feeds.count } do
+      perform_enqueued_jobs do
         post post_comments_url(@post), params: params_data, headers: @headers
       end
     end
+
+    assert_performed_jobs 1
   end
 
   test 'create comment should not feed when post author is current user' do
@@ -57,8 +58,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
     params_data = { data: { attributes: { content: '合法数据', replied_user_id: @roc.to_param } } }
     assert_difference -> { @roc.feeds.count } do
       assert_difference -> { @post.author.feeds.count } do
-        job_params = ['new_comment_of_post', @post, @post.author.id]
-        assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
+        perform_enqueued_jobs do
           post post_comments_url(@post), params: params_data, headers: @headers
         end
       end

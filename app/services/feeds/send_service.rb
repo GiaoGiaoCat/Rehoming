@@ -27,15 +27,20 @@ class Feeds::SendService < ActiveType::Object
   end
 
   # 添加一条评论 -> 给被回复的题主发送动态
+  # 1. 评论者和被回复主题作者相同，不发送动态
+  # 2. 评论中提及被回复主题作者，不发送动态
+  # 3. 被回复主题作者关闭通知，不发送动态
   def commented_post
-    common_feed('new_comment_of_post')
+    replied_user_id = sourceable.replied_user_id
+    author_id = sourceable.commentable.author.id
+    return if [handler.id, replied_user_id].include?(author_id) || disable_feed?
+    feed_job 'new_comment_of_post', author_id
   end
 
   # 回复中提及某人 -> 给被提及者发送动态
   def replied_comment
     replied_user_id = sourceable.replied_user_id
-    return if replied_user_id.blank?
-    return if [handler.id, sourceable.commentable.author.id].include?(replied_user_id)
+    return if replied_user_id.blank? || handler.id == replied_user_id
     feed_job 'new_reply_of_comment', sourceable.replied_user_id
   end
 
