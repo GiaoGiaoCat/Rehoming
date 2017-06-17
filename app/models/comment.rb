@@ -6,7 +6,7 @@ class Comment < ApplicationRecord
   # constants .................................................................
   # relationships .............................................................
   belongs_to :author, class_name: 'User', foreign_key: :user_id
-  belongs_to :commentable, polymorphic: true, optional: true
+  belongs_to :commentable, polymorphic: true, optional: true, counter_cache: true
   belongs_to :forum
   belongs_to :replied_user, class_name: 'User', foreign_key: 'replied_user_id', required: false
   has_many :attachments, as: :attachable
