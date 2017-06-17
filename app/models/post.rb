@@ -8,7 +8,7 @@ class Post < ApplicationRecord
   include ScopeByUser
   # relationships .............................................................
   belongs_to :forum
-  belongs_to :author, class_name: 'User', foreign_key: :user_id
+  belongs_to :author, class_name: 'User', foreign_key: :user_id, counter_cache: true
   has_many :attachments, as: :attachable
   has_many :comments, as: :commentable
   # validations ...............................................................

@@ -1,5 +1,5 @@
 class PostSerializer < ApplicationSerializer
-  attributes :content
+  attributes :content, :comments_count
   attribute :sticky, key: :pinned
 
   belongs_to :author
