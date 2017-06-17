@@ -1,5 +1,5 @@
 class CommentSerializer < ApplicationSerializer
-  cache key: 'comments'
+  cache key: 'comment'
 
   attributes :content
 

@@ -1,4 +1,5 @@
 class PostSerializer < ApplicationSerializer
+  cache key: 'post'
   attributes :content, :comments_count
   attribute :sticky, key: :pinned
 

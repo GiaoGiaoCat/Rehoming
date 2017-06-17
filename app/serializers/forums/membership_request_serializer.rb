@@ -1,5 +1,5 @@
 class Forums::MembershipRequestSerializer < ApplicationSerializer
-  type 'membership_requests'
+  type 'membership_request'
 
   attribute :status
   belongs_to :user
