@@ -3,7 +3,8 @@ class Forums::PostsController < ApplicationController
 
   def index
     load_posts
-    render json: @posts, include: '**'
+    options = { each_serializer: Forums::PostSerializer, include: '**' }
+    render json: explicit_serializer(@posts, options).as_json
   end
 
   def create

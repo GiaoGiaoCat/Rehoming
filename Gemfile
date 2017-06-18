@@ -27,6 +27,8 @@ gem 'dalli'
 gem 'kaminari'
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers'
+# Optimized JSON
+gem 'oj'
 # A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard
 gem 'jwt'
 # Simple Rails app configuration
