@@ -19,7 +19,10 @@ module SupportMethod
 
   def base_options
     options = { serialization_context: ActiveModelSerializers::SerializationContext.new(request) }
-    options[:scope] = view_variables if respond_to?(:view_variables, true)
+    if respond_to?(:view_variables, true)
+      options[:scope] = view_variables
+      options[:scope_name] = :view_variables
+    end
     options
   end
 end
