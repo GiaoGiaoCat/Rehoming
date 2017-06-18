@@ -40,19 +40,7 @@ module AuthenticateRequest
 
   # Sets the @current_user with the user_id from payload
   def load_current_user
-    current_user = load_user_from_redis(auth_token[:user_id])
-    @current_user ||= current_user
-  end
-
-  def load_user_from_redis(user_id)
-    user_json = redis.get(user_id)
-    if user_json
-      User.new.from_json(user_json)
-    else
-      user = User.find(user_id)
-      redis.set(user_id, user.to_json)
-      user
-    end
+    @current_user ||= User.fetch_from_redis(auth_token[:user_id])
   end
 
   def load_development_user

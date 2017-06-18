@@ -29,6 +29,14 @@ class User < ApplicationRecord
   encrypted_id key: 'gaeexiHdLTQ8Fg'
   serialize :raw_info, Hash
   # class methods .............................................................
+  def self.fetch_from_redis(encrypted_id)
+    user_json = Redis.current.get(encrypted_id)
+    return new.from_json(user_json)
+    user = find(encrypted_id)
+    Redis.current.set(encrypted_id, user.to_json)
+    find(encrypted_id)
+  end
+
   # public instance methods ...................................................
   def join_forum(forum)
     rejoin_membership_or_create_membership_request(forum)
