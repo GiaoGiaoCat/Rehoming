@@ -15,6 +15,7 @@ gem 'mysql2'
 gem 'puma', '~> 3.7'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 3.0'
+gem 'redis-rails'
 # Map Redis types directly to Ruby objects
 # gem 'redis-objects'
 # Use ActiveModel has_secure_password
@@ -23,8 +24,6 @@ gem 'redis', '~> 3.0'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
-# High performance memcached client for Ruby
-gem 'dalli'
 # A Scope & Engine based, clean, powerful, customizable and sophisticated paginator
 gem 'kaminari'
 # ActiveModel::Serializer implementation and Rails hooks
