@@ -25,4 +25,8 @@ module SupportMethod
     end
     options
   end
+
+  def redis
+    Redis.current
+  end
 end

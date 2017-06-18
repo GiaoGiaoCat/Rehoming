@@ -9,7 +9,7 @@ module AuthenticateRequest
   protected
 
   def authenticate_request!
-    return load_development_user if Rails.env.development?
+    # return load_development_user if Rails.env.development?
     return invalid_authentication unless user_id_in_token?
     return invalid_authentication unless load_current_user
   rescue JWT::DecodeError
@@ -40,7 +40,19 @@ module AuthenticateRequest
 
   # Sets the @current_user with the user_id from payload
   def load_current_user
-    @current_user ||= User.find(auth_token[:user_id])
+    current_user = load_user_from_redis(auth_token[:user_id])
+    @current_user ||= current_user
+  end
+
+  def load_user_from_redis(user_id)
+    user_json = redis.get(user_id)
+    if user_json
+      User.new.from_json(user_json)
+    else
+      user = User.find(user_id)
+      redis.set(user_id, user.to_json)
+      user
+    end
   end
 
   def load_development_user
