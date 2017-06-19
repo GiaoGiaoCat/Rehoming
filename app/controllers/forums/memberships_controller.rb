@@ -1,6 +1,6 @@
 class Forums::MembershipsController < ApplicationController
   def destroy
-    @current_user.quit_forum(forum)
+    current_user.quit_forum(forum)
     head :no_content
   end
 
