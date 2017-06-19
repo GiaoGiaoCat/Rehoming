@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.text "cover"
     t.integer "category", null: false
     t.string "background_color"
+    t.integer "posts_count", default: 0, null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

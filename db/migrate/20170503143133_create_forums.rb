@@ -6,6 +6,7 @@ class CreateForums < ActiveRecord::Migration[5.1]
       t.text      :cover
       t.integer   :category, null: false
       t.string    :background_color
+      t.integer   :posts_count, null: false, default: 0
       t.datetime  :deleted_at, index: true
       t.timestamps null: false
     end

@@ -20,6 +20,7 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :attachments
   encrypted_id key: 'kwXKxc3zRH3UFz'
   counter_culture :author
+  counter_culture :forum
 
   private
 
