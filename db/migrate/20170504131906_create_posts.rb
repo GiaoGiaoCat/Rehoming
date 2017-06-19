@@ -6,7 +6,7 @@ class CreatePosts < ActiveRecord::Migration[5.1]
       t.text    :content, limit: 64.kilobytes
       t.boolean :sticky, default: false, null: false, index: true
       t.boolean :recommended, default: false, null: false, index: true
-      t.integer :comments_count, default: 0
+      t.integer :comments_count, null: false, default: 0
       t.timestamps null: false
     end
   end

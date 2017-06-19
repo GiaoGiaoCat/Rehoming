@@ -44,6 +44,8 @@ gem 'aasm'
 gem 'rolify', '~> 5.1'
 # Object oriented authorization for Rails applications
 gem 'pundit', '~> 1.1'
+# Turbo-charged counter caches for your Rails app.
+gem 'counter_culture', '~> 1.0'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.7'

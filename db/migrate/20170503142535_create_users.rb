@@ -5,8 +5,8 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string  :nickname,  limit: 191, comment: '昵称'
       t.text    :headimgurl,            comment: '头像URL'
       t.text    :raw_info,              comment: '微信用户原始信息'
-      t.integer :posts_count, default: 0
-      t.integer :favorites_count, default: 0
+      t.integer :posts_count, null: false, default: 0
+      t.integer :favorites_count, null: false, default: 0
       t.timestamps null: false
     end
 

@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.text "content", limit: 65536
     t.boolean "sticky", default: false, null: false
     t.boolean "recommended", default: false, null: false
-    t.integer "comments_count", default: 0
+    t.integer "comments_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["forum_id"], name: "index_posts_on_forum_id"
@@ -158,8 +158,8 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.string "nickname", limit: 191
     t.text "headimgurl"
     t.text "raw_info"
-    t.integer "posts_count", default: 0
-    t.integer "favorites_count", default: 0
+    t.integer "posts_count", default: 0, null: false
+    t.integer "favorites_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unionid"], name: "users_unionid_index"
