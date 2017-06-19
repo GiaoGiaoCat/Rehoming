@@ -6,6 +6,7 @@ class CreateComments < ActiveRecord::Migration[5.1]
       t.text       :content
       t.references :forum, index: true
       t.integer    :replied_user_id
+      t.datetime  :deleted_at, index: true
       t.timestamps null: false
     end
 

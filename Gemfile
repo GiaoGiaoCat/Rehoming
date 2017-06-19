@@ -46,6 +46,8 @@ gem 'rolify', '~> 5.1'
 gem 'pundit', '~> 1.1'
 # Turbo-charged counter caches for your Rails app.
 gem 'counter_culture', '~> 1.0'
+# ActiveRecord plugin allowing you to hide and restore records without actually deleting them.
+gem 'acts_as_paranoid', github: 'ActsAsParanoid/acts_as_paranoid'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.7'

@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/ActsAsParanoid/acts_as_paranoid.git
+  revision: 0d4af4e0b1bc7035a0b6be87237986ffbf6b3843
+  specs:
+    acts_as_paranoid (1.0.0.beta)
+      activerecord (>= 4.2, < 6.0)
+      activesupport (>= 4.2, < 6.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -198,6 +206,7 @@ DEPENDENCIES
   aasm
   active_model_serializers
   active_type (~> 0.7.0)
+  acts_as_paranoid!
   awesome_print (~> 1.7)
   byebug
   codeclimate-test-reporter (~> 1.0.0)

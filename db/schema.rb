@@ -29,9 +29,11 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.text "content"
     t.integer "forum_id"
     t.integer "replied_user_id"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["deleted_at"], name: "index_comments_on_deleted_at"
     t.index ["forum_id"], name: "index_comments_on_forum_id"
     t.index ["replied_user_id"], name: "comments_replied_user_id_index"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -91,8 +93,10 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.text "cover"
     t.integer "category", null: false
     t.string "background_color"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_forums_on_deleted_at"
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -124,8 +128,10 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.boolean "sticky", default: false, null: false
     t.boolean "recommended", default: false, null: false
     t.integer "comments_count", default: 0, null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_posts_on_deleted_at"
     t.index ["forum_id"], name: "index_posts_on_forum_id"
     t.index ["recommended"], name: "index_posts_on_recommended"
     t.index ["sticky"], name: "index_posts_on_sticky"

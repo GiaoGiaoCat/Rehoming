@@ -1,10 +1,10 @@
 class CreateUserForumPreferences < ActiveRecord::Migration[5.1]
   def change
     create_table :user_forum_preferences do |t|
-      t.references :user, index: false
-      t.references :forum, index: false
-      t.string     :nickname
-      t.boolean :feed_allowed, default: true
+      t.references  :user, index: false
+      t.references  :forum, index: false
+      t.string      :nickname
+      t.boolean     :feed_allowed, default: true
       t.timestamps
     end
 

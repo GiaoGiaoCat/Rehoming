@@ -1,4 +1,5 @@
 class Forum < ApplicationRecord
+  acts_as_paranoid
   obfuscate_id
   resourcify
 
