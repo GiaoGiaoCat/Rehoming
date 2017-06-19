@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     end
 
     resources :users, only: [] do
+      collection do
+        get 'me', to: 'users#show'
+        match 'me', to: 'users#update', via: %i(patch put)
+      end
       %i(posts favorites).each { |r| resources r, only: :index, module: :users }
     end
 
