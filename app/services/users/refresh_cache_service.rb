@@ -11,6 +11,6 @@ class Users::RefreshCacheService < ApplicationService
 
   def perform
     encrypted_id = sourceable.to_param
-    Rails.cache.write encrypted_id, Marshal.dump(sourceable)
+    Rails.cache.write encrypted_id, Marshal.dump(sourceable), expires_in: 2.hours
   end
 end
