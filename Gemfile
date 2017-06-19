@@ -16,7 +16,7 @@ gem 'puma', '~> 3.7'
 # Use Redis adapter to Rack::Session, Rack::Cache, I18n and Cache
 gem 'redis-rails'
 # Map Redis types directly to Ruby objects
-# gem 'redis-objects'
+gem 'redis-objects'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
