@@ -1,4 +1,4 @@
-class Roles::BecomeCollaboratorService < ActiveType::Object
+class Roles::BecomeCollaboratorService < ApplicationService
   attribute :invitation_token, :string
   attribute :user_id, :integer
   attribute :invitation_id, :integer
@@ -12,11 +12,16 @@ class Roles::BecomeCollaboratorService < ActiveType::Object
   before_save :ensure_invitation
   before_save :ensure_membership_request
   before_save :auto_approval_membership_request
-  after_save :act_as_collaborator
 
   delegate :forum, to: :invitation
 
   private
+
+  def perform
+    return if user.has_role?(:moderator, forum) || user.has_role?(:collaborator, forum)
+    user.add_role(:collaborator, forum)
+    invitation.used_by(user)
+  end
 
   def ensure_invitation_is_available
     @invitation = Forums::Invitation.available.find_by(token: invitation_token)
@@ -34,11 +39,5 @@ class Roles::BecomeCollaboratorService < ActiveType::Object
   def auto_approval_membership_request
     membership_request = Forums::MembershipRequest.find_by(forum: forum, user: user)
     membership_request&.accept!
-  end
-
-  def act_as_collaborator
-    return if user.has_role?(:moderator, forum) || user.has_role?(:collaborator, forum)
-    user.add_role(:collaborator, forum)
-    invitation.used_by(user)
   end
 end

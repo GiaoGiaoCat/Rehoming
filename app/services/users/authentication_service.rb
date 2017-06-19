@@ -16,6 +16,8 @@ class Users::AuthenticationService < ApplicationService
 
   private
 
+  def perform; end
+
   def validate_access_token_exists
     errors.add(:access_token, access_token.errmsg) if access_token && access_token.errcode
   end

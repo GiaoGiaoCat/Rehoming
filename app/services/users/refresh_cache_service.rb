@@ -7,8 +7,6 @@ class Users::RefreshCacheService < ApplicationService
   validates :sourceable, presence: true
   validates :handler, presence: true
 
-  after_save :perform
-
   private
 
   def perform

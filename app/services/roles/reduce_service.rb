@@ -1,4 +1,4 @@
-class Roles::ReduceService < ActiveType::Object
+class Roles::ReduceService < ApplicationService
   attribute :forum_id, :integer
   attribute :user_id, :integer
   attribute :role
@@ -9,15 +9,14 @@ class Roles::ReduceService < ActiveType::Object
   validates :role, inclusion: { in: Role::PERMISSIONS }
 
   before_validation :format_role
-  after_save :remove_role
 
   private
 
-  def format_role
-    self.role = role.to_s
+  def perform
+    user.remove_role role, forum
   end
 
-  def remove_role
-    user.remove_role role, forum
+  def format_role
+    self.role = role.to_s
   end
 end
