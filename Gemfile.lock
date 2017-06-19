@@ -31,7 +31,7 @@ GEM
       activemodel (>= 4.1, < 6)
       case_transform (>= 0.2)
       jsonapi-renderer (>= 0.1.1.beta1, < 0.2)
-    active_type (0.7.0)
+    active_type (0.7.1)
       activerecord (>= 3.2)
     activejob (5.1.1)
       activesupport (= 5.1.1)
@@ -108,6 +108,7 @@ GEM
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     rack (2.0.3)
+    rack-cors (0.4.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.1.1)
@@ -202,6 +203,7 @@ DEPENDENCIES
   oj
   puma (~> 3.7)
   pundit (~> 1.1)
+  rack-cors
   rails (~> 5.1.0)
   redis-rails
   rolify (~> 5.1)

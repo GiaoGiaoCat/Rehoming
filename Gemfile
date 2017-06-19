@@ -21,7 +21,7 @@ gem 'redis-rails'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 
 # A Scope & Engine based, clean, powerful, customizable and sophisticated paginator
 gem 'kaminari'
