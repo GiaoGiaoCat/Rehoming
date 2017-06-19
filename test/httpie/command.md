@@ -11,6 +11,6 @@
 
 ## 测试 token
 
-`JsonWebToken.encode { user_id: User.first.to_param }`
+`JsonWebToken.encode({ user_id: User.first.to_param })`
 
-`http :3000/forums/1/posts Authorization:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiN2EyNGY3NzMwNTBhNTZjOTc2OTE4ZjBkMTM3MzgzNTMiLCJleHAiOjE1MDAzNTQ2NTYsImlzcyI6IlJlaG9taW5nIEFQSSBWMS4wIn0.iGQCf3-XUsQFY1iz7NoGNNYFuShSPK3dCfe-YsSPB5E`
+`http :3000/forums/1/posts Authorization:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiN2EyNGY3NzMwNTBhNTZjOTc2OTE4ZjBkMTM3MzgzNTMiLCJleHAiOjE1MDA0MzU3NzAsImlzcyI6IlJlaG9taW5nIEFQSSBWMS4wIn0.bRNJaS4e3RRNldvaEAqGCWLV9O1MsLqi-P8WZnoYvlQ`

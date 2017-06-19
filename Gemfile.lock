@@ -203,7 +203,6 @@ DEPENDENCIES
   puma (~> 3.7)
   pundit (~> 1.1)
   rails (~> 5.1.0)
-  redis (~> 3.0)
   redis-rails
   rolify (~> 5.1)
   simplecov

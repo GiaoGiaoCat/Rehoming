@@ -13,8 +13,7 @@ gem 'rails', '~> 5.1.0'
 gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
-# Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 3.0'
+# Use Redis adapter to Rack::Session, Rack::Cache, I18n and Cache
 gem 'redis-rails'
 # Map Redis types directly to Ruby objects
 # gem 'redis-objects'
