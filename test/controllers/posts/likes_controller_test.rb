@@ -18,8 +18,8 @@ class Posts::LikesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'create likes should feed' do
-    assert_difference -> { users(:yuki).feeds.count } do
-      job_params = ['new_like_of_post', @post_unliked, @post_unliked.author.id]
+    assert_difference -> { users(:yuki).feeds_count.value } do
+      job_params = ['new_like_of_post', @post_unliked, [@post_unliked.author.id]]
       assert_performed_with(job: FeedJob, args: job_params, queue: 'feed') do
         post post_likes_url(@post_unliked), headers: @headers
       end
@@ -27,7 +27,7 @@ class Posts::LikesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'create likes should not feed when post author is current user' do
-    assert_no_difference -> { @victor.feeds.count } do
+    assert_no_difference -> { @victor.feeds_count.value } do
       assert_no_performed_jobs do
         post post_likes_url(posts(:two)), headers: @headers
       end

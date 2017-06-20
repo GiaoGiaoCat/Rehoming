@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class FeedsControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @feed = feeds(:one)
-  end
+  # setup do
+  #   @feed = feeds(:one)
+  # end
 
   test 'should get index' do
     get feeds_url, headers: @headers
