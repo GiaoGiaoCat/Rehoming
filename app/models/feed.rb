@@ -24,6 +24,7 @@ class Feed < ActiveType::Object
 
   def make_as_read
     self.read = true
+    user.feeds_count.decrement
     save
   end
 
