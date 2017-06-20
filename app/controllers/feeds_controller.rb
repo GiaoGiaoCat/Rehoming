@@ -13,7 +13,7 @@ class FeedsController < ApplicationController
   private
 
   def load_feeds
-    @feeds = current_user.feeds.page(pagination_number)
+    @feeds = Kaminari.paginate_array(current_user.feeds.value).page(pagination_number)
   end
 
   def build_feed

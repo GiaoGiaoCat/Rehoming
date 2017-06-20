@@ -40,4 +40,6 @@ victor.favor post
 victor.like post
 yuki.like post
 
-Feed.create(targetable: victor, sourceable: post, event: 10)
+Feeds::CreateForm.create({
+  sourceable_id: Post.first.id, sourceable_type: Post.first.class, user_id: User.first.id, event: 'new_post'
+})

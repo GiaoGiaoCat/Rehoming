@@ -29,6 +29,7 @@ class User < ApplicationRecord
   encrypted_id key: 'gaeexiHdLTQ8Fg'
   serialize :raw_info, Hash
   counter :feeds_count
+  list :feeds
   # class methods .............................................................
   # public instance methods ...................................................
   def join_forum(forum)

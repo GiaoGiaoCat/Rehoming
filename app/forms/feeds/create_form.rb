@@ -25,7 +25,12 @@ class Feeds::CreateForm < ApplicationForm
 
   def sync
     object.save
-    Feeds::PersistenceService.create(key: "feeds/#{id}", feed: object)
+    Feeds::PersistenceService.create(key: feed_key, feed: object)
     object.user.feeds_count.increment
+    object.user.feeds << feed_key
+  end
+
+  def feed_key
+    "feeds/#{id}"
   end
 end
