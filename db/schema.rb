@@ -49,19 +49,6 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "feeds", force: :cascade do |t|
-    t.string "sourceable_type"
-    t.integer "sourceable_id"
-    t.string "targetable_type"
-    t.integer "targetable_id"
-    t.integer "event", null: false
-    t.boolean "read", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["sourceable_type", "sourceable_id"], name: "index_feeds_on_sourceable_type_and_sourceable_id"
-    t.index ["targetable_type", "targetable_id"], name: "index_feeds_on_targetable_type_and_targetable_id"
-  end
-
   create_table "forum_memberships", force: :cascade do |t|
     t.integer "forum_id"
     t.integer "user_id"

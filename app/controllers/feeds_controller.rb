@@ -13,7 +13,8 @@ class FeedsController < ApplicationController
   private
 
   def load_feeds
-    @feeds = Kaminari.paginate_array(current_user.feeds.value).page(pagination_number)
+    feed_keys = Kaminari.paginate_array(current_user.feeds.value).page(pagination_number).per(10)
+    # @feeds = Feeds::FetchService.create(keys: feed_keys)
   end
 
   def build_feed
