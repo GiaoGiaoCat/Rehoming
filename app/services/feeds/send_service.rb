@@ -61,6 +61,7 @@ class Feeds::SendService < ApplicationService
   end
 
   def feed_job(event_name, feed_owner_ids)
+    feed_owner_ids = [feed_owner_ids] if feed_owner_ids.is_a?(Integer)
     FeedJob.perform_later(event_name, sourceable, feed_owner_ids)
   end
 end

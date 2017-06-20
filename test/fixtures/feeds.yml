@@ -1,4 +1,0 @@
-one:
-  targetable: victor (User)
-  sourceable: one (Post)
-  event: 10

@@ -14,7 +14,6 @@ class User < ApplicationRecord
   has_many :forums, -> { merge(Forums::Membership.active) }, through: :forum_memberships
   has_many :membership_requests, class_name: 'Forums::MembershipRequest', foreign_key: 'user_id'
   has_many :forum_preferences, class_name: 'Users::ForumPreference'
-  has_many :feeds, as: :targetable
   # validations ...............................................................
   validates :unionid, presence: true, uniqueness: true
   validates :nickname, presence: true

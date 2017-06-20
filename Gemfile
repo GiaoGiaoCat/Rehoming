@@ -13,6 +13,10 @@ gem 'rails', '~> 5.1.0'
 gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+# A Ruby client library for Redis
+gem 'redis'
+# Namespace Redis keys
+gem 'redis-namespace'
 # Use Redis adapter to Rack::Session, Rack::Cache, I18n and Cache
 gem 'redis-rails'
 # Map Redis types directly to Ruby objects
