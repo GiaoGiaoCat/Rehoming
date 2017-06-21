@@ -37,8 +37,8 @@ class Forums::PostsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '发帖，给题主之外其它的圈子用户发送动态' do
-    assert_difference -> { Feed.count } do
-      assert_no_difference -> { users(:victor).feeds.count } do
+    assert_difference -> { users(:yuki).feeds_count.value } do
+      assert_no_difference -> { users(:victor).feeds_count.value } do
         perform_enqueued_jobs do
           post forum_posts_url(@forum), params: { data: { attributes: { content: '合法数据' } } }, headers: @headers
         end

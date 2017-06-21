@@ -1,7 +1,8 @@
 class Users::PostsController < ApplicationController
   def index
     load_posts
-    render json: @posts, include: %i(forum attachments)
+    options = { each_serializer: Users::PostSerializer, include: %i(forum attachments) }
+    render json: explicit_serializer(@posts, options).as_json
   end
 
   private

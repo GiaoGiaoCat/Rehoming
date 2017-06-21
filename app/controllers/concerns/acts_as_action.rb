@@ -17,14 +17,14 @@ module ActsAsAction
 
   def create
     authorize @parent.forum, authorize_name if authorize_name
-    @current_user.send(verb, @parent)
+    current_user.send(verb, @parent)
     instrument instrument_name, sourceable: @parent, handler: current_user if instrument_name
     head :created
   end
 
   def destroy
     authorize @parent.forum, authorize_name if authorize_name
-    @current_user.send(unverb, @parent)
+    current_user.send(unverb, @parent)
     head :no_content
   end
 end

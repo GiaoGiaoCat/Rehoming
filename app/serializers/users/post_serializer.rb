@@ -1,5 +1,5 @@
 class Users::PostSerializer < ApplicationSerializer
-  type 'posts'
+  cache key: 'post'
   attributes :content
 
   belongs_to :forum

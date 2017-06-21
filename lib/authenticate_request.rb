@@ -40,10 +40,18 @@ module AuthenticateRequest
 
   # Sets the @current_user with the user_id from payload
   def load_current_user
-    @current_user ||= User.find(auth_token[:user_id])
+    @current_user ||= fetch_user_from_cache(auth_token[:user_id])
   end
 
   def load_development_user
     @current_user ||= User.first
+  end
+
+  def fetch_user_from_cache(encrypted_id)
+    data =
+      Rails.cache.fetch(encrypted_id, expires_in: 2.hours) do
+        Marshal.dump User.find(encrypted_id)
+      end
+    Marshal.load(data) if data
   end
 end

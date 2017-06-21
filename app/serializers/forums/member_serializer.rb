@@ -1,5 +1,5 @@
 class Forums::MemberSerializer < ApplicationSerializer
-  cache key: 'members'
+  cache key: 'member'
 
   attributes :headimgurl
   attribute :nickname

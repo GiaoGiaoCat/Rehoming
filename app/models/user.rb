@@ -6,6 +6,7 @@ class User < ApplicationRecord
   include ActsAsFavorable::Favoriter
   include ActsAsPinable::Piner
   include ActsAsRecommendable::Recommender
+  include Redis::Objects
   # constants .................................................................
   # relationships .............................................................
   has_many :posts
@@ -14,7 +15,6 @@ class User < ApplicationRecord
   has_many :forums, -> { merge(Forums::Membership.active) }, through: :forum_memberships
   has_many :membership_requests, class_name: 'Forums::MembershipRequest', foreign_key: 'user_id'
   has_many :forum_preferences, class_name: 'Users::ForumPreference'
-  has_many :feeds, as: :targetable
   # validations ...............................................................
   validates :unionid, presence: true, uniqueness: true
   validates :nickname, presence: true
@@ -28,6 +28,8 @@ class User < ApplicationRecord
   # additional config (i.e. accepts_nested_attribute_for etc...) ..............
   encrypted_id key: 'gaeexiHdLTQ8Fg'
   serialize :raw_info, Hash
+  counter :feeds_count
+  list :feeds
   # class methods .............................................................
   # public instance methods ...................................................
   def join_forum(forum)

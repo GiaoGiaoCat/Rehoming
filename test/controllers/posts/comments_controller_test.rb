@@ -36,7 +36,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
 
   test 'create comment should feed' do
     params_data = { data: { attributes: { content: '合法数据' } } }
-    assert_difference -> { @comment.commentable.author.feeds.count } do
+    assert_difference -> { @comment.commentable.author.feeds_count.value } do
       perform_enqueued_jobs do
         post post_comments_url(@post), params: params_data, headers: @headers
       end
@@ -47,7 +47,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
 
   test 'create comment should not feed when post author is current user' do
     params_data = { data: { attributes: { content: '合法数据' } } }
-    assert_no_difference -> { posts(:one).author.feeds.count } do
+    assert_no_difference -> { posts(:one).author.feeds_count.value } do
       assert_no_performed_jobs do
         post post_comments_url(posts(:one)), params: params_data, headers: @headers
       end
@@ -56,8 +56,8 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
 
   test 'create comment to replyer should two feeds' do
     params_data = { data: { attributes: { content: '合法数据', replied_user_id: @roc.to_param } } }
-    assert_difference -> { @roc.feeds.count } do
-      assert_difference -> { @post.author.feeds.count } do
+    assert_difference -> { @roc.feeds_count.value } do
+      assert_difference -> { @post.author.feeds_count.value } do
         perform_enqueued_jobs do
           post post_comments_url(@post), params: params_data, headers: @headers
         end
@@ -69,8 +69,8 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
 
   test 'create comment to replyer should not feed to post author when post author is current user' do
     params_data = { data: { attributes: { content: '合法数据', replied_user_id: @roc.to_param } } }
-    assert_difference -> { @roc.feeds.count } do
-      assert_no_difference -> { posts(:one).author.feeds.count } do
+    assert_difference -> { @roc.feeds_count.value } do
+      assert_no_difference -> { posts(:one).author.feeds_count.value } do
         perform_enqueued_jobs do
           post post_comments_url(posts(:one)), params: params_data, headers: @headers
         end
@@ -82,7 +82,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
 
   test 'create comment to replyer should not feed to replyer when post author is replyer' do
     params_data = { data: { attributes: { content: '合法数据', replied_user_id: users(:yuki).to_param } } }
-    assert_difference -> { posts(:three).author.feeds.count } do
+    assert_difference -> { posts(:three).author.feeds_count.value } do
       perform_enqueued_jobs do
         post post_comments_url(posts(:three)), params: params_data, headers: @headers
       end

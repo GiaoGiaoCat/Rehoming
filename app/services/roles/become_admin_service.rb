@@ -1,4 +1,4 @@
-class Roles::BecomeAdminService < ActiveType::Object
+class Roles::BecomeAdminService < ApplicationService
   attribute :forum_id, :integer
   attribute :user_id, :integer
 
@@ -7,18 +7,16 @@ class Roles::BecomeAdminService < ActiveType::Object
 
   validate :need_membership
 
-  after_save :act_as_administrator
-
   delegate :members, to: :forum
 
   private
 
-  def need_membership
-    errors.add :base, :need_membership unless members.include?(user)
-  end
-
-  def act_as_administrator
+  def perform
     return if user.has_role?(:moderator, forum)
     user.add_role(:admin, forum)
+  end
+
+  def need_membership
+    errors.add :base, :need_membership unless members.include?(user)
   end
 end

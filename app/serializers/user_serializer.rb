@@ -1,5 +1,5 @@
 class UserSerializer < ApplicationSerializer
-  cache key: 'users'
+  cache key: 'user'
 
   attribute :headimgurl
   attribute :nickname

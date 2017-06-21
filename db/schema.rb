@@ -29,9 +29,11 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.text "content"
     t.integer "forum_id"
     t.integer "replied_user_id"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
+    t.index ["deleted_at"], name: "index_comments_on_deleted_at"
     t.index ["forum_id"], name: "index_comments_on_forum_id"
     t.index ["replied_user_id"], name: "comments_replied_user_id_index"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -45,19 +47,6 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.datetime "updated_at", null: false
     t.index ["favorable_type", "favorable_id"], name: "index_favorites_on_favorable_type_and_favorable_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
-  end
-
-  create_table "feeds", force: :cascade do |t|
-    t.string "sourceable_type"
-    t.integer "sourceable_id"
-    t.string "targetable_type"
-    t.integer "targetable_id"
-    t.integer "event", null: false
-    t.boolean "read", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["sourceable_type", "sourceable_id"], name: "index_feeds_on_sourceable_type_and_sourceable_id"
-    t.index ["targetable_type", "targetable_id"], name: "index_feeds_on_targetable_type_and_targetable_id"
   end
 
   create_table "forum_memberships", force: :cascade do |t|
@@ -91,8 +80,11 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.text "cover"
     t.integer "category", null: false
     t.string "background_color"
+    t.integer "posts_count", default: 0, null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_forums_on_deleted_at"
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -123,9 +115,11 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.text "content", limit: 65536
     t.boolean "sticky", default: false, null: false
     t.boolean "recommended", default: false, null: false
-    t.integer "comments_count", default: 0
+    t.integer "comments_count", default: 0, null: false
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_posts_on_deleted_at"
     t.index ["forum_id"], name: "index_posts_on_forum_id"
     t.index ["recommended"], name: "index_posts_on_recommended"
     t.index ["sticky"], name: "index_posts_on_sticky"
@@ -158,8 +152,8 @@ ActiveRecord::Schema.define(version: 20170604104451) do
     t.string "nickname", limit: 191
     t.text "headimgurl"
     t.text "raw_info"
-    t.integer "posts_count", default: 0
-    t.integer "favorites_count", default: 0
+    t.integer "posts_count", default: 0, null: false
+    t.integer "favorites_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["unionid"], name: "users_unionid_index"

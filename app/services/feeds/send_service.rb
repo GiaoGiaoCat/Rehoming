@@ -1,4 +1,4 @@
-class Feeds::SendService < ActiveType::Object
+class Feeds::SendService < ApplicationService
   attribute :name, :string
   attribute :sourceable
   attribute :handler
@@ -7,11 +7,9 @@ class Feeds::SendService < ActiveType::Object
   validates :sourceable, presence: true
   validates :handler, presence: true
 
-  after_save :send_feed
-
   private
 
-  def send_feed
+  def perform
     method_name = name.sub('.', '_').to_sym
     send(method_name) if private_methods.include? method_name
   end
@@ -63,6 +61,7 @@ class Feeds::SendService < ActiveType::Object
   end
 
   def feed_job(event_name, feed_owner_ids)
+    feed_owner_ids = [feed_owner_ids] if feed_owner_ids.is_a?(Integer)
     FeedJob.perform_later(event_name, sourceable, feed_owner_ids)
   end
 end

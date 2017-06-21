@@ -17,6 +17,8 @@
 
 * [active_type](https://github.com/makandra/active_type)
 * [active_model_serializers](https://github.com/rails-api/active_model_serializers)
+* [redis-rb](https://github.com/redis/redis-rb)
+* [acts_as_paranoid](https://github.com/ActsAsParanoid/acts_as_paranoid)
 
 ## 测试
 

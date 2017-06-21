@@ -13,20 +13,26 @@ gem 'rails', '~> 5.1.0'
 gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
+# A Ruby client library for Redis
+gem 'redis'
+# Namespace Redis keys
+gem 'redis-namespace'
+# Use Redis adapter to Rack::Session, Rack::Cache, I18n and Cache
+gem 'redis-rails'
+# Map Redis types directly to Ruby objects
+gem 'redis-objects'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 
-# High performance memcached client for Ruby
-gem 'dalli'
 # A Scope & Engine based, clean, powerful, customizable and sophisticated paginator
 gem 'kaminari'
 # ActiveModel::Serializer implementation and Rails hooks
 gem 'active_model_serializers'
+# Optimized JSON
+gem 'oj'
 # A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard
 gem 'jwt'
 # Simple Rails app configuration
@@ -42,6 +48,10 @@ gem 'aasm'
 gem 'rolify', '~> 5.1'
 # Object oriented authorization for Rails applications
 gem 'pundit', '~> 1.1'
+# Turbo-charged counter caches for your Rails app.
+gem 'counter_culture', '~> 1.0'
+# ActiveRecord plugin allowing you to hide and restore records without actually deleting them.
+gem 'acts_as_paranoid', github: 'ActsAsParanoid/acts_as_paranoid'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.7'

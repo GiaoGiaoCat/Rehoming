@@ -1,4 +1,4 @@
 class AttachmentSerializer < ApplicationSerializer
-  cache key: 'attachments'
+  cache key: 'attachment'
   attributes :category, :url
 end
