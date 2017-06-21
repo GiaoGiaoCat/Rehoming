@@ -7,7 +7,7 @@ class Comments::CreateFormTest < ActiveSupport::TestCase
     }
     feed = Feeds::CreateForm.new(params)
     assert feed.save
-    assert_equal 10, feed.event
+    assert_equal 'new_post', feed.event
     assert feed.id
   end
 end

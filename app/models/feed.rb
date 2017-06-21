@@ -12,9 +12,7 @@ class Feed < ActiveType::Object
   attribute :sourceable_id, :integer
   attribute :sourceable_type, :string
   attribute :user_id, :integer
-  # NOTE: 不要给 event 指定 integer 或 string 类型，这里需求输入的是 string 输出的是 integer
-  # HACK: 可以移动到 serializer 中实现
-  attribute :event
+  attribute :event, :string
   %i(created_at updated_at).each { |attr| attribute attr, :datetime, default: proc { Time.current } }
 
   belongs_to :sourceable, polymorphic: true

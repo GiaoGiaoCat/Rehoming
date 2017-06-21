@@ -3,16 +3,9 @@ class Feeds::CreateForm < ApplicationForm
   ATTRS.each { |attr| delegate attr, "#{attr}=".to_sym, to: :object }
   %i(id cache_key user).each { |attr| delegate attr, to: :object }
 
-  validates :event, inclusion: { in: Feed::EVENTS.values }
-
-  before_validation :correct_enum_value
+  validates :event, inclusion: { in: Feed::EVENTS.keys.map(&:to_s) }
 
   private
-
-  def correct_enum_value
-    return if event.blank? || event.is_a?(Integer)
-    self.event = Feed::EVENTS.fetch(event.to_sym)
-  end
 
   def sync
     object.save
