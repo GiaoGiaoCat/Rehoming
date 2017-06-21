@@ -15,6 +15,14 @@ class Feed < ActiveType::Object
   attribute :event, :string
   %i(created_at updated_at).each { |attr| attribute attr, :datetime, default: proc { Time.current } }
 
+  # redundant data
+  attribute :forum_id, :integer
+  attribute :forum_name, :string
+  attribute :content, :string
+  attribute :creator_id, :integer
+  attribute :creator_nickname, :string
+  attribute :creator_avatar, :string
+
   belongs_to :sourceable, polymorphic: true
   belongs_to :user
 
