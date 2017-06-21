@@ -1,7 +1,7 @@
 class FeedsController < ApplicationController
   def index
     load_feeds
-    render json: @feeds, include: [:sourceable]
+    render json: @feeds
   end
 
   def update
@@ -13,7 +13,7 @@ class FeedsController < ApplicationController
   private
 
   def load_feeds
-    cache_keys = Kaminari.paginate_array(current_user.feeds.value).page(pagination_number).per(10)
+    cache_keys = Kaminari.paginate_array(current_user.feeds.value).page(pagination_number).per(25)
     fetch = Redis::FetchMultiService.new(keys: cache_keys)
     @feeds = fetch.save ? fetch.objects : []
   end

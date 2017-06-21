@@ -48,10 +48,9 @@ module AuthenticateRequest
   end
 
   def fetch_user_from_cache(encrypted_id)
-    data =
-      Rails.cache.fetch(encrypted_id, expires_in: 2.hours) do
-        Marshal.dump User.find(encrypted_id)
-      end
+    user = User.find(encrypted_id)
+    return unless user
+    data = Rails.cache.fetch(encrypted_id, expires_in: 2.hours) { Marshal.dump user }
     Marshal.load(data) if data
   end
 end
