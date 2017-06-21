@@ -5,7 +5,7 @@ class FeedsController < ApplicationController
   end
 
   def update
-    build_feed
+    load_feed
     @feed.make_as_read!
     head :no_content
   end
@@ -14,10 +14,12 @@ class FeedsController < ApplicationController
 
   def load_feeds
     feed_keys = Kaminari.paginate_array(current_user.feeds.value).page(pagination_number).per(10)
-    # @feeds = Feeds::FetchService.create(keys: feed_keys)
+    fetch = Redis::FetchMultiService.new(keys: feed_keys)
+    @feeds = fetch.save ? fetch.objects : []
   end
 
-  def build_feed
-    @feed = current_user.feeds.find(params[:id])
+  def load_feed
+    fetch = Redis::FetchService.new(key: "feeds/#{params[:id]}")
+    @feed = fetch.save ? fetch.object : nil
   end
 end

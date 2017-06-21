@@ -9,7 +9,7 @@ module AuthenticateRequest
   protected
 
   def authenticate_request!
-    # return load_development_user if Rails.env.development?
+    return load_development_user if Rails.env.development?
     return invalid_authentication unless user_id_in_token?
     return invalid_authentication unless load_current_user
   rescue JWT::DecodeError
@@ -52,6 +52,6 @@ module AuthenticateRequest
       Rails.cache.fetch(encrypted_id, expires_in: 2.hours) do
         Marshal.dump User.find(encrypted_id)
       end
-    Marshal.load data
+    Marshal.load(data) if data
   end
 end

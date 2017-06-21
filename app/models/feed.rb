@@ -20,15 +20,29 @@ class Feed < ActiveType::Object
   belongs_to :sourceable, polymorphic: true
   belongs_to :user
 
+  before_save :generate_uuid
   before_save :touch_timestamps
+  after_save :persist!
 
-  def make_as_read
+  def cache_key
+    "feeds/#{id}"
+  end
+
+  def make_as_read!
     self.read = true
-    user.feeds_count.decrement
     save
+    user.feeds_count.decrement
   end
 
   private
+
+  def persist!
+    Feeds::PersistenceService.create(key: cache_key, feed: self)
+  end
+
+  def generate_uuid
+    self.id ||= SecureRandom.uuid
+  end
 
   def touch_timestamps
     self.updated_at = Time.current
