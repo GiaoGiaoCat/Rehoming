@@ -8,7 +8,7 @@ class Feeds::CreateForm < ApplicationForm
   private
 
   def sync
-    object.save
+    return unless object.save
     user.feeds_count.increment
     user.feeds << cache_key
   end

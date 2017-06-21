@@ -22,8 +22,12 @@ class Feed < ActiveType::Object
   before_save :touch_timestamps
   after_save :persist!
 
-  def cache_key
+  def self.generate_cache_key(id)
     "feeds/#{id}"
+  end
+
+  def cache_key
+    Feed.generate_cache_key(id)
   end
 
   def make_as_read!
