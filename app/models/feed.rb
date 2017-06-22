@@ -25,11 +25,10 @@ class Feed < ActiveType::Object
 
   belongs_to :sourceable, polymorphic: true
   belongs_to :user
-  belongs_to :creator, class_name: 'User', foreign_key: :creator_id#, optional: true
+  belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
   before_save :generate_uuid
   before_save :touch_timestamps
-  before_save :append_data
   after_save :persist!
 
   delegate :forum, to: :sourceable
@@ -60,14 +59,5 @@ class Feed < ActiveType::Object
 
   def touch_timestamps
     self.updated_at = Time.current
-  end
-
-  def append_data
-    self.forum_id ||= forum.id
-    self.forum_name ||= forum.name
-    self.content ||= sourceable.content
-    # self.creator_id ||=
-    # self.creator_nickname ||=
-    # self.creator_avatar ||=
   end
 end

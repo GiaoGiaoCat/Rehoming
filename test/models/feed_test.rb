@@ -24,23 +24,4 @@ class FeedTest < ActiveSupport::TestCase
     assert @feed.id
   end
 
-  test 'append_data callback when sourceable is a post' do
-    assert @feed.forum_id
-    assert @feed.forum_name
-    assert posts(:one).content, @feed.content
-  end
-
-  test 'append_data callback when sourceable is a comment' do
-    params = {
-      id: SecureRandom.uuid,
-      sourceable_id: comments(:one).id, sourceable_type: comments(:one).class,
-      creator_id: users(:roc).id, user_id: users(:victor).id,
-      event: 'commented.post'
-    }
-    feed = Feed.create(params)
-
-    assert feed.forum_id
-    assert feed.forum_name
-    assert_equal comments(:one).content, feed.content
-  end
 end
