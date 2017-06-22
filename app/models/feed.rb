@@ -28,6 +28,7 @@ class Feed < ActiveType::Object
 
   before_save :generate_uuid
   before_save :touch_timestamps
+  before_save :append_data
   after_save :persist!
 
   def self.generate_cache_key(id)
@@ -56,5 +57,14 @@ class Feed < ActiveType::Object
 
   def touch_timestamps
     self.updated_at = Time.current
+  end
+
+  def append_data
+    self.forum_id ||= sourceable.forum.id
+    self.forum_name ||= sourceable.forum.name
+    self.content ||= sourceable.content
+    # self.creator_id ||=
+    # self.creator_nickname ||=
+    # self.creator_avatar ||=
   end
 end
