@@ -42,7 +42,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_performed_jobs 1
+    assert_performed_jobs 1 * 2
   end
 
   test 'create comment should not feed when post author is current user' do
@@ -64,7 +64,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_performed_jobs 2
+    assert_performed_jobs 2 * 2
   end
 
   test 'create comment to replyer should not feed to post author when post author is current user' do
@@ -77,7 +77,7 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_performed_jobs 1
+    assert_performed_jobs 1 * 2
   end
 
   test 'create comment to replyer should not feed to replyer when post author is replyer' do
@@ -88,6 +88,6 @@ class Posts::CommentsControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_performed_jobs 1
+    assert_performed_jobs 1 * 2
   end
 end

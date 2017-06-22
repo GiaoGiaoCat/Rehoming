@@ -15,6 +15,7 @@ class Feeds::CreateForm < ApplicationForm
     return unless object.save
     user.feeds_count.increment
     user.feeds << object.cache_key
+    schedule_cleanup_task
   end
 
   def setup_object_attributes
@@ -36,5 +37,9 @@ class Feeds::CreateForm < ApplicationForm
     self.creator_id ||= creator_id
     self.creator_nickname ||= creator.forum_nickname(forum)
     self.creator_avatar ||= creator.headimgurl
+  end
+
+  def schedule_cleanup_task
+    FeedCleanupJob.set(wait: 2.week).perform_later(object.cache_key)
   end
 end
