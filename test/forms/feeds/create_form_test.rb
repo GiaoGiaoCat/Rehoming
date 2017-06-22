@@ -4,7 +4,7 @@ class Comments::CreateFormTest < ActiveSupport::TestCase
   setup do
     params = {
       sourceable_id: posts(:one).id, sourceable_type: posts(:one).class,
-      creator_id: users(:roc).id, user_id: users(:victor).id,
+      creator_id: users(:yuki).id, user_id: users(:victor).id,
       event: 'new_post'
     }
     @feed = Feeds::CreateForm.new(params)
@@ -21,13 +21,16 @@ class Comments::CreateFormTest < ActiveSupport::TestCase
     assert @feed.save
     assert @feed.forum_id
     assert @feed.forum_name
+    assert @feed.creator_id
+    assert @feed.creator_nickname
+    assert @feed.creator_avatar
     assert posts(:one).content, @feed.content
   end
 
   test 'setup_object_attributes when sourceable is a comment' do
     params = {
       sourceable_id: comments(:one).id, sourceable_type: comments(:one).class,
-      creator_id: users(:roc).id, user_id: users(:victor).id,
+      creator_id: users(:yuki).id, user_id: users(:victor).id,
       event: 'commented.post'
     }
     feed = Feeds::CreateForm.create(params)

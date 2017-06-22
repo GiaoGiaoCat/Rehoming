@@ -9,7 +9,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
   test 'should update feed read status' do
     params = {
       sourceable_id: posts(:one).id, sourceable_type: posts(:one).class,
-      creator_id: users(:roc).id, user_id: users(:victor).id,
+      creator_id: users(:yuki).id, user_id: users(:victor).id,
       event: 'new_post'
     }
     feed = Feeds::CreateForm.create(params).object
