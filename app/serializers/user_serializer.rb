@@ -5,8 +5,7 @@ class UserSerializer < ApplicationSerializer
   attribute :nickname
 
   def nickname
-    return nickname unless current_forum
-    membership.preference.nickname
+    object.forum_nickname(current_forum)
   end
 
   def id

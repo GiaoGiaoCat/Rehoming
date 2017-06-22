@@ -43,6 +43,13 @@ class User < ApplicationRecord
   def membership_by_forum(forum)
     forum_memberships.find_by(forum: forum)
   end
+
+  def forum_nickname(forum)
+    return nickname unless forum
+    forum_membership = membership_by_forum(forum)
+    return nickname unless forum_membership
+    forum_membership.preference.nickname
+  end
   # protected instance methods ................................................
   # private instance methods ..................................................
 
