@@ -5,7 +5,7 @@ class FeedTest < ActiveSupport::TestCase
     params = {
       id: SecureRandom.uuid,
       sourceable_id: posts(:one).id, sourceable_type: posts(:one).class,
-      user_id: users(:victor).id,
+      creator_id: users(:roc).id, user_id: users(:victor).id,
       event: 'new_post'
     }
     @feed = Feed.create(params)
@@ -34,7 +34,7 @@ class FeedTest < ActiveSupport::TestCase
     params = {
       id: SecureRandom.uuid,
       sourceable_id: comments(:one).id, sourceable_type: comments(:one).class,
-      user_id: users(:victor).id,
+      creator_id: users(:roc).id, user_id: users(:victor).id,
       event: 'commented.post'
     }
     feed = Feed.create(params)
