@@ -1,7 +1,9 @@
 class FeedSerializer < ApplicationSerializer
   cache key: 'feed'
 
-  attributes :event, :read
+  attributes :event, :read, :forum_name, :content, :creator_nickname, :creator_avatar
 
-  belongs_to :sourceable
+  def event
+    Feed::EVENTS.fetch(object.event.to_sym)
+  end
 end

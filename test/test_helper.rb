@@ -6,7 +6,6 @@ require 'minitest/autorun'
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in support/ and its subdirectories.
 require 'support/custom_header_setup'
-
 # Code coverage
 require 'simplecov'
 SimpleCov.start do
@@ -16,6 +15,8 @@ end
 # Improved Minitest output (color and progress bar)
 require 'minitest/reporters'
 Minitest::Reporters.use!
+
+require 'fakeredis/minitest'
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.

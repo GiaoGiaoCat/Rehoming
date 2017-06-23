@@ -8,13 +8,13 @@ class FeedJobTest < ActiveJob::TestCase
 
   test 'create feed' do
     assert_difference -> { users(:yuki).feeds_count.value } do
-      FeedJob.perform_now('new_like_of_comment', @comment, [@comment.author.id])
+      FeedJob.perform_now('new_like_of_comment', @comment, users(:victor), [@comment.author.id])
     end
   end
 
   test 'create feeds' do
     assert_difference -> { users(:yuki).feeds_count.value } do
-      FeedJob.perform_now('new_post', posts(:one), @forum.member_ids)
+      FeedJob.perform_now('new_post', posts(:one), users(:victor), @forum.member_ids)
     end
   end
 end

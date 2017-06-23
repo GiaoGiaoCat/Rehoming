@@ -42,6 +42,7 @@ yuki.like post
 
 30.times do
   Feeds::CreateForm.create({
-    sourceable_id: Post.first.id, sourceable_type: Post.first.class, user_id: User.first.id, event: 'new_post'
+    sourceable_id: Post.first.id, sourceable_type: Post.first.class,
+    creator_id: User.last.id, user_id: User.first.id, event: 'new_post'
   })
 end

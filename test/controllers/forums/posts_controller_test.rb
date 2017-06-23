@@ -45,6 +45,6 @@ class Forums::PostsControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_performed_jobs 1
+    assert_performed_jobs 1 * 2
   end
 end

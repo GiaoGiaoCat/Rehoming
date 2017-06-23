@@ -11,7 +11,7 @@ class Redis::FetchMultiService < ApplicationService
   end
 
   def fetch_multi(keys)
-    keys.inject([]) do |objects, k|
+    keys.each_with_object([]) do |k, objects|
       data = redis.get(k)
       objects << Marshal.load(data) if data
     end

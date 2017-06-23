@@ -12,20 +12,33 @@ class Feed < ActiveType::Object
   attribute :sourceable_id, :integer
   attribute :sourceable_type, :string
   attribute :user_id, :integer
-  # NOTE: 不要给 event 指定 integer 或 string 类型，这里需求输入的是 string 输出的是 integer
-  # HACK: 可以移动到 serializer 中实现
-  attribute :event
+  attribute :event, :string
   %i(created_at updated_at).each { |attr| attribute attr, :datetime, default: proc { Time.current } }
+
+  # redundant data
+  attribute :forum_id, :integer
+  attribute :forum_name, :string
+  attribute :content, :string
+  attribute :creator_id, :integer
+  attribute :creator_nickname, :string
+  attribute :creator_avatar, :string
 
   belongs_to :sourceable, polymorphic: true
   belongs_to :user
+  belongs_to :creator, class_name: 'User', foreign_key: :creator_id
 
   before_save :generate_uuid
   before_save :touch_timestamps
   after_save :persist!
 
-  def cache_key
+  delegate :forum, to: :sourceable
+
+  def self.generate_cache_key(id)
     "feeds/#{id}"
+  end
+
+  def cache_key
+    Feed.generate_cache_key(id)
   end
 
   def make_as_read!

@@ -16,7 +16,7 @@ Rails.application.configure do
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
-    config.cache_store = :redis_store, Figaro.env.redis_cache_server
+    config.cache_store = :dalli_store, Figaro.env.memcached_server, { namespace: 'rapi', expires_in: 1.day, compress: true }
 
     config.public_file_server.headers = {
       'Cache-Control' => "public, max-age=#{2.days.seconds.to_i}"
@@ -37,7 +37,6 @@ Rails.application.configure do
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
-
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
