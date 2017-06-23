@@ -20,11 +20,14 @@ class Posts::CreateForm < ApplicationForm
   def author_role_can_post
     postable_roles = forum.postable_roles
     return if postable_roles.empty?
-    roles = Role::PERMISSIONS & postable_roles & author.roles.where(resource: forum).map(&:name)
     errors.add :base, :no_permissions if roles.empty?
   end
 
   def author_membership
     forum_memberships.available.find_by(forum: forum)
+  end
+
+  def roles
+    Role::PERMISSIONS & postable_roles & author.roles.where(resource: forum).map(&:name)
   end
 end

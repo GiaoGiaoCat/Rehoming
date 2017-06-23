@@ -33,7 +33,7 @@ class Comments::CreateFormTest < ActiveSupport::TestCase
       creator_id: users(:yuki).id, user_id: users(:victor).id,
       event: 'commented.post'
     }
-    feed = Feeds::CreateForm.create(params)
+    feed = Feeds::CreateForm.create(params).object
 
     assert feed.forum_id
     assert feed.forum_name
