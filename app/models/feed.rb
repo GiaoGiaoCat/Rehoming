@@ -42,9 +42,8 @@ class Feed < ActiveType::Object
   end
 
   def make_as_read!
-    self.read = true
-    save
-    user.feeds_count.decrement
+    self.read = true and save
+    decrease_user_feeds_count
   end
 
   private
@@ -59,5 +58,9 @@ class Feed < ActiveType::Object
 
   def touch_timestamps
     self.updated_at = Time.current
+  end
+
+  def decrease_user_feeds_count
+    user.feeds_count.decrement
   end
 end

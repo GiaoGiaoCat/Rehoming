@@ -23,5 +23,4 @@ class FeedTest < ActiveSupport::TestCase
   test 'generate_uuid callback' do
     assert @feed.id
   end
-
 end

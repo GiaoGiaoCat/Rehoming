@@ -1,5 +1,4 @@
 class Forums::Preference < ApplicationRecord
-
   self.table_name = 'forum_preferences'
 
   belongs_to :forum
