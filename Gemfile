@@ -38,8 +38,7 @@ gem 'active_type', '~> 0.7.0'
 # AASM - State machines for Ruby classes
 gem 'aasm'
 # Simple, efficient background processing for Ruby
-# gem 'sidekiq'
-
+gem 'sidekiq'
 # Role management library with resource scoping
 gem 'rolify', '~> 5.1'
 # Object oriented authorization for Rails applications
