@@ -15,4 +15,20 @@ class Forums::MembershipTest < ActiveSupport::TestCase
     assert @membership.preference
     assert_equal @roc.nickname, @membership.preference.nickname
   end
+
+  test 'preference' do
+    membership = Forums::Membership.first
+    assert membership.preference
+  end
+
+  test 'join_again' do
+    membership = Forums::Membership.first
+    assert_changes -> { membership.status } do
+      membership.quit!
+    end
+
+    assert_changes -> { membership.status } do
+      membership.join_again
+    end
+  end
 end

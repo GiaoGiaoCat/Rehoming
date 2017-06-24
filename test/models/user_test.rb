@@ -51,7 +51,12 @@ class UserTest < ActiveSupport::TestCase
     assert @victor.has_role?(:admin, @forum)
   end
 
-  test 'membership_by_forum' do
+  test 'membership_by_forum method' do
     assert_equal 'active', @victor.membership_by_forum(@forum).status
+  end
+
+  test 'forum_nickname method' do
+    assert @victor.forum_nickname(@forum)
+    refute_equal @victor.nickname, @victor.forum_nickname(@forum)
   end
 end

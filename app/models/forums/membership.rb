@@ -12,6 +12,7 @@ class Forums::Membership < ApplicationRecord
 
   encrypted_id key: 'MhnjnhNQZxubL9'
   delegate :forum_preferences, to: :user
+  delegate :nickname, to: :preference
 
   def preference
     forum_preferences.find_by(forum: forum)

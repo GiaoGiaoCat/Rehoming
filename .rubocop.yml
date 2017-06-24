@@ -16,6 +16,9 @@ AllCops:
 Rails:
   Enabled: true
 
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
 # Commonly used screens these days easily fit more than 80 characters.
 Metrics/LineLength:
   Description: 'Limit lines to 120 characters.'

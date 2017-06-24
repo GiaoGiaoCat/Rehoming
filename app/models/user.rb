@@ -41,10 +41,8 @@ class User < ApplicationRecord
   end
 
   def forum_nickname(forum)
-    return nickname unless forum
     forum_membership = membership_by_forum(forum)
-    return nickname unless forum_membership
-    forum_membership.preference.nickname
+    forum_membership&.nickname || nickname
   end
 
   private
