@@ -32,26 +32,26 @@ class Feeds::SendService < ApplicationService
     replied_user_id = sourceable.replied_user_id
     author_id = sourceable.commentable.author.id
     return if [handler.id, replied_user_id].include?(author_id) || disable_feed?
-    feed_job 'new_comment_of_post', author_id
+    seed_feed 'new_comment_of_post', author_id
   end
 
   # 回复中提及某人 -> 给被提及者发送动态
   def replied_comment
     replied_user_id = sourceable.replied_user_id
     return if replied_user_id.blank? || handler.id == replied_user_id
-    feed_job 'new_reply_of_comment', sourceable.replied_user_id
+    seed_feed 'new_reply_of_comment', sourceable.replied_user_id
   end
 
   # 添加一条主题 -> 给主题所在的圈子中，题主之外的所有成员发送动态
   def created_post
     user_id = sourceable.user_id
     member_ids = sourceable.forum.members.feed_allowed.map(&:id).reject { |member_id| member_id == user_id }
-    feed_job 'new_post', member_ids
+    seed_feed 'new_post', member_ids
   end
 
   def common_feed(event_name)
     return if sourceable.author == handler || disable_feed?
-    feed_job event_name, sourceable.author.id
+    seed_feed event_name, sourceable.author.id
   end
 
   def disable_feed?
@@ -60,8 +60,10 @@ class Feeds::SendService < ApplicationService
     !preference.feed_allowed
   end
 
-  def feed_job(event_name, feed_owner_ids)
+  def seed_feed(event_name, feed_owner_ids)
     feed_owner_ids = [feed_owner_ids] if feed_owner_ids.is_a?(Integer)
-    FeedJob.perform_later(event_name, sourceable, handler, feed_owner_ids)
+    feed_owner_ids.each_slice(100) do |batch|
+      batch.each { |user_id| FeedJob.perform_later(event_name, sourceable, handler, user_id) }
+    end
   end
 end
