@@ -3,8 +3,8 @@ class CreateForumMemberships < ActiveRecord::Migration[5.1]
     create_table :forum_memberships do |t|
       t.references  :forum
       t.references  :user
-      t.integer     :status, default: 0
-      t.datetime    :accepted_at
+      t.integer     :status, default: 0, comment: '会员状态'
+      t.datetime    :accepted_at, comment: '审批时间'
       t.timestamps null: false
     end
 
