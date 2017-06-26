@@ -18,6 +18,7 @@ class Users::SessionsController < ApplicationController
   end
 
   def load_development_session
+    load_development_user
     @session = Users::Session.create(user: @current_user)
     render json: @session, status: :created
   end

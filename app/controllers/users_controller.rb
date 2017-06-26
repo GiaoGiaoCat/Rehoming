@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     build_current_user
     if @current_user.save
       instrument 'updated.user', sourceable: @current_user, handler: current_user
-      head :ok
+      render json: @current_user
     else
       render json: @current_user.errors.messages, status: :bad_request
     end

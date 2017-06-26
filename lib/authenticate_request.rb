@@ -2,7 +2,6 @@ module AuthenticateRequest
   extend ActiveSupport::Concern
 
   included do
-    before_action :load_development_user, if: -> { Rails.env.development? }
     before_action :authenticate_request!
     attr_reader :current_user
   end
@@ -10,6 +9,7 @@ module AuthenticateRequest
   protected
 
   def authenticate_request!
+    return load_development_user if Rails.env.development?
     return invalid_authentication unless user_id_in_token?
     return invalid_authentication unless load_current_user
   rescue JWT::DecodeError
