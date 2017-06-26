@@ -4,27 +4,41 @@
 
 ## System dependencies
 
-* Ruby version 2.4.1
-* System dependencies
-* Configuration
-* Database creation
-* Database initialization
-* How to run the test suite
-* Services (job queues, cache servers, search engines, etc.)
-* Deployment instructions
+* Ruby 2.4.1
+* Rails ~> 5.1.0
+* Redis 3.2.9
+* Memcached 1.4.36
+* MySQL 5.7.18
 
-### Gems
+## Configuration
+
+```
+cp config/database.yml.example config/database.yml
+cp config/application.yml.example config/application.yml
+cp config/secrets.yml.example config/secrets.yml
+```
+
+## Database creation and initialization
+
+```
+rake dev:rebuild
+```
+
+## How to run the test suite
+
+```
+bin/rails db:migrate RAILS_ENV=test
+rake
+```
+
+## Services (job queues, cache servers, search engines, etc.)
+
+## Deployment instructions
+
+### Gems you should know
 
 * [active_type](https://github.com/makandra/active_type)
 * [active_model_serializers](https://github.com/rails-api/active_model_serializers)
 * [acts_as_paranoid](https://github.com/ActsAsParanoid/acts_as_paranoid)
 * [redis-rb](https://github.com/redis/redis-rb)
 * [redis-objects](https://github.com/nateware/redis-objects)
-
-## 测试
-
-```
-bin/rails db:migrate RAILS_ENV=test
-rake
-CODECLIMATE_REPO_TOKEN=<token> bundle exec codeclimate-test-reporter
-```
