@@ -12,7 +12,6 @@ Rehoming API 文档
 用户完全依赖微信系统，首次授权登录的微信用户，系统内部会自动创建一个用户。
 
 ### 微信登录 [POST]
-
 + Request (application/vnd.api+json)
     + Attributes
         + data (CreateSessionData, required)
@@ -24,14 +23,12 @@ Rehoming API 文档
 ## Data Structures
 
 ### CreateSessionData
-
 + type: `sessions` (required)
 + attributes
     + code: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
 
 
 ### SessionResouceObject
-
 + id: `ea2340d68be9b6ff537be3be1fd36268` (required)
 + type: `sessions` (required)
 + attributes (Session, required)
@@ -47,7 +44,6 @@ Rehoming API 文档
 当前用户的个人信息
 
 ### 获取我的个人信息 [GET]
-
 + Request JSON Message
 
     + Headers
@@ -59,7 +55,6 @@ Rehoming API 文档
         + data (UserResouceObject, required)
 
 ### 更新我的个人信息 [PUT]
-
 + Request JSON Message
 
     + Headers
@@ -74,11 +69,39 @@ Rehoming API 文档
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
         + data (UserResouceObject, required)
+        
+## Post Resources [/posts]
+
+### 获取我的帖子 [GET]
+
++ Request JSON Message
+
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (array, required)
+            + (PostResoucesObject)
+
+## Favorite Resources [/favorites]
+
+### 获取我的收藏 [GET]
++ Request JSON Message
+
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (array, required)
+            + (FavoriteResoucesObject)
 
 ## Data Structures
 
 ### UpdateProfileData
-
 + id: `xxx` (required)
 + type: `users` (required)
 + attributes
@@ -86,9 +109,55 @@ Rehoming API 文档
     + nickname: `老王`
 
 ### UserResouceObject
++ id: `xxx`
++ type: `users`
++ attributes
+    + headimgurl: `http://www.qiniu.com/adfasdfadaf.jpg`
+    + nickname: `老王`
+    + posts_count: 4 (number, required) - 我的帖子数目
+    + favorites_count: 2 (number, required) - 我的收藏数目
 
+### PostResoucesObject
++ id: `5708ca5fd085255ba2fadcb2c643bffa` - 订单号
++ type: `posts` (required)
++ attributes
+    + content: `hahaha` - 内容
+    + created_at: `2016-05-26T12:46:17.000Z` - 订单创建时间
+    + updated_at: `2016-05-26T12:46:17.000Z` - 订单创建时间
++ relationships
+    + forum
+        + data (BaseForumResourceObject)
+    + attachments
+        + data (array)
+            + (BaseAttachmentResourceObject)
++ included (array, required)
+    + (ForumResourceObject)
+    + (AttachmentResourceObject)
+
+### FavoriteResoucesObject
 + id: `xxx`
 + type: `users`
 + attributes
     + headimgurl: `adfasdfadaf.jpg`
     + nickname: `老王`
+
+### BaseForumResourceObject
++ id: `f37f66fe207798521332f9a613514b15` (required)
++ type: `forums` (required)
+
+### BaseAttachmentResourceObject
++ id: `dc01a2ff45766cb529f017a8c4ce23c7` (required)
++ type: `attachments` (required)
+
+### ForumResourceObject
++ id: `f37f66fe207798521332f9a613514b15` (required)
++ type: `forums` (required)+ attributes
++ attributes
+    + name: `Free Group` - 圈子名称
+
+### AttachmentResourceObject
++ id: `dc01a2ff45766cb529f017a8c4ce23c7` (required)
++ type: `attachments` (required)
++ attributes
+    + category: `image` - 附件类型
+    + url: `http://www.baidu.com/a.jpg` - 附件地址
