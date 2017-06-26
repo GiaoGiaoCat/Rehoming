@@ -5,11 +5,13 @@ HOST: http://127.0.0.1:300/
 
 Rehoming API 文档
 
-## Authentication [/sessions]
+# Group Authentication
+
+## Session Resource [/sessions]
 
 用户完全依赖微信系统，首次授权登录的微信用户，系统内部会自动创建一个用户。
 
-### Create a New Session [POST]
+### 微信登录 [POST]
 
 + Request (application/vnd.api+json)
     + Attributes
@@ -37,3 +39,56 @@ Rehoming API 文档
 ### Session
 
 + `auth_token`: `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxODYwMDA3NjAwNyIsImV4cCI6MTQ3MDU2ODMwMX0.sSfEHuboFYtKr4D253rAgIXNukiPEsTxV7Fp77wW1Qs` (required)
+
+# Group Users
+
+## User Resource [/users/me]
+
+当前用户的个人信息
+
+### 获取我的个人信息 [GET]
+
++ Request JSON Message
+
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 200 (application/vnd.api+json)
+    + Attributes
+        + data (UserResouceObject, required)
+
+### 更新我的个人信息 [PUT]
+
++ Request JSON Message
+
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Request (application/vnd.api+json)
+    + Attributes
+        + data (UpdateProfileData, required)
+
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (UserResouceObject, required)
+        
+## Data Structures
+
+### UpdateProfileData
+
++ id: `xxx` (required)
++ type: `users` (required)
++ attributes
+    + headimgurl: `adfasdfadaf.jpg`
+    + nickname: `老王`
+
+### UserResouceObject
+
++ id: `xxx`
++ type: `users`
++ attributes
+    + headimgurl: `adfasdfadaf.jpg`
+    + nickname: `老王`
