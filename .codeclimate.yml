@@ -28,5 +28,6 @@ ratings:
   - "**.go"
 exclude_paths:
 - db/**
+- test/**
 - spec/**/*
 - "**/vendor/**/*"
