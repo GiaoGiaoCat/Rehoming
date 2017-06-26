@@ -1,7 +1,7 @@
 class UserSerializer < ApplicationSerializer
   cache key: 'user'
 
-  attribute :headimgurl
+  attributes :headimgurl, :posts_count, :favorites_count
   attribute :nickname
 
   def nickname
