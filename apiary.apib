@@ -5,76 +5,35 @@ HOST: http://polls.apiblueprint.org/
 
 Rehoming API 文档
 
-## Questions Collection [/questions]
+## Authentication [/sessions]
 
-### List All Questions [GET]
+用户完全依赖微信系统，首次授权登录的微信用户，系统内部会自动创建一个用户。
 
-+ Response 200 (application/json)
+### Create a New Session [POST]
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
++ Request (application/vnd.api+json)
+    + Attributes
+        + data (CreateSessionData, required)
 
-### Create a New Question [POST]
++ Response 201 (application/vnd.api+json)
+    + Attributes
+        + data (SessionResouceObject, required)
+            
+## Data Structures
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+### CreateSessionData
 
-+ Request (application/json)
++ type: `sessions` (required)
++ attributes
+    + code: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
 
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
 
-+ Response 201 (application/json)
+### SessionResouceObject
 
-    + Headers
++ id: `ea2340d68be9b6ff537be3be1fd36268` (required)
++ type: `sessions` (required)
++ attributes (Session, required)
 
-            Location: /questions/2
+### Session
 
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
++ `auth_token`: `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxODYwMDA3NjAwNyIsImV4cCI6MTQ3MDU2ODMwMX0.sSfEHuboFYtKr4D253rAgIXNukiPEsTxV7Fp77wW1Qs` (required)
