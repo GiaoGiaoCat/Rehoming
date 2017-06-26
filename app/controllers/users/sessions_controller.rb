@@ -1,4 +1,5 @@
 class Users::SessionsController < ApplicationController
+  before_action :load_development_session, if: -> { Rails.env.development? }
   skip_before_action :authenticate_request!
 
   def create
@@ -14,5 +15,10 @@ class Users::SessionsController < ApplicationController
 
   def session_params
     params.require(:data).require(:attributes).permit(:code)
+  end
+
+  def load_development_session
+    @session = Users::Session.create(user: @current_user)
+    render json: @session, status: :created
   end
 end

@@ -52,7 +52,6 @@ group :development, :test do
   gem 'awesome_print', '~> 1.7'
   gem 'byebug'
   gem 'sqlite3'
-  gem 'dredd_hooks'
 end
 
 group :development do

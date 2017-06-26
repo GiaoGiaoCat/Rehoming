@@ -2,6 +2,10 @@
 
 入伙 API 端
 
+## Documentation
+
+Documentation for the Rehoming API can be found at http://docs.rehomingapi.apiary.io/.
+
 ## System dependencies
 
 * Ruby 2.4.1
@@ -25,6 +29,26 @@ rake dev:rebuild
 ```
 
 ## How to run the test suite
+
+开发采用 API Driven Development。API 文档先行，然后用 Dredd 确保 API 实现与文档一致。
+
+1. Make sure you have Node and NPM installed.
+
+```
+npm install -g dredd
+```
+
+2. Initialize Dredd. Mind the privacy of API key.
+
+```
+dredd init -r apiary -j apiaryApiKey:2110e9ea0e48cb74f4efde209fcd22c3 -j apiaryApiName:rehomingapi
+```
+
+3. Run the test, reports appear here.
+
+```
+dredd
+```
 
 ```
 bin/rails db:migrate RAILS_ENV=test
