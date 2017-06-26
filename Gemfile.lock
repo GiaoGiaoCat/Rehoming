@@ -75,6 +75,7 @@ GEM
       after_commit_action (~> 1.0)
     dalli (2.7.6)
     docile (1.1.5)
+    dredd_hooks (0.1.2)
     erubi (1.6.0)
     fakeredis (0.6.0)
       redis (~> 3.2)
@@ -209,6 +210,7 @@ DEPENDENCIES
   codeclimate-test-reporter (~> 1.0.0)
   counter_culture (~> 1.0)
   dalli
+  dredd_hooks
   fakeredis
   figaro
   jwt
