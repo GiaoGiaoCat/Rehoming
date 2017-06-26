@@ -30,25 +30,17 @@ rake dev:rebuild
 
 ## How to run the test suite
 
-开发采用 API Driven Development。API 文档先行，然后用 Dredd 确保 API 实现与文档一致。
+### API test
 
-1. Make sure you have Node and NPM installed.
+项目使用 API Driven Development。API 文档先行，然后用 Dredd 确保 API 实现与文档一致。
 
 ```
 npm install -g dredd
 ```
 
-2. Initialize Dredd. Mind the privacy of API key.
+先运行 `rails server`，再打开另外一个命令行窗口运行 `dredd`，可以去 [api tests](https://app.apiary.io/rehomingapi/tests/runs) 查看详细的测试报告。
 
-```
-dredd init -r apiary -j apiaryApiKey:2110e9ea0e48cb74f4efde209fcd22c3 -j apiaryApiName:rehomingapi
-```
-
-3. Run the test, reports appear here.
-
-```
-dredd
-```
+### Rails test
 
 ```
 bin/rails db:migrate RAILS_ENV=test
