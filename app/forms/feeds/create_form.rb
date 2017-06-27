@@ -42,6 +42,6 @@ class Feeds::CreateForm < ApplicationForm
   end
 
   def schedule_cleanup_task
-    FeedCleanupJob.set(wait: 2.weeks).perform_later(object.cache_key)
+    FeedCleanupJob.set(wait: 3.days).perform_later(object.cache_key)
   end
 end
