@@ -18,26 +18,9 @@ Rehoming API 文档
 
 + Response 201 (application/vnd.api+json; charset=utf-8)
     + Attributes
-        + data (SessionResouceObject, required)
+        + data (Session, required)
 
-## Data Structures
-
-### CreateSessionData
-+ type: `sessions` (required)
-+ attributes
-    + code: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
-
-
-### SessionResouceObject
-+ id: `ea2340d68be9b6ff537be3be1fd36268` (required)
-+ type: `sessions` (required)
-+ attributes (Session, required)
-
-### Session
-
-+ `auth_token`: `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxODYwMDA3NjAwNyIsImV4cCI6MTQ3MDU2ODMwMX0.sSfEHuboFYtKr4D253rAgIXNukiPEsTxV7Fp77wW1Qs` (required)
-
-# Group Users
+# Group User
 
 ## User Resource [/users/me]
 
@@ -52,7 +35,7 @@ Rehoming API 文档
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
-        + data (UserResouceObject, required)
+        + data (User, required)
 
 ### 更新我的个人信息 [PUT]
 + Request JSON Message
@@ -68,8 +51,8 @@ Rehoming API 文档
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
-        + data (UserResouceObject, required)
-        
+        + data (User, required)
+
 ## Post Resources [/posts]
 
 ### 获取我的帖子 [GET]
@@ -82,8 +65,7 @@ Rehoming API 文档
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
-        + data (array, required)
-            + (PostResoucesObject)
+        + data (array[Post], required)
 
 ## Favorite Resources [/favorites]
 
@@ -96,68 +78,75 @@ Rehoming API 文档
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
-        + data (array, required)
-            + (FavoriteResoucesObject)
+        + data (array[Post], required)
 
 ## Data Structures
 
-### UpdateProfileData
-+ id: `xxx` (required)
-+ type: `users` (required)
-+ attributes
-    + headimgurl: `adfasdfadaf.jpg`
-    + nickname: `老王`
+### BaseUser (object)
++ id: ea2340d68be9b6ff537be3be1fd36268
++ type: users
 
-### UserResouceObject
-+ id: `xxx`
-+ type: `users`
+### BaseForum (object)
++ id: `f37f66fe207798521332f9a613514b15` (required)
++ type: `forums` (required)
+
+### BaseAttachment (object)
++ id: dc01a2ff45766cb529f017a8c4ce23c7 (required)
++ type: attachments (required)
+
+### BasePost (object)
++ id: dc01a2ff45766cb529f017a8c4ce23c7 (required)
++ type: posts (required)
+
+### BaseFavorite (object)
++ id: dc01a2ff45766cb529f017a8c4ce23c7 (required)
++ type: posts (required)
+
+### Session (object)
++ id: ea2340d68be9b6ff537be3be1fd36268
++ type: sessions
 + attributes
-    + headimgurl: `http://www.qiniu.com/adfasdfadaf.jpg`
-    + nickname: `老王`
+    + auth_token: `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxODYwMDA3NjAwNyIsImV4cCI6MTQ3MDU2ODMwMX0.sSfEHuboFYtKr4D253rAgIXNukiPEsTxV7Fp77wW1Qs` (string, required)
+
+### User (object)
+- Include BaseUser
++ attributes
+    + headimgurl: http://www.qiniu.com/adfasdfadaf.jpg
+    + nickname: 老王
     + posts_count: 4 (number, required) - 我的帖子数目
     + favorites_count: 2 (number, required) - 我的收藏数目
 
-### PostResoucesObject
-+ id: `5708ca5fd085255ba2fadcb2c643bffa` - 订单号
-+ type: `posts` (required)
+### Post (object)
+- Include BasePost
 + attributes
     + content: `hahaha` - 内容
     + created_at: `2016-05-26T12:46:17.000Z` - 订单创建时间
     + updated_at: `2016-05-26T12:46:17.000Z` - 订单创建时间
 + relationships
     + forum
-        + data (BaseForumResourceObject)
+        + data (BaseForum)
     + attachments
-        + data (array)
-            + (BaseAttachmentResourceObject)
-+ included (array, required)
-    + (ForumResourceObject)
-    + (AttachmentResourceObject)
+        + data (array[BaseAttachment])
++ included (array[Forum, Attachment], required)
 
-### FavoriteResoucesObject
-+ id: `xxx`
-+ type: `users`
-+ attributes
-    + headimgurl: `adfasdfadaf.jpg`
-    + nickname: `老王`
-
-### BaseForumResourceObject
-+ id: `f37f66fe207798521332f9a613514b15` (required)
-+ type: `forums` (required)
-
-### BaseAttachmentResourceObject
-+ id: `dc01a2ff45766cb529f017a8c4ce23c7` (required)
-+ type: `attachments` (required)
-
-### ForumResourceObject
-+ id: `f37f66fe207798521332f9a613514b15` (required)
-+ type: `forums` (required)+ attributes
+### Forum (object)
+- Include BaseForum
 + attributes
     + name: `Free Group` - 圈子名称
 
-### AttachmentResourceObject
-+ id: `dc01a2ff45766cb529f017a8c4ce23c7` (required)
-+ type: `attachments` (required)
+### Attachment (object)
+- Include BaseAttachment
 + attributes
     + category: `image` - 附件类型
     + url: `http://www.baidu.com/a.jpg` - 附件地址
+
+### CreateSessionData
++ type: sessions (string, required)
++ attributes
+    + code: 0312RTRI0rMOWj22GAUI0llVRI02RTR5 (string, required)
+
+### UpdateProfileData
+- Include BaseUser
++ attributes
+    + headimgurl: `adfasdfadaf.jpg`
+    + nickname: `老王`
