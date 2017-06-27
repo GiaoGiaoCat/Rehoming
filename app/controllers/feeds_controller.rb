@@ -8,7 +8,7 @@ class FeedsController < ApplicationController
   def update
     load_feed
     @feed.make_as_read!
-    head :no_content
+    render json: @feed
   end
 
   private

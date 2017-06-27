@@ -28,7 +28,6 @@ Rehoming API 文档
 
 ### 获取我的个人信息 [GET]
 + Request JSON Message
-
     + Headers
 
             Authorization: `TOKEN Value`
@@ -39,7 +38,6 @@ Rehoming API 文档
 
 ### 更新我的个人信息 [PUT]
 + Request JSON Message
-
     + Headers
 
             Authorization: `TOKEN Value`
@@ -58,7 +56,6 @@ Rehoming API 文档
 ### 获取我的帖子 [GET]
 
 + Request JSON Message
-
     + Headers
 
             Authorization: `TOKEN Value`
@@ -71,7 +68,6 @@ Rehoming API 文档
 
 ### 获取我的收藏 [GET]
 + Request JSON Message
-
     + Headers
 
             Authorization: `TOKEN Value`
@@ -88,7 +84,6 @@ Rehoming API 文档
 
 ### 获取我的动态列表 [GET]
 + Request JSON Message
-
     + Headers
 
             Authorization: `TOKEN Value`
@@ -96,6 +91,19 @@ Rehoming API 文档
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
         + data (array[Feed], required)
+
+
+## Feed Resource [/feeds/{feed_id}]
+
+### 标记动态为已读 [PUT]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (Feed, required)
 
 ## Data Structures
 
@@ -164,12 +172,16 @@ Rehoming API 文档
 ### Feed (object)
 - Include BaseFeed
 + attributes
-    + event: 10
-    + read: false
-    + forum_name: `Free Group`
-    + content: hahaha
-    + creator_nickname: Roc
-    + creator_avatar: http://www.qiniu.com/adfasdfadaf.jpg
+    + event: 10 (number, required) - feed 类型
+    + read: false (boolean, required) - 是否已读
+    + forum_name: `Free Group` (required) - 所属圈子名称
+    + content: hahaha (required) - 动态关联内容的正文
+    + creator_nickname: Roc (required) - 动态创建者
+    + creator_avatar: http://www.qiniu.com/adfasdfadaf.jpg (required) - 动态创建者头像
+    + attachments (array, required)
+        + (object)
+            + category: `image` - 附件类型
+            + url: `http://www.baidu.com/a.jpg` - 附件地址
 
 ### CreateSessionData
 + type: sessions (string, required)
