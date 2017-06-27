@@ -80,6 +80,23 @@ Rehoming API 文档
     + Attributes
         + data (array[Post], required)
 
+# Group Feed
+
+## Feed Resources [/feeds]
+
+动态列表
+
+### 获取我的动态列表 [GET]
++ Request JSON Message
+
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (array[Feed], required)
+
 ## Data Structures
 
 ### BaseUser (object)
@@ -101,6 +118,10 @@ Rehoming API 文档
 ### BaseFavorite (object)
 + id: dc01a2ff45766cb529f017a8c4ce23c7 (required)
 + type: posts (required)
+
+### BaseFeed (object)
++ id: 71adf05d-711b-4e4a-aff6-9b383ebefe93 (required)
++ type: feeds (required)
 
 ### Session (object)
 + id: ea2340d68be9b6ff537be3be1fd36268
@@ -139,6 +160,16 @@ Rehoming API 文档
 + attributes
     + category: `image` - 附件类型
     + url: `http://www.baidu.com/a.jpg` - 附件地址
+
+### Feed (object)
+- Include BaseFeed
++ attributes
+    + event: 10
+    + read: false
+    + forum_name: `Free Group`
+    + content: hahaha
+    + creator_nickname: Roc
+    + creator_avatar: http://www.qiniu.com/adfasdfadaf.jpg
 
 ### CreateSessionData
 + type: sessions (string, required)
