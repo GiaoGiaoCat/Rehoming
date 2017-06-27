@@ -24,6 +24,7 @@ class Comments::CreateFormTest < ActiveSupport::TestCase
     assert @feed.creator_id
     assert @feed.creator_nickname
     assert @feed.creator_avatar
+    assert @feed.attachments
     assert posts(:one).content, @feed.content
   end
 

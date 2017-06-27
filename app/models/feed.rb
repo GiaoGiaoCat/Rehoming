@@ -22,6 +22,7 @@ class Feed < ActiveType::Object
   attribute :creator_id, :integer
   attribute :creator_nickname, :string
   attribute :creator_avatar, :string
+  attribute :attachments
 
   belongs_to :sourceable, polymorphic: true
   belongs_to :user
