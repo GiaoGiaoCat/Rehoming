@@ -10,4 +10,8 @@ class Attachment < ApplicationRecord
 
   encrypted_id key: 'Kpovojv2sJzPnb'
   enum category: IMAGE_CATEGORIES
+
+  def as_json(_options)
+    { category: category, url: url }
+  end
 end

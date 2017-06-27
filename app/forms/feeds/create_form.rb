@@ -3,6 +3,7 @@ class Feeds::CreateForm < ApplicationForm
     sourceable_id sourceable_type user_id event
     forum_id forum_name content
     creator_id creator_nickname creator_avatar
+    attachments
   ).freeze
   ATTRS.each { |attr| delegate attr, "#{attr}=".to_sym, to: :object }
   %i(user sourceable forum creator).each { |attr| delegate attr, to: :object }
@@ -26,6 +27,7 @@ class Feeds::CreateForm < ApplicationForm
 
   def copy_content
     self.content ||= sourceable.content
+    self.attachments ||= sourceable.attachments.to_json
   end
 
   def copy_forum

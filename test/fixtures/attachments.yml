@@ -1,0 +1,9 @@
+one:
+  category: 'image'
+  url: 'http://www.baidu.com/a.jpg'
+  attachable: one (Post)
+
+two:
+  category: 'image'
+  url: 'http://www.baidu.com/b.jpg'
+  attachable: one (Post)
