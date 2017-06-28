@@ -1,0 +1,30 @@
+module MockDredd
+  extend ActiveSupport::Concern
+
+  included do
+    if Rails.env.development?
+      before_action :load_session_dev
+      before_action :load_feed_dev
+    end
+  end
+
+  private
+
+  def load_session_dev
+    if controller_name == 'sessions' && action_name == 'create'
+      load_development_user
+      @session = Users::Session.create(user: @current_user)
+      render json: @session, status: :created
+    end
+  end
+
+  def load_feed_dev
+    if controller_name == 'feeds' && action_name == 'update'
+      cache_key = current_user.feeds.value.first
+      fetch = Feeds::FetchService.new(key: cache_key)
+      @feed = fetch.save ? fetch.object : nil
+      @feed.make_as_read!
+      render json: @feed
+    end
+  end
+end

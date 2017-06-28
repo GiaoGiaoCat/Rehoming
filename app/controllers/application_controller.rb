@@ -4,6 +4,7 @@ class ApplicationController < ActionController::API
   include AuthenticateRequest
   include SupportMethod
   include Pundit
+  include MockDredd
 
   def_delegator ActiveSupport::Notifications, :instrument
 
