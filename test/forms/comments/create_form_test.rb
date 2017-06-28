@@ -35,4 +35,10 @@ class Comments::CreateFormTest < ActiveSupport::TestCase
     post = Comments::CreateForm.new(commentable: @post, author: @victor, content: '#我是标签# content goes here')
     assert post.valid?
   end
+
+  test '圈子允许外部人员回复（用于帮助和反馈圈）' do
+    post = Posts::CreateForm.create(forum: forums(:three), author: @victor, content: 'cool')
+    comment = Comments::CreateForm.new(commentable: post, author: @roc, content: 'man')
+    assert comment.valid?
+  end
 end

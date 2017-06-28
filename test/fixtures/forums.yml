@@ -5,3 +5,7 @@ one:
 two:
   name: 'Forum Two'
   category: 10
+
+three:
+  name: 'Help'
+  category: 10

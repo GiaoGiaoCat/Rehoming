@@ -1,14 +1,19 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 # This model initially had no columns defined. If you add columns to the
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
 one:
   forum: one
+  postable_with_membership: true
   postable_roles: []
 
 two:
   forum: two
+  postable_with_membership: true
   membership_approval_needed: true
+  postable_roles: ["owner", "admin"]
+
+three:
+  forum: three
+  postable_with_membership: false
   postable_roles: ["owner", "collaborator", "admin"]

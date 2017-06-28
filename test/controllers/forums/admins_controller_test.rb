@@ -10,7 +10,7 @@ class Forums::AdminsControllerTest < ActionDispatch::IntegrationTest
     assert_empty member.reload.roles
 
     assert_no_difference -> { member.roles.reload.count } do
-      post forum_admins_url(forum_id: @forum.id, id: member.id), headers: @headers
+      post forum_member_admin_url(forum_id: @forum.id, member_id: member.to_param), headers: @headers
     end
   end
 
@@ -19,7 +19,7 @@ class Forums::AdminsControllerTest < ActionDispatch::IntegrationTest
     member = @forum.members.first
     assert_empty member.reload.roles
 
-    post forum_admins_url(forum_id: @forum.id, id: member.id), headers: @headers
+    post forum_member_admin_url(forum_id: @forum.id, member_id: member.to_param), headers: @headers
     assert member.reload.has_role? :admin, @forum
   end
 
@@ -29,7 +29,7 @@ class Forums::AdminsControllerTest < ActionDispatch::IntegrationTest
     assert_empty member.reload.roles
     member.add_role :admin, @forum
 
-    delete forum_admin_url(forum_id: @forum.id, id: member.id), headers: @headers
+    delete forum_member_admin_url(forum_id: @forum.id, member_id: member.to_param), headers: @headers
     assert_empty member.reload.roles
   end
 end
