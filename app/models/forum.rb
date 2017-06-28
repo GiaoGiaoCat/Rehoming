@@ -32,6 +32,7 @@ class Forum < ApplicationRecord
   delegate :membership_approval_needed?,
            :member_list_protected?,
            :postable_until_tomorrow?,
+           :postable_with_membership?,
            :postable_roles,
            to: :preference
 

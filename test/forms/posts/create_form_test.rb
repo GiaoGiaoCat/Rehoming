@@ -25,13 +25,18 @@ class Posts::CreateFormTest < ActiveSupport::TestCase
     assert post.errors.key?(:base)
 
     @victor.quit_forum(@forum)
-    post = Posts::CreateForm.new(forum: @forum, author: @victor, content: '#我是标签# content goes here')
+    post = Posts::CreateForm.new(forum: forums(:two), author: @victor, content: '#我是标签# content goes here')
     assert_not post.valid?
   end
 
   test '会员状态为 blocked 能发帖' do
     Forums::BlockedMember.create(forum: @forum, user: @victor)
     post = Posts::CreateForm.new(forum: @forum, author: @victor, content: '#我是标签# content goes here')
+    assert post.valid?
+  end
+
+  test '圈子允许外部人员发帖（用于帮助和反馈圈）' do
+    post = Posts::CreateForm.new(forum: forums(:three), author: @victor, content: '#我是标签# content goes here')
     assert post.valid?
   end
 end

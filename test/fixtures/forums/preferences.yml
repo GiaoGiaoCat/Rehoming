@@ -6,9 +6,16 @@
 #
 one:
   forum: one
+  postable_with_membership: true
   postable_roles: []
 
 two:
   forum: two
+  postable_with_membership: true
   membership_approval_needed: true
+  postable_roles: ["owner", "collaborator", "admin"]
+
+three:
+  forum: three
+  postable_with_membership: false
   postable_roles: ["owner", "collaborator", "admin"]
