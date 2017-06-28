@@ -14,7 +14,7 @@ class FeedsController < ApplicationController
   private
 
   def load_feeds
-    cache_keys = Kaminari.paginate_array(current_user.feeds.value).page(pagination_number).per(500)
+    cache_keys = Kaminari.paginate_array(current_user.feeds.value).page(pagination_number).per(25)
     fetch = Feeds::FetchMultiService.new(keys: cache_keys)
     @feeds = fetch.save ? fetch.objects : []
   end

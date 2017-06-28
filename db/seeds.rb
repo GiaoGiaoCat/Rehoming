@@ -40,14 +40,14 @@ victor.favor post
 victor.like post
 yuki.like post
 
-10.times do
+20.times do
   Feeds::CreateForm.create({
     sourceable_id: Post.last.id, sourceable_type: Post.first.class,
     creator_id: User.last.id, user_id: User.first.id, event: 'new_post'
   })
 end
 
-10.times do
+20.times do
   Feeds::CreateForm.create({
     sourceable_id: Post.first.id, sourceable_type: Post.first.class,
     creator_id: User.last.id, user_id: User.first.id, event: 'new_post'
