@@ -7,7 +7,7 @@ class ForumsController < ApplicationController
   def create
     build_forum
     if @forum_form.save
-      head :created
+      render json: @forum_form.object, include: '**', status: :created
     else
       render json: @forum_form.errors.messages, status: :bad_request
     end

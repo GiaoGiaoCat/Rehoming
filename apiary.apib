@@ -6,9 +6,7 @@ HOST: http://127.0.0.1:300/
 Rehoming API 文档
 
 # Group Authentication
-
 ## Session Resource [/sessions]
-
 用户完全依赖微信系统，首次授权登录的微信用户，系统内部会自动创建一个用户。
 
 ### 微信登录 [POST]
@@ -21,11 +19,7 @@ Rehoming API 文档
         + data (Session, required)
 
 # Group User
-
 ## User Resource [/users/me]
-
-当前用户的个人信息
-
 ### 获取我的个人信息 [GET]
 + Request JSON Message
     + Headers
@@ -37,12 +31,11 @@ Rehoming API 文档
         + data (User, required)
 
 ### 更新我的个人信息 [PUT]
-+ Request JSON Message
++ Request (application/vnd.api+json)
     + Headers
 
             Authorization: `TOKEN Value`
 
-+ Request (application/vnd.api+json)
     + Attributes
         + data (UpdateProfileData, required)
 
@@ -52,9 +45,7 @@ Rehoming API 文档
         + data (User, required)
 
 ## Post Resources [/posts]
-
 ### 获取我的帖子 [GET]
-
 + Request JSON Message
     + Headers
 
@@ -65,7 +56,6 @@ Rehoming API 文档
         + data (array[Post], required)
 
 ## Favorite Resources [/favorites]
-
 ### 获取我的收藏 [GET]
 + Request JSON Message
     + Headers
@@ -77,11 +67,7 @@ Rehoming API 文档
         + data (array[Post], required)
 
 # Group Feed
-
 ## Feed Resources [/feeds]
-
-动态列表
-
 ### 获取我的动态列表 [GET]
 + Request JSON Message
     + Headers
@@ -94,7 +80,6 @@ Rehoming API 文档
 
 
 ## Feed Resource [/feeds/{id}]
-
 + Parameters
     + id: `85579eec-9034-4940-855b-b60cb614f555` (required)
 
@@ -108,8 +93,32 @@ Rehoming API 文档
     + Attributes
         + data (Feed, required)
 
-## Data Structures
+# Group Forum
+## Forum Resources [/forums]
+### 获取我的圈子列表 [GET]
++ Request JSON Message
+    + Headers
 
+            Authorization: `TOKEN Value`
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (array[Forum], required)
+
+### 创建免费圈子 [POST]
++ Request (application/vnd.api+json)
+    + Headers
+
+            Authorization: `TOKEN Value`
+
+    + Attributes
+        + data (CreateForumData, required)
+
++ Response 201 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (Forum, required)
+
+## Data Structures
 ### BaseUser (object)
 + id: ea2340d68be9b6ff537be3be1fd36268
 + type: users
@@ -165,6 +174,10 @@ Rehoming API 文档
 - Include BaseForum
 + attributes
     + name: `Free Group` - 圈子名称
+    + description: 不错呦 - 圈子简介
+    + cover: https://www.baidu.com/1.jpg - 圈子封面
+    + background_color: `#333333` - 背景色
+    + posts_count: 100 (number, required) - 帖子数目
 
 ### Attachment (object)
 - Include BaseAttachment
@@ -196,3 +209,12 @@ Rehoming API 文档
 + attributes
     + headimgurl: `adfasdfadaf.jpg`
     + nickname: `老王`
+
+### CreateForumData
++ type: forums (string, required)
++ attributes
+    + name: `Free Group` (required) - 圈子名称
+    + description: 不错呦 - 圈子简介
+    + cover: https://www.baidu.com/1.jpg - 圈子封面
+    + background_color: `#333333` - 背景色
+    + category: 10 (number, required) - 圈子类型
