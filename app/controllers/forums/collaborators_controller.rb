@@ -8,6 +8,7 @@ class Forums::CollaboratorsController < ApplicationController
   end
 
   def destroy
+    load_member
     build_reduce_collaborator
     authorize @forum, :manage_collaborator?
     @reduce_collaborator.save
@@ -20,14 +21,17 @@ class Forums::CollaboratorsController < ApplicationController
     @forum ||= Forum.find(params[:forum_id])
   end
 
+  def load_member
+    @member = @forum.members.find(params[:member_id])
+  end
+
   def build_collaborator
     @collaborator = Roles::BecomeCollaboratorService.new(user: current_user)
     @collaborator.attributes = collaborator_params
   end
 
   def build_reduce_collaborator
-    user = @forum.members.find(params[:id])
-    @reduce_collaborator = Roles::ReduceService.new(forum: @forum, user: user, role: :collaborator)
+    @reduce_collaborator = Roles::ReduceService.new(forum: @forum, user: @member, role: :collaborator)
   end
 
   def collaborator_params

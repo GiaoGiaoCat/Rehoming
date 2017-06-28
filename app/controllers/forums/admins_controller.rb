@@ -22,7 +22,7 @@ class Forums::AdminsController < ApplicationController
   end
 
   def load_member
-    @member = @forum.members.find(params[:id])
+    @member = @forum.members.find(params[:member_id])
   end
 
   def build_admin

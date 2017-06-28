@@ -24,7 +24,7 @@ class Forums::CollaboratorsControllerTest < ActionDispatch::IntegrationTest
     @roc.add_role :collaborator, @forum
 
     assert_difference -> { @roc.roles.reload.count }, -1 do
-      delete forum_collaborator_url(forums(:one), @roc), headers: @headers
+      delete forum_member_collaborator_url(forums(:one), @roc), headers: @headers
     end
     assert_response :success
   end
