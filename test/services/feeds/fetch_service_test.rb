@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Redis::FetchServiceTest < ActiveSupport::TestCase
+class Feeds::FetchServiceTest < ActiveSupport::TestCase
   setup do
     params = {
       sourceable_id: posts(:one).id, sourceable_type: posts(:one).class,
@@ -11,7 +11,7 @@ class Redis::FetchServiceTest < ActiveSupport::TestCase
   end
 
   test '根据 key 从 redis 中获取数据' do
-    fetch = Redis::FetchService.new(key: @feed.cache_key)
+    fetch = Feeds::FetchService.new(key: @feed.cache_key)
     assert fetch.save
     assert_equal @feed, fetch.object
   end

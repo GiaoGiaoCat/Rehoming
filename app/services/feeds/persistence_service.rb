@@ -8,6 +8,6 @@ class Feeds::PersistenceService < ApplicationService
   private
 
   def perform
-    Redis.current.set key, Marshal.dump(feed)
+    Redis.current.set key, feed.to_json
   end
 end

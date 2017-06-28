@@ -16,7 +16,7 @@ class Feeds::DeleteService < ApplicationService
   end
 
   def ensure_feed
-    fetch = Redis::FetchService.create(key: key)
+    fetch = Feeds::FetchService.create(key: key)
     self.feed = fetch.object if fetch
   end
 

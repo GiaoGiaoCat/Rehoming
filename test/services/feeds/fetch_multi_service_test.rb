@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Redis::FetchMultiServiceTest < ActiveSupport::TestCase
+class Feeds::FetchMultiServiceTest < ActiveSupport::TestCase
   setup do
     params = {
       sourceable_id: posts(:one).id, sourceable_type: posts(:one).class,
@@ -13,7 +13,7 @@ class Redis::FetchMultiServiceTest < ActiveSupport::TestCase
 
   test '根据 key 从 redis 中获取数据' do
     keys = [@feed_a.cache_key, @feed_b.cache_key]
-    fetch = Redis::FetchMultiService.new(keys: keys)
+    fetch = Feeds::FetchMultiService.new(keys: keys)
     assert fetch.save
     assert_equal [@feed_a, @feed_b], fetch.objects
   end

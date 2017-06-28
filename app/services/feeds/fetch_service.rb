@@ -1,4 +1,4 @@
-class Redis::FetchService < ApplicationService
+class Feeds::FetchService < ApplicationService
   attribute :key
   attribute :object
 
@@ -12,7 +12,7 @@ class Redis::FetchService < ApplicationService
 
   def fetch(key)
     data = redis.get(key)
-    Marshal.load(data) if data
+    Feed.new.from_json data if data
   end
 
   def redis

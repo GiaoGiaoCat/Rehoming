@@ -14,7 +14,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
     }
     feed = Feeds::CreateForm.create(params).object
 
-    assert_changes -> { Redis::FetchService.create(key: feed.cache_key).object.read } do
+    assert_changes -> { Feeds::FetchService.create(key: feed.cache_key).object.read } do
       patch feed_url(feed), headers: @headers
     end
     assert_response :success
