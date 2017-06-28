@@ -3,9 +3,6 @@ require 'rails/test_help'
 
 require 'minitest/autorun'
 
-# Requires supporting ruby files with custom matchers and macros, etc,
-# in support/ and its subdirectories.
-require 'support/custom_header_setup'
 # Code coverage
 require 'simplecov'
 SimpleCov.start do
@@ -17,6 +14,7 @@ require 'minitest/reporters'
 Minitest::Reporters.use!
 
 require 'fakeredis/minitest'
+# Requires supporting ruby files with custom matchers and macros in support/ and its subdirectories.
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
