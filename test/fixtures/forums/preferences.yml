@@ -11,7 +11,7 @@ two:
   forum: two
   postable_with_membership: true
   membership_approval_needed: true
-  postable_roles: ["owner", "collaborator"]
+  postable_roles: ["owner", "admin"]
 
 three:
   forum: three

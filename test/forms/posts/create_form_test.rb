@@ -40,9 +40,13 @@ class Posts::CreateFormTest < ActiveSupport::TestCase
     assert post.valid?
   end
 
-  # test '验证会员权限可发帖 author_role_can_post' do
-  #   @victor.join_forum(forums(:two))
-  #   post = Posts::CreateForm.new(forum: forums(:two), author: @victor, content: '#我是标签# content goes here')
-  #   assert_not post.valid?
-  # end
+  test '验证会员权限可发帖 author_role_can_post' do
+    @victor.join_forum(forums(:two))
+    @victor.forum_memberships.find_by(forum: forums(:two)).active!
+    post = Posts::CreateForm.new(forum: forums(:two), author: @victor, content: '#我是标签# content goes here')
+    assert_not post.valid?
+
+    Roles::BecomeAdminService.create(forum: forums(:two), user: @victor)
+    assert post.valid?
+  end
 end
