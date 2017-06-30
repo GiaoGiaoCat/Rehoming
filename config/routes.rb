@@ -1,21 +1,21 @@
 Rails.application.routes.draw do
   concern :routes do
     concern :commentable do |options|
-      resources :comments, :only => %i(index create), **options
+      resources :comments, only: %i(index create), **options
     end
     concern :likeable do |options|
       # NOTE: `likes` is noun NOT plurality.
-      resource :likes, :only => %i(create destroy), **options
+      resource :likes, only: %i(create destroy), **options
     end
     concern :pinable do |options|
-      resource :pin, :only => %i(create destroy), **options
+      resource :pin, only: %i(create destroy), **options
     end
     concern :favorable do |options|
       # NOTE: `favorites` is noun NOT plurality.
-      resource :favorite, :only => %i(create destroy), **options
+      resource :favorite, only: %i(create destroy), **options
     end
     concern :recommendable do |options|
-      resource :recommendation, :only => %i(create destroy), **options
+      resource :recommendation, only: %i(create destroy), **options
     end
 
     scope module: 'users' do
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     end
     %i(posts favorites forums).each { |r| resources r, only: :index, module: :users }
 
-    resources :posts, only: [:show] do
+    resources :posts, only: [] do
       %i(likeable commentable pinable favorable recommendable).each { |r| concerns r, module: :posts }
     end
 

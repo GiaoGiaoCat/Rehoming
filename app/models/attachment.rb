@@ -5,11 +5,11 @@ class Attachment < ApplicationRecord
   }.freeze
 
   belongs_to :attachable, polymorphic: true, optional: true
-  belongs_to :forum
+  belongs_to :forum, optional: true
 
   validates :category, :url, presence: true
 
-  before_validation :ensure_forum
+  before_create :ensure_forum
 
   encrypted_id key: 'Kpovojv2sJzPnb'
   enum category: IMAGE_CATEGORIES
