@@ -5,6 +5,8 @@ module MockDredd
     if Rails.env.development?
       before_action :load_session_dev
       before_action :load_feed_dev
+      before_action :load_forum_dev
+      before_action :load_post_preview_dev
     end
   end
 
@@ -25,6 +27,16 @@ module MockDredd
       @feed = fetch.save ? fetch.object : nil
       @feed.make_as_read!
       render json: @feed
+    end
+  end
+
+  def load_forum_dev
+    @forum = Forum.first if controller_name == 'post_previews'
+  end
+
+  def load_post_preview_dev
+    if controller_name == 'post_previews' && action_name == 'show'
+      render json: Post.first, serializer: Forums::PostPreviewSerializer, include: '**'
     end
   end
 end

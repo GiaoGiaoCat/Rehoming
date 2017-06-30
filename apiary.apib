@@ -53,7 +53,8 @@ Rehoming API 文档
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
-        + data (array[Post], required)
+        + data (array[MyPost], required)
+        + included (array[Forum, Attachment], required)
 
 ## Favorite Resources [/favorites]
 ### 获取我的收藏 [GET]
@@ -64,7 +65,8 @@ Rehoming API 文档
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
-        + data (array[Post], required)
+        + data (array[MyFavorite], required)
+        + included (array[Forum, User, Attachment], required)
 
 # Group Feed
 ## Feed Resources [/feeds]
@@ -118,6 +120,27 @@ Rehoming API 文档
     + Attributes
         + data (Forum, required)
 
+## Post Preview Resources [/forums/{forum_id}/post_previews]
+### 获取列表列表 [GET]
++ Parameters
+    + forum_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (array[PostPreview], required)
+        + included (array[Forum, User, Attachment], required)
+
+## Post Preview Resource [/forums/{forum_id}/post_previews/{id}]
+### 获取列表详情 [GET]
++ Parameters
+    + forum_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+    + id: `5708ca5fd085255ba2fadcb2c643bffa` (required)
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (PostPreview, required)
+        + included (array[Forum, User, Attachment], required)
+
 ## Data Structures
 ### BaseUser (object)
 + id: ea2340d68be9b6ff537be3be1fd36268
@@ -157,18 +180,45 @@ Rehoming API 文档
     + posts_count: 4 (number, required) - 我的帖子数目
     + favorites_count: 2 (number, required) - 我的收藏数目
 
-### Post (object)
+### MyPost (object)
 - Include BasePost
 + attributes
     + content: `hahaha` - 内容
-    + created_at: `2016-05-26T12:46:17.000Z` - 订单创建时间
-    + updated_at: `2016-05-26T12:46:17.000Z` - 订单创建时间
+    + created_at: `2016-05-26T12:46:17.000Z`
+    + updated_at: `2016-05-26T12:46:17.000Z`
 + relationships
     + forum
         + data (BaseForum)
     + attachments
         + data (array[BaseAttachment])
-+ included (array[Forum, Attachment], required)
+
+### MyFavorite (object)
+- Include BasePost
++ attributes
+    + content: `hahaha` - 内容
+    + created_at: `2016-05-26T12:46:17.000Z`
+    + updated_at: `2016-05-26T12:46:17.000Z`
++ relationships
+    + forum
+        + data (BaseForum)
+    + author
+        + data (array[BaseUser])
+    + attachments
+        + data (array[BaseAttachment])
+
+### PostPreview (object)
+- Include BasePost
++ attributes
+    + content: `hahaha` - 内容
+    + created_at: `2016-05-26T12:46:17.000Z`
+    + updated_at: `2016-05-26T12:46:17.000Z`
++ relationships
+    + forum
+        + data (BaseForum)
+    + author
+        + data (BaseUser)
+    + attachments
+        + data (array[BaseAttachment])
 
 ### Forum (object)
 - Include BaseForum
@@ -178,6 +228,8 @@ Rehoming API 文档
     + cover: https://www.baidu.com/1.jpg - 圈子封面
     + background_color: `#333333` - 背景色
     + posts_count: 100 (number, required) - 帖子数目
+    + image_attachments_count: 100 (number, required) - 图片附件数目
+    + video_attachments_count: 100 (number, required) - 视频附件数目
 
 ### Attachment (object)
 - Include BaseAttachment
