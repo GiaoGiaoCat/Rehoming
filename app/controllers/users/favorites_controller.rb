@@ -1,7 +1,7 @@
 class Users::FavoritesController < ApplicationController
   def index
     load_favorites
-    options = { each_serializer: Users::PostSerializer, include: %i(forum attachments) }
+    options = { each_serializer: Users::FavoriteSerializer, include: %i(forum author attachments) }
     render json: explicit_serializer(@favorites, options).as_json
   end
 

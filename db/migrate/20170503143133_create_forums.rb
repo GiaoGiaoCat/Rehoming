@@ -7,6 +7,8 @@ class CreateForums < ActiveRecord::Migration[5.1]
       t.integer   :category, null: false, comment: '圈子归属类型'
       t.string    :background_color, comment: '背景色'
       t.integer   :posts_count, null: false, default: 0, comment: '圈子中的帖子数目'
+      t.integer   :image_attachments_count, null: false, default: 0, comment: '图片附件数目'
+      t.integer   :video_attachments_count, null: false, default: 0, comment: '视频附件数目'
       t.datetime  :deleted_at, index: true
       t.timestamps null: false
     end

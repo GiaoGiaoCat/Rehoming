@@ -3,6 +3,7 @@ class PostSerializer < ApplicationSerializer
   attributes :content, :comments_count
   attribute :sticky, key: :pinned
 
+  belongs_to :forum_for_serializer, key: :forum
   belongs_to :author
   has_many :attachments
   has_many :comments do

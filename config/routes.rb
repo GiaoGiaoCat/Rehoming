@@ -46,6 +46,7 @@ Rails.application.routes.draw do
 
         resource :setting, only: [:update], controller: 'preferences'
         resources :posts, only: %i(index create)
+        resources :post_previews, only: %i(index show)
         resources :invitations, only: %i(create)
         resources :members, only: %i(index destroy) do
           resource :admin, only: %i(create destroy)

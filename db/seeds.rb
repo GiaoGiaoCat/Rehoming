@@ -25,6 +25,8 @@ yuki.forum_memberships.find_by(forum: forum_a).preference.update(nickname: 'Â∞èÈ
 post = Post.create(user_id: victor.id, forum_id: forum_a.id, content: 'hahaha', sticky: true, recommended: true)
 post.attachments.create(category: 'image', url: 'http://www.baidu.com/a.jpg')
 post.attachments.create(category: 'image', url: 'http://www.baidu.com/b.jpg')
+post.attachments.create(category: 'video', url: 'http://www.baidu.com/c.avi')
+
 
 Post.create(user_id: victor.id, forum_id: forum_a.id, content: 'today is fine')
 Post.create(user_id: yuki.id, forum_id: forum_a.id, content: 'cool man')

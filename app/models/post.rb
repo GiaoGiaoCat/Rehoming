@@ -7,6 +7,8 @@ class Post < ApplicationRecord
   include ActsAsRecommendable::Recommendable
   include ScopeByUser
 
+  # XXX: forum's id is integer in the serializer of post relationships, that's not correct
+  belongs_to :forum_for_serializer, class_name: 'Forum', foreign_key: :forum_id
   belongs_to :forum
   belongs_to :author, class_name: 'User', foreign_key: :user_id
   has_many :attachments, as: :attachable

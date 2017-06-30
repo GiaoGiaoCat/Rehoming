@@ -8,7 +8,7 @@ class UserSerializer < ApplicationSerializer
     object.forum_nickname(current_forum)
   end
 
-  def id
+  def to_param
     return to_param unless current_forum
     membership.to_param
   end
