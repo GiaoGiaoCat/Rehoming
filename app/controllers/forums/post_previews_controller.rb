@@ -1,4 +1,5 @@
 class Forums::PostPreviewsController < ApplicationController
+  skip_before_action :authenticate_request!
   serialization_scope :view_variables
 
   def index
