@@ -44,6 +44,7 @@ Rehoming API 文档
     + Attributes
         + data (User, required)
 
+# Group Post
 ## Post Resources [/posts]
 ### 获取我的帖子 [GET]
 + Request JSON Message
@@ -56,6 +57,8 @@ Rehoming API 文档
         + data (array[MyPost], required)
         + included (array[Forum, Attachment], required)
 
+
+# Group Favorite
 ## Favorite Resources [/favorites]
 ### 获取我的收藏 [GET]
 + Request JSON Message
@@ -120,8 +123,9 @@ Rehoming API 文档
     + Attributes
         + data (Forum, required)
 
+# Group PostPreview
 ## Post Preview Resources [/forums/{forum_id}/post_previews]
-### 获取列表列表 [GET]
+### 获取预览列表列表 [GET]
 + Parameters
     + forum_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
 
@@ -131,7 +135,7 @@ Rehoming API 文档
         + included (array[Forum, User, Attachment], required)
 
 ## Post Preview Resource [/forums/{forum_id}/post_previews/{id}]
-### 获取列表详情 [GET]
+### 获取预览帖子详情 [GET]
 + Parameters
     + forum_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
     + id: `5708ca5fd085255ba2fadcb2c643bffa` (required)
