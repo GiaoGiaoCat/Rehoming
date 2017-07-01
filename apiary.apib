@@ -58,6 +58,26 @@ Rehoming API 文档
         + included (array[UserForum, Attachment], required)
 
 
+## Like Resource [/posts/{post_id}/likes]
++ Parameters
+    + post_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+
+### 赞 [POST]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 204
+
+### 取消赞 [DELETE]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 204
+
 # Group Favorite
 ## Favorite Resources [/favorites]
 ### 获取我的收藏 [GET]

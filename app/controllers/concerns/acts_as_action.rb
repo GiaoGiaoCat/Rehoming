@@ -19,7 +19,7 @@ module ActsAsAction
     authorize @parent.forum, authorize_name if authorize_name
     current_user.send(verb, @parent)
     instrument instrument_name, sourceable: @parent, handler: current_user if instrument_name
-    head :created
+    head :no_content
   end
 
   def destroy

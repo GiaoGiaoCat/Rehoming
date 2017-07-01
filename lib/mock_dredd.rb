@@ -7,6 +7,7 @@ module MockDredd
       before_action :load_feed_dev
       before_action :load_forum_dev
       before_action :load_post_preview_dev
+      before_action :load_post_dev
     end
   end
 
@@ -37,6 +38,12 @@ module MockDredd
   def load_post_preview_dev
     if controller_name == 'post_previews' && action_name == 'show'
       render json: Post.first, serializer: Forums::PostPreviewSerializer, include: '**'
+    end
+  end
+
+  def load_post_dev
+    if controller_path == 'posts/likes'
+      @parent = Post.first
     end
   end
 end

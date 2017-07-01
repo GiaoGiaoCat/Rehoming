@@ -14,7 +14,7 @@ class Comments::LikesControllerTest < ActionDispatch::IntegrationTest
       post comment_likes_url(@comment_unliked), headers: @headers
     end
     assert_response :success
-    assert_equal 201, @response.status
+    assert_equal 204, @response.status
   end
 
   test 'create likes should feed' do

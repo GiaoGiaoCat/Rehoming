@@ -11,7 +11,7 @@ class Posts::PinsControllerTest < ActionDispatch::IntegrationTest
   test '圈主才能设置置顶' do
     setup_role(:moderator, @forum) do
       assert_changes -> { @post_pined.reload.sticky } do
-        assert_pins_no_difference(:post, :created)
+        assert_pins_no_difference(:post, :no_content)
       end
     end
   end
@@ -19,7 +19,7 @@ class Posts::PinsControllerTest < ActionDispatch::IntegrationTest
   test '管理员能设置置顶' do
     setup_role(:admin, @forum) do
       assert_changes -> { @post_pined.reload.sticky } do
-        assert_pins_no_difference(:post, :created)
+        assert_pins_no_difference(:post, :no_content)
       end
     end
   end

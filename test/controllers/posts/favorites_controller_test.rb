@@ -13,7 +13,7 @@ class Posts::FavoritesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_equal 201, @response.status
+    assert_equal 204, @response.status
   end
 
   test 'should destroy favorites' do

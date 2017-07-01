@@ -5,7 +5,7 @@ module SupportMethod
 
   def load_parent
     resource, id = request.path.split('/')[1, 2]
-    @parent = resource.singularize.classify.constantize.find(id)
+    @parent ||= resource.singularize.classify.constantize.find(id)
   end
 
   def pagination_number
