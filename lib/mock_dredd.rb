@@ -31,7 +31,7 @@ module MockDredd
   end
 
   def load_forum_dev
-    @forum = Forum.first if controller_name == 'post_previews'
+    @forum = Forum.first if %w[post_previews members].include? controller_name
   end
 
   def load_post_preview_dev

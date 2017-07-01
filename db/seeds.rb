@@ -15,6 +15,7 @@ forum_a = Forum.create(name: 'Free Group', category: 10)
 victor.join_forum(forum_a)
 yuki.join_forum(forum_a)
 
+victor.add_role :moderator, forum_a
 
 # victor.forum_memberships.find_by(forum: forum_a).accept
 # yuki.forum_memberships.find_by(forum: forum_a).accept

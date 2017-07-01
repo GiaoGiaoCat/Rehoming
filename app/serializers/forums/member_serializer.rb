@@ -4,11 +4,16 @@ class Forums::MemberSerializer < ApplicationSerializer
   attributes :headimgurl
   attribute :nickname
   attribute :status
+  attribute :roles
 
   delegate :status, to: :forum_membership
 
   def nickname
     object.forum_nickname(current_forum)
+  end
+
+  def roles
+    object.role_names_by_forum(current_forum)
   end
 
   private

@@ -45,6 +45,10 @@ class User < ApplicationRecord
     forum_membership&.nickname || nickname
   end
 
+  def role_names_by_forum(forum)
+    roles.where(resource: forum).map(&:name)
+  end
+
   private
 
   def rejoin_membership_or_create_membership_request(forum)

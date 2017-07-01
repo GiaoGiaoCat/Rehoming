@@ -54,6 +54,7 @@ rake
 ### You should know
 
 * [JSON API](http://jsonapi.org/)
+* [rolify](https://github.com/RolifyCommunity/rolify)
 * [active_type](https://github.com/makandra/active_type)
 * [active_model_serializers](https://github.com/rails-api/active_model_serializers)
 * [acts_as_paranoid](https://github.com/ActsAsParanoid/acts_as_paranoid)
