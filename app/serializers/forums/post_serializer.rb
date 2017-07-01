@@ -1,4 +1,4 @@
-class Forums::PostSerializer < PostSerializer
+class Forums::PostSerializer < ApplicationSerializer
   cache key: 'forum_post'
 
   attributes :content, :comments_count

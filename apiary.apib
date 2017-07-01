@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://127.0.0.1:300/
+HOST: http://127.0.0.1:3000/
 
 # Rehoming API
 
@@ -54,8 +54,8 @@ Rehoming API 文档
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
-        + data (array[MyPost], required)
-        + included (array[Forum, Attachment], required)
+        + data (array[UserPost], required)
+        + included (array[UserForum, Attachment], required)
 
 
 # Group Favorite
@@ -68,8 +68,8 @@ Rehoming API 文档
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
-        + data (array[MyFavorite], required)
-        + included (array[Forum, User, Attachment], required)
+        + data (array[UserPost], required)
+        + included (array[UserForum, Attachment], required)
 
 # Group Feed
 ## Feed Resources [/feeds]
@@ -162,10 +162,6 @@ Rehoming API 文档
 + id: dc01a2ff45766cb529f017a8c4ce23c7 (required)
 + type: posts (required)
 
-### BaseFavorite (object)
-+ id: dc01a2ff45766cb529f017a8c4ce23c7 (required)
-+ type: posts (required)
-
 ### BaseFeed (object)
 + id: 71adf05d-711b-4e4a-aff6-9b383ebefe93 (required)
 + type: feeds (required)
@@ -184,7 +180,7 @@ Rehoming API 文档
     + posts_count: 4 (number, required) - 我的帖子数目
     + favorites_count: 2 (number, required) - 我的收藏数目
 
-### MyPost (object)
+### UserPost (object)
 - Include BasePost
 + attributes
     + content: `hahaha` - 内容
@@ -193,20 +189,6 @@ Rehoming API 文档
 + relationships
     + forum
         + data (BaseForum)
-    + attachments
-        + data (array[BaseAttachment])
-
-### MyFavorite (object)
-- Include BasePost
-+ attributes
-    + content: `hahaha` - 内容
-    + created_at: `2016-05-26T12:46:17.000Z`
-    + updated_at: `2016-05-26T12:46:17.000Z`
-+ relationships
-    + forum
-        + data (BaseForum)
-    + author
-        + data (array[BaseUser])
     + attachments
         + data (array[BaseAttachment])
 
@@ -223,6 +205,11 @@ Rehoming API 文档
         + data (BaseUser)
     + attachments
         + data (array[BaseAttachment])
+
+### UserForum (object)
+- Include BaseForum
++ attributes
+    + name: `Free Group` - 圈子名称
 
 ### Forum (object)
 - Include BaseForum
