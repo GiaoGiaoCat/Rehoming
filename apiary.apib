@@ -44,6 +44,19 @@ Rehoming API 文档
     + Attributes
         + data (User, required)
 
+# Group Favorite
+## Favorite Resources [/favorites]
+### 获取我的收藏 [GET]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (array[UserPost], required)
+        + included (array[UserForum, Attachment], required)
+
 # Group Post
 ## Post Resources [/posts]
 ### 获取我的帖子 [GET]
@@ -58,7 +71,7 @@ Rehoming API 文档
         + included (array[UserForum, Attachment], required)
 
 
-## Like Resource [/posts/{post_id}/likes]
+## Like Action [/posts/{post_id}/likes]
 + Parameters
     + post_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
 
@@ -78,18 +91,47 @@ Rehoming API 文档
 
 + Response 204
 
-# Group Favorite
-## Favorite Resources [/favorites]
-### 获取我的收藏 [GET]
+## Pin Action [/posts/{post_id}/pin]
++ Parameters
+    + post_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+
+### 置顶 [POST]
 + Request JSON Message
     + Headers
 
             Authorization: `TOKEN Value`
 
-+ Response 200 (application/vnd.api+json; charset=utf-8)
-    + Attributes
-        + data (array[UserPost], required)
-        + included (array[UserForum, Attachment], required)
++ Response 204
+
+### 取消置顶 [DELETE]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 204
+
+## Favorite Action [/posts/{post_id}/favorite]
++ Parameters
+    + post_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+
+### 收藏 [POST]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 204
+
+### 取消收藏 [DELETE]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 204
+
+
 
 # Group Feed
 ## Feed Resources [/feeds]
