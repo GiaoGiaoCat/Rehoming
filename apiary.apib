@@ -39,7 +39,6 @@ Rehoming API 文档
     + Attributes
         + data (UpdateProfileData, required)
 
-
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
         + data (User, required)
@@ -59,14 +58,33 @@ Rehoming API 文档
 
 # Group Post
 ## Forum Post Resources [/forums/{forum_id}/posts]
-### 获取帖子列表 [GET]
 + Parameters
     + forum_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+
+### 获取帖子列表 [GET]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
 
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
         + data (array[Post], required)
         + included (array[Forum, User, Attachment, Comment, Likes], required)
+
+### 发帖 [POST]
++ Request (application/vnd.api+json)
+    + Headers
+
+            Authorization: `TOKEN Value`
+
+    + Attributes
+        + data (CreatePostData, required)
+
++ Response 201 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (PostPreview, required)
+        + included (array[Forum, User, Attachment], required)
 
 ## Post Resources [/posts]
 ### 获取我的帖子 [GET]
@@ -328,7 +346,6 @@ Rehoming API 文档
     + likes
         + data (array[BaseLikes])
 
-
 ### PostPreview (object)
 - Include BasePost
 + attributes
@@ -374,10 +391,7 @@ Rehoming API 文档
     + content: hahaha (required) - 动态关联内容的正文
     + creator_nickname: Roc (required) - 动态创建者
     + creator_avatar: http://www.qiniu.com/adfasdfadaf.jpg (required) - 动态创建者头像
-    + attachments (array, required)
-        + (object)
-            + category: `image` - 附件类型
-            + url: `http://www.baidu.com/a.jpg` - 附件地址
+    + attachments (array[CreateAttachment], required)
 
 ### Likes (object)
 + Include BaseLikes
@@ -394,6 +408,10 @@ Rehoming API 文档
         + data (BaseUser)
     + attachments
         + data (array[BaseAttachment])
+
+### CreateAttachment
++ category: image, video (enum) - 附件类型
++ url: `http://www.baidu.com/a.jpg` - 附件地址
 
 ### CreateSessionData
 + type: sessions (string, required)
@@ -414,3 +432,9 @@ Rehoming API 文档
     + cover: https://www.baidu.com/1.jpg - 圈子封面
     + background_color: `#333333` - 背景色
     + category: 10 (number, required) - 圈子类型
+
+### CreatePostData
++ type: posts (string, required)
++ attributes
+    + content: `here will besome text` (required) - 正文
+    + attachments_attributes (array[CreateAttachment]) - 附件

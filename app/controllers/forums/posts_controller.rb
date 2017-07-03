@@ -11,7 +11,8 @@ class Forums::PostsController < ApplicationController
     build_form
     if @post_form.save
       instrument 'created.post', sourceable: @post_form.object, handler: current_user
-      render json: @post_form.object.becomes(Post), status: :created
+      options = { each_serializer: Forums::PostPreviewSerializer, include: '**' }
+      render json: explicit_serializer(@post_form.object.becomes(Post), options).as_json, status: :created
     else
       render json: @post_form.errors.messages, status: :bad_request
     end
