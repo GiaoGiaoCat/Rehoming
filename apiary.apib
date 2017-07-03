@@ -71,7 +71,7 @@ Rehoming API 文档
         + included (array[UserForum, Attachment], required)
 
 
-## Like Action [/posts/{post_id}/likes]
+## Likes [/posts/{post_id}/likes]
 + Parameters
     + post_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
 
@@ -91,7 +91,7 @@ Rehoming API 文档
 
 + Response 204
 
-## Pin Action [/posts/{post_id}/pin]
+## Pin [/posts/{post_id}/pin]
 + Parameters
     + post_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
 
@@ -111,7 +111,7 @@ Rehoming API 文档
 
 + Response 204
 
-## Favorite Action [/posts/{post_id}/favorite]
+## Favorite [/posts/{post_id}/favorite]
 + Parameters
     + post_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
 
@@ -131,6 +131,24 @@ Rehoming API 文档
 
 + Response 204
 
+## Recommendation [/posts/{post_id}/recommendation]
++ Parameters
+    + post_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+
+### 精华 [POST]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 204
+
+### 取消精华 [DELETE]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
++ Response 204
 
 
 # Group Feed

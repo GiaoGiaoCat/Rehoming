@@ -42,7 +42,7 @@ module MockDredd
   end
 
   def load_post_dev
-    if ['posts/likes', 'posts/pins', 'posts/favorites'].include? controller_path
+    if ['posts/likes', 'posts/pins', 'posts/favorites', 'posts/recommendations'].include? controller_path
       @parent = Post.first
     end
   end
