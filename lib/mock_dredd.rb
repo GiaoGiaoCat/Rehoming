@@ -10,6 +10,7 @@ module MockDredd
       before_action :load_post_dev
       before_action :load_post_for_comment_dev
       before_action :load_favorites_dev
+      before_action :load_comment_dev
     end
   end
 
@@ -54,6 +55,12 @@ module MockDredd
     ary = ['posts/comments']
     return unless ary.include? controller_path
     @parent = Post.last
+  end
+
+  def load_comment_dev
+    ary = ['comments/likes']
+    return unless ary.include? controller_path
+    @parent = Comment.first
   end
 
   def load_favorites_dev

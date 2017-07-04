@@ -294,6 +294,27 @@ Rehoming API 文档
         + included (array[User, Attachment], required)
 
 
+## Likes [/comments/{comment_id}/likes]
++ Parameters
+    + comment_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+
+### 赞 [POST]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 204
+
+### 取消赞 [DELETE]
++ Request JSON Message
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 204
+
+
 ## Data Structures
 ### BaseUser (object)
 + id: ea2340d68be9b6ff537be3be1fd36268
