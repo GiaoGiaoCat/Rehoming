@@ -255,13 +255,26 @@ Rehoming API 文档
 
 # Group Member
 ## Member Resources [/forums/{forum_id}/members]
-### 获取成员列表 [GET]
 + Parameters
     + forum_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
 
+### 获取成员列表 [GET]
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
         + data (array[Member], required)
+
+## Member Resource [/forums/{forum_id}/members/{id}]
++ Parameters
+    + forum_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+    + id: `5708ca5fd085255ba2fadcb2c643bffa` (required)
+
+### 删除一个成员 [DELETE]
++ Request (application/vnd.api+json)
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 204
 
 # Group Comment
 ## Comment Resources [/posts/{post_id}/comments]

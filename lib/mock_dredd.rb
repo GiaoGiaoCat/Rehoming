@@ -3,20 +3,21 @@ module MockDredd
 
   included do
     if Rails.env.development?
-      before_action :load_session_dev
-      before_action :load_feed_dev
+      before_action :hack_create_session_dev
+      before_action :hack_update_feed_dev
       before_action :load_forum_dev
-      before_action :load_post_preview_dev
+      before_action :hack_show_post_preview_dev
       before_action :load_post_dev
       before_action :load_post_for_comment_dev
       before_action :load_favorites_dev
       before_action :load_comment_dev
+      before_action :hack_destroy_member_dev
     end
   end
 
   private
 
-  def load_session_dev
+  def hack_create_session_dev
     return unless controller_name == 'sessions'
     return unless action_name == 'create'
     load_development_user
@@ -24,7 +25,7 @@ module MockDredd
     render json: @session, status: :created
   end
 
-  def load_feed_dev
+  def hack_update_feed_dev
     return unless controller_name == 'feeds'
     return unless action_name == 'update'
     cache_key = current_user.feeds.value.first
@@ -35,11 +36,12 @@ module MockDredd
   end
 
   def load_forum_dev
-    return unless ['forums/posts', 'forums/post_previews', 'forums/members'].include? controller_path
+    ary = ['forums/posts', 'forums/post_previews', 'forums/members']
+    return unless ary.include? controller_path
     @forum = Forum.first
   end
 
-  def load_post_preview_dev
+  def hack_show_post_preview_dev
     return unless controller_name == 'post_previews'
     return unless action_name == 'show'
     render json: Post.first, serializer: Forums::PostPreviewSerializer, include: '**'
@@ -67,5 +69,11 @@ module MockDredd
     return unless controller_name == 'favorites'
     return unless action_name == 'index'
     current_user.favor(Post.first)
+  end
+
+  def hack_destroy_member_dev
+    return unless controller_path == 'forums/members'
+    return unless action_name == 'destroy'
+    return head :no_content
   end
 end
