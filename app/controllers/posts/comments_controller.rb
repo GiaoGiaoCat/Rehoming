@@ -3,7 +3,7 @@ class Posts::CommentsController < ApplicationController
 
   def index
     load_comments
-    render json: @comments
+    render json: @comments, include: '**'
   end
 
   def create
@@ -11,7 +11,7 @@ class Posts::CommentsController < ApplicationController
     if @comment_form.save
       instrument 'commented.post', sourceable: @comment_form.object, handler: current_user
       instrument 'replied.comment', sourceable: @comment_form.object, handler: current_user
-      head :created
+      render json: @comment_form.object, include: '**', status: :created
     else
       render json: @comment_form.errors.messages, status: :bad_request
     end

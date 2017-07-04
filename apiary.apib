@@ -263,6 +263,37 @@ Rehoming API 文档
     + Attributes
         + data (array[Member], required)
 
+# Group Comment
+## Comment Resources [/posts/{post_id}/comments]
++ Parameters
+    + post_id: `0312RTRI0rMOWj22GAUI0llVRI02RTR5` (required)
+
+### 获取评论列表 [GET]
++ Request (application/vnd.api+json)
+    + Headers
+
+            Authorization: `TOKEN Value`
+
++ Response 200 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (array[Comment], required)
+        + included (array[User, Attachment], required)
+
+### 发布评论 [POST]
++ Request (application/vnd.api+json)
+    + Headers
+
+            Authorization: `TOKEN Value`
+
+    + Attributes
+        + data (CreateCommentData, required)
+
++ Response 201 (application/vnd.api+json; charset=utf-8)
+    + Attributes
+        + data (Comment, required)
+        + included (array[User, Attachment], required)
+
+
 ## Data Structures
 ### BaseUser (object)
 + id: ea2340d68be9b6ff537be3be1fd36268
@@ -435,6 +466,12 @@ Rehoming API 文档
 
 ### CreatePostData
 + type: posts (string, required)
++ attributes
+    + content: `here will besome text` (required) - 正文
+    + attachments_attributes (array[CreateAttachment]) - 附件
+
+### CreateCommentData
++ type: comments (string, required)
 + attributes
     + content: `here will besome text` (required) - 正文
     + attachments_attributes (array[CreateAttachment]) - 附件

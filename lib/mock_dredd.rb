@@ -8,6 +8,7 @@ module MockDredd
       before_action :load_forum_dev
       before_action :load_post_preview_dev
       before_action :load_post_dev
+      before_action :load_post_for_comment_dev
       before_action :load_favorites_dev
     end
   end
@@ -44,8 +45,15 @@ module MockDredd
   end
 
   def load_post_dev
-    return unless ['posts/likes', 'posts/pins', 'posts/favorites', 'posts/recommendations'].include? controller_path
+    ary = ['posts/likes', 'posts/pins', 'posts/favorites', 'posts/recommendations']
+    return unless ary.include? controller_path
     @parent = Post.first
+  end
+
+  def load_post_for_comment_dev
+    ary = ['posts/comments']
+    return unless ary.include? controller_path
+    @parent = Post.last
   end
 
   def load_favorites_dev
