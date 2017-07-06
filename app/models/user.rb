@@ -1,8 +1,10 @@
 class User < ApplicationRecord
   rolify
 
-  include ActsAsLikeable::Liker
-  include ActsAsFavorable::Favoriter
+  action_store :like, :post, counter_cache: true
+  action_store :like, :comment, counter_cache: true
+  action_store :favor, :post, user_counter_cache: 'favorites_count'
+
   include ActsAsPinable::Piner
   include ActsAsRecommendable::Recommender
   include Redis::Objects

@@ -47,6 +47,8 @@ gem 'pundit', '~> 1.1'
 gem 'counter_culture', '~> 1.0'
 # ActiveRecord plugin allowing you to hide and restore records without actually deleting them.
 gem 'acts_as_paranoid', github: 'ActsAsParanoid/acts_as_paranoid'
+# Store different kind of actions in one table via ActiveRecord Polymorphic Association.
+gem 'action-store'
 
 group :development, :test do
   gem 'awesome_print', '~> 1.7'

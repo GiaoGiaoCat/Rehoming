@@ -1,7 +1,6 @@
 class Comment < ApplicationRecord
   acts_as_paranoid
 
-  include ActsAsLikeable::Likeable
   include ScopeByUser
 
   belongs_to :author, class_name: 'User', foreign_key: :user_id
