@@ -12,6 +12,7 @@ module MockDredd
       before_action :load_favorites_dev
       before_action :load_comment_dev
       before_action :hack_destroy_member_dev
+      before_action :hack_destroy_membership_dev
     end
   end
 
@@ -73,6 +74,12 @@ module MockDredd
 
   def hack_destroy_member_dev
     return unless controller_path == 'forums/members'
+    return unless action_name == 'destroy'
+    return head :no_content
+  end
+
+  def hack_destroy_membership_dev
+    return unless controller_path == 'forums/memberships'
     return unless action_name == 'destroy'
     return head :no_content
   end

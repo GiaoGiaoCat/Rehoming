@@ -60,3 +60,4 @@ rake
 * [acts_as_paranoid](https://github.com/ActsAsParanoid/acts_as_paranoid)
 * [redis-rb](https://github.com/redis/redis-rb)
 * [redis-objects](https://github.com/nateware/redis-objects)
+* [action-store](https://github.com/rails-engine/action-store)
