@@ -68,7 +68,7 @@ module MockDredd
   def load_favorites_dev
     return unless controller_name == 'favorites'
     return unless action_name == 'index'
-    current_user.favor(Post.first)
+    current_user.favor_post(Post.first)
   end
 
   def hack_destroy_member_dev
