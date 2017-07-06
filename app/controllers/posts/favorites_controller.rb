@@ -1,4 +1,4 @@
 class Posts::FavoritesController < ApplicationController
-  include ActsAsAction
-  define_action_names verb: :favor, unverb: :unfavor
+  include ActsAsActionStore
+  define_action_names verb_name: :favor
 end

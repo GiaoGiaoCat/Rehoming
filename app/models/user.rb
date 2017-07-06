@@ -3,8 +3,8 @@ class User < ApplicationRecord
 
   action_store :like, :post, counter_cache: true
   action_store :like, :comment, counter_cache: true
+  action_store :favor, :post, user_counter_cache: 'favorites_count'
 
-  include ActsAsFavorable::Favoriter
   include ActsAsPinable::Piner
   include ActsAsRecommendable::Recommender
   include Redis::Objects

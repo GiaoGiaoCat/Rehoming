@@ -7,3 +7,8 @@ two:
   action_type: 'like'
   user: victor (User)
   target: one (Comment)
+
+three:
+  action_type: 'favor'
+  user: victor (User)
+  target: one (Post)

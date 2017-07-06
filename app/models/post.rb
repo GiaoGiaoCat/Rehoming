@@ -1,7 +1,6 @@
 class Post < ApplicationRecord
   acts_as_paranoid
 
-  include ActsAsFavorable::Favorable
   include ActsAsPinable::Pinable
   include ActsAsRecommendable::Recommendable
   include ScopeByUser

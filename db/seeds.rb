@@ -39,7 +39,7 @@ comment.attachments.create(category: 'image', url: 'http://www.baidu.com/hello.j
   post.comments.create(author: victor, content: "this is the #{i} commment.")
 end
 
-victor.favor post
+victor.create_action(:favor, target: post)
 victor.create_action(:like, target: post)
 yuki.create_action(:like, target: post)
 

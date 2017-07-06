@@ -8,7 +8,7 @@ class Posts::FavoritesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create favorites' do
-    assert_difference -> { @victor.favorites.count } do
+    assert_difference -> { @victor.favor_posts.count } do
       post post_favorite_url(@post_unfavored), headers: @headers
     end
 
@@ -17,7 +17,7 @@ class Posts::FavoritesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy favorites' do
-    assert_difference -> { @victor.favorites.count }, -1 do
+    assert_difference -> { @victor.favor_posts.count }, -1 do
       delete post_favorite_url(@post_favored), headers: @headers
     end
 
