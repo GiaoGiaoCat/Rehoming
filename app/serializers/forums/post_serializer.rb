@@ -10,5 +10,5 @@ class Forums::PostSerializer < ApplicationSerializer
   has_many :comments do
     object.comments.by_user(scope[:current_user], scope[:current_forum]).limit(5)
   end
-  has_many :likes
+  has_many :like_by_users, key: :likers
 end

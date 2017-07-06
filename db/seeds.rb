@@ -40,8 +40,8 @@ comment.attachments.create(category: 'image', url: 'http://www.baidu.com/hello.j
 end
 
 victor.favor post
-victor.like post
-yuki.like post
+victor.create_action(:like, target: post)
+yuki.create_action(:like, target: post)
 
 20.times do
   Feeds::CreateForm.create({

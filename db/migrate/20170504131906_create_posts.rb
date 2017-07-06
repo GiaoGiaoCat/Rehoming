@@ -7,6 +7,7 @@ class CreatePosts < ActiveRecord::Migration[5.1]
       t.boolean :sticky, default: false, null: false, index: true, comment: '是否置顶'
       t.boolean :recommended, default: false, null: false, index: true, comment: '是否精华'
       t.integer :comments_count, null: false, default: 0, comment: '评论数'
+      t.integer :likes_count, null: false, default: 0, comment: '点赞数'
       t.datetime  :deleted_at, index: true
       t.timestamps null: false
     end

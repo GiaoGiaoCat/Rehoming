@@ -6,6 +6,7 @@ class CreateComments < ActiveRecord::Migration[5.1]
       t.references :forum, index: true
       t.text       :content, comment: '正文'
       t.integer    :replied_user_id, comment: '提及者'
+      t.integer :likes_count, null: false, default: 0, comment: '点赞数'
       t.datetime  :deleted_at, index: true
       t.timestamps null: false
     end

@@ -10,7 +10,7 @@ class Posts::LikesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create likes' do
-    assert_difference -> { @victor.likes.count } do
+    assert_difference -> { @victor.like_posts.count } do
       post post_likes_url(@post_unliked), headers: @headers
     end
     assert_response :success
@@ -35,7 +35,7 @@ class Posts::LikesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should destroy likes' do
-    assert_difference -> { @victor.likes.count }, -1 do
+    assert_difference -> { @victor.like_posts.count }, -1 do
       delete post_likes_url(@post_liked), headers: @headers
     end
 

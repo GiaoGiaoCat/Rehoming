@@ -1,4 +1,4 @@
 class Comments::LikesController < ApplicationController
-  include ActsAsAction
-  define_action_names verb: :like, unverb: :dislike, instrument_name: 'liked.comment'
+  include ActsAsActionStore
+  define_action_names verb_name: :like, instrument_name: 'liked.comment'
 end

@@ -1,0 +1,9 @@
+one:
+  action_type: 'like'
+  user: victor (User)
+  target: one (Post)
+
+two:
+  action_type: 'like'
+  user: victor (User)
+  target: one (Comment)
