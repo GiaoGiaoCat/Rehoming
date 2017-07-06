@@ -1,7 +1,7 @@
 class Forums::PostSerializer < ApplicationSerializer
   cache key: 'forum_post'
 
-  attributes :content, :comments_count
+  attributes :content, :comments_count, :likes_count
   attribute :sticky, key: :pinned
 
   belongs_to :forum_for_serializer, key: :forum
@@ -10,5 +10,7 @@ class Forums::PostSerializer < ApplicationSerializer
   has_many :comments do
     object.comments.by_user(scope[:current_user], scope[:current_forum]).limit(5)
   end
-  has_many :like_by_users, key: :likers
+  has_many :like_by_users, key: :likers do
+    object.like_by_users.limit(20)
+  end
 end

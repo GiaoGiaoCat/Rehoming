@@ -70,7 +70,7 @@ Rehoming API 文档
 + Response 200 (application/vnd.api+json; charset=utf-8)
     + Attributes
         + data (array[Post], required)
-        + included (array[Forum, User, Attachment, Comment, Likes], required)
+        + included (array[Forum, User, Attachment, Comment], required)
 
 ### 发帖 [POST]
 + Request (application/vnd.api+json)
@@ -365,11 +365,6 @@ Rehoming API 文档
 + id: 71adf05d-711b-4e4a-aff6-9b383ebefe93 (required)
 + type: feeds (required)
 
-### BaseLikes (object)
-+ id: e6be2635df47c5244d32010d4317722a (required)
-+ type: likes (required)
-
-
 ### Session (object)
 + id: ea2340d68be9b6ff537be3be1fd36268
 + type: sessions
@@ -409,6 +404,9 @@ Rehoming API 文档
 - Include BasePost
 + attributes
     + content: `hahaha` - 内容
+    + comments_count: 11 (number) - 回复数量
+    + likes_count: 12 (number) - 点赞数量
+    + pinned: true (boolean) - 是否置顶
     + created_at: `2016-05-26T12:46:17.000Z`
     + updated_at: `2016-05-26T12:46:17.000Z`
 + relationships
@@ -420,8 +418,8 @@ Rehoming API 文档
         + data (array[BaseAttachment])
     + comments
         + data (array[BaseComment])
-    + likes
-        + data (array[BaseLikes])
+    + likers
+        + data (array[BaseUser])
 
 ### PostPreview (object)
 - Include BasePost
@@ -469,12 +467,6 @@ Rehoming API 文档
     + creator_nickname: Roc (required) - 动态创建者
     + creator_avatar: http://www.qiniu.com/adfasdfadaf.jpg (required) - 动态创建者头像
     + attachments (array[CreateAttachment], required)
-
-### Likes (object)
-+ Include BaseLikes
-+ relationships
-    + liker
-        + data(BaseUser, required)
 
 ### Comment (object)
 - Include BaseComment
