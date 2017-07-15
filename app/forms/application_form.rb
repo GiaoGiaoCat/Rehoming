@@ -7,6 +7,8 @@ class ApplicationForm < ActiveType::Object
   validate :verify_object_class_correct
   validate :verify_object_valid
 
+  before_validation :setup_object_attributes
+  before_validation :setup_associations
   after_save :sync
 
   def initialize(params)
@@ -23,8 +25,8 @@ class ApplicationForm < ActiveType::Object
 
   private
 
+  # NOTE: can implemented by subtypes.
   def sync
-    # raise NotImplementedError, 'Must be implemented by subtypes.'
     object.save
   end
 
@@ -33,8 +35,6 @@ class ApplicationForm < ActiveType::Object
   end
 
   def verify_object_valid
-    setup_object_attributes
-    setup_associations
     promote_errors(object.errors) unless object.valid?
   end
 
